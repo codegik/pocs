@@ -31,17 +31,15 @@ public class SimplesNacionalService {
 
     private Customer calculateEffectiveAliquot(Customer customer) {
         final List<Tax> anexoTable = customer.getFatorR().compareTo(BigDecimal.valueOf(0.28)) >= 0 ? customerService.getAnexoIII() : customerService.getAnexoV();
-        Observable.fromIterable(anexoTable).map(anexo -> {
-            if (anexo.getFrom().compareTo(customer.getGrossRevenue()) <= 0 &&
-                anexo.getTo().compareTo(customer.getGrossRevenue()) >= 0) {
-
+        Observable.fromIterable(anexoTable)
+            .filter(anexo -> anexo.getFrom().compareTo(customer.getGrossRevenue()) <= 0 && anexo.getTo().compareTo(customer.getGrossRevenue()) >= 0)
+            .map(anexo -> {
                 final BigDecimal effectiveAliquot =
                     (customer.getGrossRevenue().multiply(anexo.getAliquot()).divide(BigDecimal.valueOf(100))
                         .subtract(anexo.getAmountDeducted())).divide(customer.getGrossRevenue());
                 customer.effectiveAliquot(effectiveAliquot.multiply(BigDecimal.valueOf(100)));
-            }
-            return anexo;
-        }).subscribe();
+                return anexo;
+            }).subscribe();
 
         return customer;
     }
