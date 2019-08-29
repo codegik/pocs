@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage("building") {
             steps {
-                dir("terraform") {
+                dir("devops/aws-rds/terraform") {
                     sh """
                     terraform init
                     terraform plan  -var AWS_ACCESS_KEY=${AWS_ACCESS_KEY} \
@@ -27,6 +27,9 @@ pipeline {
                                                     -var DB_MASTER_USER=${DB_MASTER_USER} \
                                                     -var DB_MASTER_PASSWORD=${DB_MASTER_PASSWORD}
                     """
+
+                    sh "mkdir ~/lastStates"
+                    sh "mv *.tfstate* ~/lastStates/"
                 }
             }
         }
