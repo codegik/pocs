@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name: 'DB_NAME')
         string(name: 'DB_MASTER_USER')
-        string(name: 'DB_MASTER_PASSWORD')
+        password(name: 'DB_MASTER_PASSWORD')
     }
     environment {
         AWS_ACCESS_KEY = credentials("AWS_ACCESS_KEY")
