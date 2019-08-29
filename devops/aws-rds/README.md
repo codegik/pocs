@@ -2,21 +2,24 @@
 
 ## Requirements
 To run this provision it is necessary has those tools:
-- terraform
+- docker
 
 You shold have an account on aws and do upload off your public key.
 
 ## Perform provisioning
+### Build local Jenkins
 ```
-./build.sh <AWS_ACCESS_KEY> <AWS_SECRET_KEY>
+cd jenkins
+docker build . -t jenkins-terraform
 ```
 
-Take a look on file `terraform/terraform.tfvars` to setup terraform variables.
+### Start local Jenkins
 ```
-AWS_PUBLIC_SUBNET = ""
-AWS_DEFAULT_VPC = ""
-AWS_DEFAULT_AMI = ""
-AWS_DEFAULT_REGION = ""
-AWS_DEFAULT_INSTANCE_TYPE = ""
-AWS_KEY_PAIR_NAME = ""
+docker run -it -p 8080:8080 -p 50000:50000 jenkins-terraform
 ```
+Follow de wizard process to setup the Jenkins plugins.
+
+### Import Jenkins Job
+Read the process to import here: https://stackoverflow.com/questions/8424228/export-import-jobs-in-jenkins
+
+The files to import are available on folder `jenkins/jobs`.
