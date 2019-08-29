@@ -26,10 +26,10 @@ pipeline {
                                                     -var DB_NAME=${DB_NAME} \
                                                     -var DB_MASTER_USER=${DB_MASTER_USER} \
                                                     -var DB_MASTER_PASSWORD=${DB_MASTER_PASSWORD}
+                    
+                    mkdir -p ~/lastStates
+                    mv terraform.tfstate* ~/lastStates/
                     """
-
-                    sh "mkdir ~/lastStates"
-                    sh "mv *.tfstate* ~/lastStates/"
                 }
             }
         }

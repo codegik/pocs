@@ -8,8 +8,8 @@ pipeline {
         stage("destroying") {
             steps {
                 dir("devops/aws-rds/terraform") {
-                    sh "mv ~/lastStates/*.tfstate* ."
                     sh """
+                    mv ~/lastStates/terraform.tfstate* .
                     terraform init
                     terraform destroy -auto-approve -var AWS_ACCESS_KEY=${AWS_ACCESS_KEY} \
                                                     -var AWS_SECRET_KEY=${AWS_SECRET_KEY} \

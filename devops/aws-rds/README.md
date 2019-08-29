@@ -19,7 +19,10 @@ docker run -it -p 8080:8080 -p 50000:50000 jenkins-terraform
 ```
 Follow de wizard process to setup the Jenkins plugins.
 
-### Import Jenkins Job
-Read the process to import here: https://stackoverflow.com/questions/8424228/export-import-jobs-in-jenkins
+### Create Jobs
+The Jenkinsfile are are available on folder `jenkins`, you can create a pipeline job referencing those files.
 
-The files to import are available on folder `jenkins/jobs`.
+### Create Jenkins Credentials
+Create the following Jenkins credentials:
+- AWS_ACCESS_KEY (your aws access key)
+- AWS_SECRET_KEY (your aws secret key)
