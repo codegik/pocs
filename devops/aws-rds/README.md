@@ -5,7 +5,7 @@ Provisioning AWS RDS Postgres cluster using Jenkins.
 To run this provision it is necessary has those tools:
 - docker
 
-You shold have an account on aws and do upload off your public key.
+You shold have an account on aws and do upload of your public key.
 
 ## Perform provisioning
 ### Build local Jenkins
