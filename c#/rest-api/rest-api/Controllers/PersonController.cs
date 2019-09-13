@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using rest_api.Models;
+using restapi.Models;
 
 namespace rest_api.Controllers
 {
@@ -10,31 +10,52 @@ namespace rest_api.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly PersonContext personContext;
+
+        public PersonController(PersonContext personContext)
         {
-            return new string[] { "value1", "value2" };
+            this.personContext = personContext;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Person>> Get()
+        {
+            return personContext.Persons.ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Person> Get(int id)
         {
-            return "value";
+            Person person = personContext.Persons.Find(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return person;
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Person person)
         {
+            personContext.Persons.Add(person);
+            personContext.SaveChanges();
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] Person person)
         {
+            personContext.Persons.Update(person);
+            personContext.SaveChanges();
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            Person person = personContext.Persons.Find(id);
+            if (person != null)
+            {
+                personContext.Persons.Remove(person);
+            }
         }
     }
 }
