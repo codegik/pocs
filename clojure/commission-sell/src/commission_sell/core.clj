@@ -1,13 +1,11 @@
 (ns commission-sell.core
   (:gen-class))
 
-(defn toDoubleArray [sales]
-  (map #(Double. %) sales))
+(defrecord Sale [salesman amount commission])
 
-(defn calculateCommission [sales]
-  (keep-indexed (fn [index item]
-                  (when < index (count sales))
-                    (/ (* (nth (sort > sales) index) item) 100)) [41 31 21]))
+(defn calculate [sales]
+  (for [[sale commission] (map list (sort-by :amount > sales) [41 31 21])] 
+    (->Sale (:salesman sale) (:amount sale) (/ (* (:amount sale) commission) 100))))
 
 (defn -main [& args]
-  (println (calculateCommission (toDoubleArray args))))
+  (println "Please run lein test"))
