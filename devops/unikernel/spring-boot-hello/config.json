@@ -1,0 +1,9 @@
+{
+  "Args": ["-Dos.name=Linux", "-jar", "./target/hello-0.0.1-SNAPSHOT.jar"],
+  "Dirs": ["target", "tmp"],
+  "CloudConfig" :{
+     "ProjectID" :"prod-1000",
+     "Zone": "us-east-1",
+     "BucketName":"nanos-images"
+  }
+}
