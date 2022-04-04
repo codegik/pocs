@@ -10,6 +10,13 @@ Using h2 on runtime to simulate edh database. The goal is to enable engineers to
 
 ## Run
 
+### Start application
 ```commandline
 ./mvnw spring-boot:run 
+```
+
+### Requesting API example
+GET /transactions/{date}
+```commandline
+curl --request GET 'http://localhost:8080/transactions/2022-03-09'
 ```
