@@ -1,0 +1,10 @@
+*.iml
+.idea
+.classpath
+.project
+git.properties
+target/
+logs/
+.settings/
+.metadata
+.DS_Store
