@@ -16,7 +16,7 @@ Using h2 on runtime to simulate edh database. The goal is to enable engineers to
 ```
 
 ### Requesting API example
-GET /transactions/{date}
+GET /chargeback/{date}
 ```commandline
-curl --request GET 'http://localhost:8080/transactions/2022-03-09'
+curl --request GET 'http://localhost:8080/chargeback/2022-03-01'
 ```
