@@ -23,9 +23,23 @@ class H2ApplicationTests {
 
 
 	@Test
-	void contextLoads() {
-		Transaction[] transactions = restTemplate.getForObject(rootUrl + port + "/transactions/2022-03-09", Transaction[].class);
-		assertThat(transactions).hasSize(2);
+	void chargeback() {
+		Transaction[] transactions = restTemplate.getForObject(rootUrl + port + "/chargeback/2022-03-01", Transaction[].class);
+		assertThat(transactions).hasSize(3);
+	}
+
+
+	@Test
+	void fedReturns() {
+		Transaction[] transactions = restTemplate.getForObject(rootUrl + port + "/fedreturns/2022-03-01", Transaction[].class);
+		assertThat(transactions).hasSize(1);
+	}
+
+
+	@Test
+	void accountsWithFedReturns() {
+		Transaction[] transactions = restTemplate.getForObject(rootUrl + port + "/accountswithfedreturns/2022-03-01", Transaction[].class);
+		assertThat(transactions).hasSize(1);
 	}
 
 }

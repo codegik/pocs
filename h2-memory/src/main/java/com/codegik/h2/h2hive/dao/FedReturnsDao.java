@@ -14,44 +14,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TransactionsDao {
-    private static final Logger logger = LoggerFactory.getLogger(TransactionsDao.class);
+public class FedReturnsDao {
+    private static final Logger logger = LoggerFactory.getLogger(FedReturnsDao.class);
 
     @Autowired
     private H2DataSource h2DataSource;
 
     private String getQuery() {
-        return "WITH fed_returns AS " +
-                "(SELECT " +
-                "   t1.tw_seq_nbr, " +
-                "   CAST(SUBSTR(t1.tw_ach_rec_data, 14, 7) as BIGINT) AS last_trace_nbr, " +
-                "   t1.tw_batch_seq, " +
-                "   t1.tw_ach_comp_id, " +
-                "   t1.tw_ach_rec_trace, " +
-                "   t1.tw_rej_reason, " +
-                "   t1.tw_post_dt, " +
-                "   t1.tw_proc_dt, " +
-                "   REPLACE(LOWER(SUBSTR(t1.tw_ach_rec_data, 2, 7)), '  ', ' ') acct_name, " +
-                "   RTRIM(LTRIM(SUBSTR(t1.tw_ach_rec_data, 30, 5))) ach_amt, " +
-                "FROM misdb.tran_warehouse t1 " +
-                "WHERE t1.tw_proc_dt = DATE(?)) " +
-                "" +
-                "SELECT * from fed_returns";
+        return "with fed_returns as\n" +
+                "    (select\n" +
+                "           cast(substr(t1.tw_ach_rec_data, 14, 7) as bigint) as last_trace_nbr,\n" +
+                "           substr(t1.tw_ach_rec_data, 3, 3) return_code,\n" +
+                "           t3.tw_seq_nbr,\n" +
+                "           replace(lower(substr(t3.tw_ach_rec_data, 54, 22)), '  ', ' ') acct_name,\n" +
+                "           rtrim(ltrim(substr(t3.tw_ach_rec_data, 29, 10))) ach_amt,\n" +
+                "           t3.tw_batch_seq,\n" +
+                "           t3.tw_ach_comp_id,\n" +
+                "           t1.tw_ach_rec_trace seven_trace,\n" +
+                "           t3.tw_rej_reason,\n" +
+                "           t3.tw_post_dt,\n" +
+                "           t3.tw_proc_dt\n" +
+                "    from misdb.tran_warehouse t1\n" +
+                "join  misdb.tran_warehouse t3 on t3.tw_tpr_last_trace = cast((substr(t1.tw_ach_rec_data, 14, 7)) as bigint)\n" +
+                "where t1.tw_ach_rec_type = '7'\n" +
+                "and substr(t1.tw_ach_rec_data, 1, 3) like '99R%'\n" +
+                "and DATE(t1.tw_proc_dt) = DATE(?))\n" +
+
+                "select * from fed_returns\n";
     }
 
 
     public Transaction getObject(ResultSet resultSet) throws SQLException {
         final Transaction transaction = new Transaction();
-        transaction.setTw_seq_nbr(resultSet.getString(1));
-        transaction.setTw_ach_rec_data(resultSet.getString(2));
-        transaction.setTw_batch_seq(resultSet.getString(3));
-        transaction.setTw_ach_comp_id(resultSet.getString(4));
-        transaction.setTw_ach_rec_trace(resultSet.getString(5));
-        transaction.setTw_rej_reason(resultSet.getString(6));
-        transaction.setTw_post_dt(resultSet.getDate(7));
-        transaction.setTw_proc_dt(resultSet.getDate(8));
-        transaction.setAcct_name(resultSet.getString(9));
-        transaction.setAch_amt(resultSet.getString(10));
+        transaction.setLast_trace_nbr(resultSet.getString(1));
+        transaction.setReturn_code(resultSet.getString(2));
+        transaction.setTw_post_dt(resultSet.getDate(10));
         return transaction;
     }
 
