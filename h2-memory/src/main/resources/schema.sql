@@ -1,5 +1,14 @@
-CREATE SCHEMA misdb AUTHORIZATION sa;
-CREATE SCHEMA udf AUTHORIZATION sa;
+CREATE SCHEMA IF NOT EXISTS misdb AUTHORIZATION sa;
+CREATE SCHEMA IF NOT EXISTS udf AUTHORIZATION sa;
+
+DROP TABLE IF EXISTS misdb.tran_warehouse;
+DROP TABLE IF EXISTS misdb.fed_returns;
+DROP TABLE IF EXISTS misdb.third_party_mast;
+DROP TABLE IF EXISTS misdb.nda;
+DROP TABLE IF EXISTS misdb.savings;
+DROP TABLE IF EXISTS misdb.loan;
+DROP TABLE IF EXISTS misdb.nd_history;
+DROP TABLE IF EXISTS misdb.sv_history;
 
 CREATE TABLE misdb.tran_warehouse (
    tw_seq_nbr           VARCHAR(20)     NOT NULL,
