@@ -1,28 +1,44 @@
 package com.codegik.poc.cohesion;
 
-import com.fidelityifs.webservices.CohesionConnect;
-import com.fidelityifs.webservices.STran;
-import com.fidelityinfoservices.schemas.webservices.miser.tpsl.MiserXMLInput;
-import com.fidelityinfoservices.schemas.webservices.miser.vbtp.Transaction;
-import com.fidelityinfoservices.schemas.webservices.miser.vbtp.VBTPRequest;
+import com.codegik.poc.cohesion.miser.tpsl.MiserXMLInput;
+import com.codegik.poc.cohesion.miser.vbtp.Transaction;
+import com.codegik.poc.cohesion.miser.vbtp.VBTPRequest;
+import com.codegik.poc.cohesion.webservices.CohesionConnect;
+import com.codegik.poc.cohesion.webservices.STran;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class App {
+@SpringBootApplication
+public class App implements CommandLineRunner {
+    private static Logger logger = LoggerFactory.getLogger(App.class);
 
-	public static void main(String[] args) throws MalformedURLException {
-		final URL url = new URL("http://localhost:8080/employeeservice?wsdl");
-		final CohesionConnect cohesionConnect = new CohesionConnect(url);
-		final STran sTran = new STran();
-		final MiserXMLInput miserXMLInput = new MiserXMLInput();
-		final VBTPRequest vbtpRequest = new VBTPRequest();
-		final Transaction transaction = new Transaction();
 
-		vbtpRequest.setTransaction(transaction);
-		sTran.setMiserXMLInput(miserXMLInput);
-		sTran.setVBTPRequest(vbtpRequest);
-		cohesionConnect.getCohesionConnectSoap().getHostReply(sTran);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 
+    public void run(String... args) {
+        try {
+            logger.info("Requesting Cohesion");
+            final URL url = new URL("http://localhost:8080/employeeservice?wsdl");
+            final CohesionConnect cohesionConnect = new CohesionConnect();
+            final STran sTran = new STran();
+            final MiserXMLInput miserXMLInput = new MiserXMLInput();
+            final VBTPRequest vbtpRequest = new VBTPRequest();
+            final Transaction transaction = new Transaction();
+
+            vbtpRequest.setTransaction(transaction);
+            sTran.setMiserXMLInput(miserXMLInput);
+            sTran.setVBTPRequest(vbtpRequest);
+            cohesionConnect.getCohesionConnectSoap().getHostReply(sTran);
+            logger.info("Success");
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
 }

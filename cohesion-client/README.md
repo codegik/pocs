@@ -1,6 +1,6 @@
-# Java Hash
+# Java Cohesion Client
 
-Creating hashes from json string.
+Acessing Cohesion API
 
 ## Run application
 ```commandline
