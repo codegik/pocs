@@ -10,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import static com.codegik.poc.java17.LCD.printNumber;
+import static com.codegik.poc.java17.TextBlocks.printTextBlock;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SUNDAY;
 
@@ -38,7 +40,14 @@ public class Java17Application implements CommandLineRunner {
 
 		logger.info("is work day? {}", patternMatch.isWorkDay(FRIDAY));
 		logger.info("is work day? {}", patternMatch.isWorkDay(SUNDAY));
-		logger.info("LCD print 123456789 -> {}", new LCD().printNumber("123456789"));
-		logger.info("LCD print 1103 -> {}", new LCD().printNumber("1103"));
+
+		logger.info("LCD print 123456789 -> {}", printNumber("123456789"));
+		logger.info("LCD print 1103 -> {}", printNumber("1103"));
+
+		logger.info("Text blocks -> {}", printTextBlock());
+
+		logger.info("Record data -> {}", new RecordData(35, "Inacio"));
+		logger.info("Record data -> {}", new RecordData());
+		logger.info("Record data -> {}", new RecordData(age: 32, name: "John"));
 	}
 }

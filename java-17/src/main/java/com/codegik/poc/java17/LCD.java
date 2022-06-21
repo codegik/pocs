@@ -1,25 +1,25 @@
 package com.codegik.poc.java17;
 
 public class LCD {
-    final private String[][] matrix = {
-            {"   ", "___", "___",  "    ",  "___", "   ", "___", "___", "___"},
-            {"  |", "__|",  "__|", "|__|",  "|__", "__|", " _|", "|_|", "|_|"},
-            {"  |", "|__",  "__|", "   |",  "__|", "|_|", "  |", "|_|", "__|"}
+    final static private String[][] matrix = {
+            {"", "   ", "___", "___",  "    ",  "___", "   ", "___", "___", "___"},
+            {"", "  |", "__|",  "__|", "|__|",  "|__", "__|", " _|", "|_|", "|_|"},
+            {"", "  |", "|__",  "__|", "   |",  "__|", "|_|", "  |", "|_|", "__|"}
     };
 
-    public String printNumber(String number) {
-        String result = "\n";
 
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < number.length(); j++) {
-                final int index = Integer.valueOf("" + number.charAt(j)) - 1;
-                if (index >= 0 && index < 9) {
-                    result += matrix[i][index] + "  ";
-                }
-            }
-            result += "\n";
+    public static String printNumber(String number) {
+        String line1 = "";
+        String line2 = "";
+        String line3 = "";
+
+        for (int i = 0; i < number.length(); i++) {
+            final int index = Integer.valueOf("" + number.charAt(i));
+            line1 += matrix[0][index] + "  ";
+            line2 += matrix[1][index] + "  ";
+            line3 += matrix[2][index] + "  ";
         }
 
-        return result;
+        return "\n" + line1 + "\n" + line2 + "\n" + line3;
     }
 }
