@@ -52,10 +52,13 @@ There are some limitations:
 - It is not possible to bind the properties to records (java 17), only to interfaces.
 - it is not possible to bind the properties into a multi hierarchy data structure, for example:
   - file `application.property`:
-    - some.setting = some setting string value
-    - some.other.setting = what do you know? :p
+  ```properties
+    some.setting = some setting string value
+    some.other.setting = what do you know? :p
+  ```
+
   - target interface:
-  - ```java
+  ```java
     public interface GitDefaultProperties {
     
         String setting();
@@ -66,4 +69,4 @@ There are some limitations:
             String setting();
         }
     }
-    ```
+  ```
