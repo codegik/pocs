@@ -11,7 +11,7 @@
 	<groupId>com.codegik.poc.h2</groupId>
 	<artifactId>h2-memory</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>h2-memory</name>
+	<name>java-h2-memory</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
