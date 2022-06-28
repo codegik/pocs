@@ -48,6 +48,6 @@ public class Java17Application implements CommandLineRunner {
 
 		logger.info("Record data -> {}", new RecordData(35, "Inacio"));
 		logger.info("Record data -> {}", new RecordData());
-		logger.info("Record data -> {}", new RecordData(age: 32, name: "John"));
+//		logger.info("Record data -> {}", new RecordData(age: 32, name: "John"));
 	}
 }
