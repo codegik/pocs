@@ -6,21 +6,37 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class App : CommandLineRunner {
-	fun rev(str: String): String {
-		val reversed: CharArray = CharArray(str.length)
 
-		for (i in str.length - 1 downTo 0) {
+	fun leftRotate(str: String, d: Int): String {
+		return str.substring(d) + str.substring(0, d)
+	}
+
+	/**
+	 * reversed = "q", i = 4
+	 * reversed = "%q", i = 3
+	 * reversed = "r%q", i = 2
+	 * reversed = "er%q", i = 1
+	 * reversed = "rew%q", i = 0
+ 	 */
+
+
+	fun rev(str: String): String {
+		var reversed = ""
+		for (i in 0..str.length - 1) {
 			if (str[i] in 'a'..'z') {
-				reversed[str.length - i - 2] = str[i]
+				reversed = str[i] + reversed
+			} else if (i == 0) {
+				reversed = str[i] + reversed
 			} else {
-				reversed[i] = str[i]
+				reversed = reversed.substring(0, i-1) + str[i] + reversed.substring(i-1)
 			}
 		}
-		return reversed.concatToString()
+
+		return reversed
 	}
 
 	override fun run(vararg args: String?) {
-		println(rev("qwer%"))
+		println(rev("qwe%r"))
 		println(rev("*wer%"))
 		println(rev("wer%tyui"))
 	}
