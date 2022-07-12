@@ -1,23 +1,283 @@
-# Read Me First
-The following was discovered as part of building this project:
+# Resilience4j POC
 
-* The original package name 'com.codegik.poc.java-resilience4j' is invalid and this project uses 'com.codegik.poc.javaresilience4j' instead.
+Testing resilience4j library features.
 
-# Getting Started
+## Requirements
+- Java 8
+- Maven 3
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## Circuit breaker
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.1/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.1/maven-plugin/reference/html/#build-image)
-* [Resilience4J](https://docs.spring.io/spring-cloud-circuitbreaker/docs/current/reference/html/#configuring-resilience4j-circuit-breakers)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.1/reference/htmlsingle/#web)
+There are two apps running, the product app and shop app.
+The shop app is requesting a service from product app.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+### Testing
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+The test scenario is:
+- starting two apps.
+- stopping product app.
+- starting product app again.
 
+I've created a custom header called `isCached` that contain value `true` when the product app is down or `false` when the product app is up.
+
+#### Run command
+`$ ./test.sh`
+
+#### Output sample
+```
+skipping build for product
+skipping build for shop
+product pid = 44703
+shop pid = 44705
+
+### trying number 1 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+### trying number 2 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+### trying number 3 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+### trying number 4 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:36:53 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 5 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:36:55 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### stopping product app ###
+
+### trying number 6 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:36:58 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 7 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:01 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 8 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:04 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 9 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:08 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 10 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:11 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### starting product app ###
+product pid = 44852
+
+### trying number 11 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:14 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 12 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:17 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 13 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:19 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 14 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:21 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+### trying number 15 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:37:23 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### test complete: stopping all apps ###
+
+  kotlin-resilience4j   master ?2 ❯ ./run.sh                                                                                                                                                 45s
+skipping build for product
+skipping build for shop
+product pid = 44946
+shop pid = 44948
+
+
+### trying number 1 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+
+### trying number 2 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+
+### trying number 3 ###
+curl: (7) Failed to connect to localhost port 9090: Connection refused
+
+
+### trying number 4 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:38:46 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 5 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:38:49 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### stopping product app ###
+
+
+### trying number 6 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:38:54 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 7 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:38:58 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 8 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:02 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 9 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:06 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 10 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:10 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### starting product app ###
+product pid = 45131
+
+
+### trying number 11 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:14 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 12 ###
+HTTP/1.1 200
+isCached: true
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:18 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 13 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:21 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 14 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:25 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### trying number 15 ###
+HTTP/1.1 200
+isCached: false
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 12 Jul 2022 12:39:28 GMT
+
+{"id":"1","products":[{"id":"1","name":"Table chair","width":30,"height":50},{"id":"2","name":"Outside chair","width":100,"height":80},{"id":"3","name":"Weird chair","width":100,"height":20}]}
+
+### test complete: stopping all apps ###
+```
