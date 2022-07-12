@@ -12,7 +12,9 @@
 	<artifactId>kotlin-github-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<kotlin.version>1.6.21</kotlin.version>
 	</properties>
 	<dependencies>
@@ -33,12 +35,6 @@
 			<groupId>com.spotify</groupId>
 			<artifactId>github-client</artifactId>
 			<version>0.1.39</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
