@@ -19,7 +19,7 @@ github:
 
 ## Running
 ```shell
-./run.sh <username> <accessToken>
+./run.sh <github username> <github accessToken>
 ```
 
 Output sample
