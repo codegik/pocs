@@ -10,20 +10,16 @@ Finding last week PRs from the user.
 ## Setup
 
 1. Go to github account and create a accessToken.
-2. Update `application.yml` file with your username, accessToken and repositories.
+2. Update `application.yml` file with your repositories.
 
 ```properties
 github:
-  uri: "https://github.tlcinternal.com/api/v3"
-  user: "put your username here"
-  accessToken: "put your accessToken here"
   repositories: LendingClub/batch-script-data, LendingClub/lc-bank-operations, Release/lc-bank-operations
 ```
 
 ## Running
 ```shell
-mvn clean install
-mvn spring-boot:run
+./run.sh <username> <accessToken>
 ```
 
 Output sample

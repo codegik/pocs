@@ -1,8 +1,4 @@
-server:
-  port: 8080
 
 github:
   uri: "https://github.tlcinternal.com/api/v3"
-  user: "put your username here"
-  accessToken: "put your accessToken here"
   repositories: LendingClub/batch-script-data, LendingClub/lc-bank-operations, Release/lc-bank-operations
