@@ -4,6 +4,8 @@ import com.codegik.poc.javaresilience4j.domain.Cart
 import com.codegik.poc.javaresilience4j.domain.Chair
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
+import io.github.resilience4j.retry.Retry
+import io.vavr.CheckedFunction0
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,7 +31,7 @@ class ShopController {
     private val cachedCart = mutableMapOf<String, Cart>()
 
 
-    @GetMapping
+    @GetMapping("/cart")
     fun getCartProducts(): ResponseEntity<Cart> {
         val circuitBreaker = circuitBreakerRegistry.circuitBreaker("productService", "productService")
 
@@ -52,5 +54,27 @@ class ShopController {
                 ok().headers { it.set("isCached", "false") }.build()
             }
         }.get()
+    }
+
+
+    @GetMapping("/default-cart")
+    fun getCartProductsRetry(): ResponseEntity<Cart> {
+        val retry: Retry = Retry.ofDefaults("id")
+        val retryableSupplier: CheckedFunction0<Cart> = Retry.decorateCheckedSupplier(retry) {
+            val response = restTemplate.getForEntity("/chair", Array<Chair>::class.java)
+
+            logger.info("Requesting external service")
+
+            Cart(id = "1", products = response.body!!)
+        }
+
+        retry.eventPublisher.onRetry {
+            logger.info("Requesting external service attempt ${it.numberOfRetryAttempts}")
+        }
+
+        return Try.of(retryableSupplier).recover {
+            logger.info("Requesting external service didn't worked, tried ${retry.retryConfig.maxAttempts} attempts, returning default cart")
+            Cart(id = "1")
+        }.map { ok().body(it) }.get()
     }
 }

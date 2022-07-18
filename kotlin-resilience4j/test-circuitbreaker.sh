@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SHOP_URL="http://localhost:9090/shop"
+SHOP_URL="http://localhost:9090/shop/cart"
 BASEDIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 if ls product/target/kotlin-resilience4j-product-*.jar 1> /dev/null 2>&1; then
