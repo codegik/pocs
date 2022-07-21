@@ -61,7 +61,7 @@ Finished task delay-task-10
 
 ## Code sample
 
-This sample is creating a TaskPool named as "custom-task-manager" and the max simultaneous tasks is 3.
+This sample is creating a TaskPool named as "custom-task-manager" and the max simultaneous tasks is 3, the other tasks will be queued.
 
 ```kotlin
 val taskPool = TaskPool("custom-task-manager", 3)
@@ -72,3 +72,5 @@ for (i in 1..10) {
 
 taskPool.waitToFinish()
 ```
+
+
