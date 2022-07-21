@@ -7,7 +7,7 @@ import kotlin.concurrent.withLock
 
 class TaskPool(private val name: String = "task-pool", private val maxSimultaneous: Int = 5) {
     private val threads = arrayListOf<SmartThread>()
-    private var aliveThreadCount = 0L
+    private var aliveThreadCount = 0
     private val lock = ReentrantLock()
 
 

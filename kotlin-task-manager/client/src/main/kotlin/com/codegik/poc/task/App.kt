@@ -1,11 +1,17 @@
 package com.codegik.poc.task
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.codegik.poc.task.pool.TaskPool
 
-@SpringBootApplication
 class App
 
 fun main(args: Array<String>) {
-	runApplication<App>(*args)
+
+	val taskPool = TaskPool("custom-task-manager", 3)
+
+
+	for (i in 1..10) {
+		taskPool.add(DelayTask(name = "delay-task-$i", 4000))
+	}
+
+	taskPool.waitToFinish()
 }
