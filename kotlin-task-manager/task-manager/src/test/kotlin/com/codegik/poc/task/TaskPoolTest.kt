@@ -46,5 +46,4 @@ class TaskPoolTest {
 
 		taskPool.waitToFinish()
 	}
-
 }
