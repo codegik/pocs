@@ -46,4 +46,16 @@ class TaskPoolTest {
 
 		taskPool.waitToFinish()
 	}
+
+
+	@Test
+	fun add1000Tasks() {
+		val taskPool = TaskPool(maxSimultaneous = 15)
+
+		for (i in 0..1000) {
+			taskPool.add(DelayTask("$i", 200))
+		}
+
+		taskPool.waitToFinish()
+	}
 }
