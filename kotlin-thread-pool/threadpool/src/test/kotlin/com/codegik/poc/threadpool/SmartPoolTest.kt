@@ -9,9 +9,9 @@ class SmartPoolTest {
 	fun add3Tasks() {
 		val smartPool = SmartPool()
 
-		smartPool.add(DelayTask("1", 10000))
-		smartPool.add(DelayTask("2", 4000))
-		smartPool.add(DelayTask("3", 1000))
+		smartPool.addTask(DelayTask("1", 10000))
+		smartPool.addTask(DelayTask("2", 4000))
+		smartPool.addTask(DelayTask("3", 1000))
 
 		smartPool.waitToFinish()
 	}
@@ -21,16 +21,16 @@ class SmartPoolTest {
 	fun add10Tasks() {
 		val smartPool = SmartPool()
 
-		smartPool.add(DelayTask("1", 10000))
-		smartPool.add(DelayTask("2", 4000))
-		smartPool.add(DelayTask("3", 1000))
-		smartPool.add(DelayTask("4", 1000))
-		smartPool.add(DelayTask("5", 20000))
-		smartPool.add(DelayTask("6", 1000))
-		smartPool.add(DelayTask("7", 1000))
-		smartPool.add(DelayTask("8", 1000))
-		smartPool.add(DelayTask("9", 1000))
-		smartPool.add(DelayTask("10", 500))
+		smartPool.addTask(DelayTask("1", 10000))
+		smartPool.addTask(DelayTask("2", 4000))
+		smartPool.addTask(DelayTask("3", 1000))
+		smartPool.addTask(DelayTask("4", 1000))
+		smartPool.addTask(DelayTask("5", 20000))
+		smartPool.addTask(DelayTask("6", 1000))
+		smartPool.addTask(DelayTask("7", 1000))
+		smartPool.addTask(DelayTask("8", 1000))
+		smartPool.addTask(DelayTask("9", 1000))
+		smartPool.addTask(DelayTask("10", 500))
 
 		smartPool.waitToFinish()
 	}
@@ -41,7 +41,7 @@ class SmartPoolTest {
 		val smartPool = SmartPool()
 
 		for (i in 0..50) {
-			smartPool.add(DelayTask("$i", 500))
+			smartPool.addTask(DelayTask("$i", 500))
 		}
 
 		smartPool.waitToFinish()
@@ -53,7 +53,7 @@ class SmartPoolTest {
 		val smartPool = SmartPool(maxSimultaneous = 15)
 
 		for (i in 0..1000) {
-			smartPool.add(DelayTask("$i", 200))
+			smartPool.addTask(DelayTask("$i", 200))
 		}
 
 		smartPool.waitToFinish()

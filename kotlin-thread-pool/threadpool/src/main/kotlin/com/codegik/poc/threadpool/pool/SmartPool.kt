@@ -12,16 +12,16 @@ class SmartPool(private val name: String = "smart-pool", private val maxSimultan
     private val startedAt = System.currentTimeMillis()
 
 
-    fun add(task: Task) {
+    fun addTask(task: Task) {
         val thread = SmartThread(task, this)
         threads.add(thread)
 
         if (aliveThreadCount < maxSimultaneous) {
             aliveThreadCount++
-            println("[$name] Added task ${thread.name}")
+            println("[$name] Added task ${task.name()}")
             thread.start()
         } else {
-            println("[$name] Queued task ${thread.name}")
+            println("[$name] Queued task ${task.name()}")
         }
     }
 

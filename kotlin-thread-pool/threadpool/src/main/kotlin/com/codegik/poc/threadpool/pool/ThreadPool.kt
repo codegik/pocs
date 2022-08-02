@@ -45,7 +45,9 @@ class ThreadPool(private val name: String = "thread-pool", size: Int = 5) {
     fun waitToFinish(): Long {
         while (threads.isNotEmpty()) {
             lock.withLock {
-                threads.forEach { it.value.stopLookingForTasks() }
+                if (tasks.isEmpty()) {
+                    threads.forEach { it.value.stopLookingForTasks() }
+                }
             }
             Thread.sleep(1)
         }
