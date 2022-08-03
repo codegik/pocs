@@ -9,11 +9,7 @@ class ReusableThread(threadName: String = "reusable-thread", private val threadP
     override fun run() {
         while (lookingForTasks) {
             threadPool.findQueuedTask().let { task ->
-                if (task != null) {
-                    println("[$name] Started task ${task.name()}")
-                    task.execute()
-                    println("[$name] Finished task ${task.name()}")
-                }
+                task?.let {it.execute() }
             }
         }
 

@@ -5,14 +5,17 @@ import com.codegik.poc.threadpool.thread.ReusableThread
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-class ThreadPool(private val name: String = "thread-pool", size: Int = 5) {
+class ThreadPool(
+    private val name: String = "thread-pool",
+    private val maxSimultaneous: Int = 5
+) {
     private val threads = mutableMapOf<Long, ReusableThread>()
     private val tasks = mutableSetOf<Task>()
     private val lock = ReentrantLock()
     private val startedAt = System.currentTimeMillis()
 
     init {
-        for (i in 1..size) {
+        for (i in 1..maxSimultaneous) {
             val thread = ReusableThread("reusable-thread-$i", this)
             threads[thread.id] = thread
             threads[thread.id]!!.start()
@@ -22,7 +25,6 @@ class ThreadPool(private val name: String = "thread-pool", size: Int = 5) {
 
     fun addTask(task: Task) {
         tasks.add(task)
-        println("[$name] Queued task ${task.name()}")
     }
 
 
@@ -52,9 +54,6 @@ class ThreadPool(private val name: String = "thread-pool", size: Int = 5) {
             Thread.sleep(1)
         }
 
-        val took = System.currentTimeMillis() - startedAt
-        println("[$name] took $took to finish")
-
-        return took
+        return System.currentTimeMillis() - startedAt
     }
 }

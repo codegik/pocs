@@ -5,8 +5,11 @@ import com.codegik.poc.threadpool.thread.SmartThread
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-class SmartPool(private val name: String = "smart-pool", private val maxSimultaneous: Int = 5) {
-    private val threads = arrayListOf<SmartThread>()
+class SmartPool(
+    private val name: String = "smart-pool",
+    private val maxSimultaneous: Int = 5
+) {
+    private val threads = mutableSetOf<SmartThread>()
     private var aliveThreadCount = 0
     private val lock = ReentrantLock()
     private val startedAt = System.currentTimeMillis()
@@ -18,10 +21,7 @@ class SmartPool(private val name: String = "smart-pool", private val maxSimultan
 
         if (aliveThreadCount < maxSimultaneous) {
             aliveThreadCount++
-            println("[$name] Added task ${task.name()}")
             thread.start()
-        } else {
-            println("[$name] Queued task ${task.name()}")
         }
     }
 
@@ -39,13 +39,10 @@ class SmartPool(private val name: String = "smart-pool", private val maxSimultan
 
 
     fun waitToFinish(): Long {
-        while (threads.size > 0) {
+        while (threads.isNotEmpty()) {
             Thread.sleep(1)
         }
 
-        val took = System.currentTimeMillis() - startedAt
-        println("[$name] took $took to finish")
-
-        return took
+        return System.currentTimeMillis() - startedAt
     }
 }
