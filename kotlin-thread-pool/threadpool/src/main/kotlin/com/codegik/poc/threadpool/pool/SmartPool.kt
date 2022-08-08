@@ -2,22 +2,20 @@ package com.codegik.poc.threadpool.pool
 
 import com.codegik.poc.threadpool.Task
 import com.codegik.poc.threadpool.thread.SmartThread
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentSkipListMap
 
 class SmartPool(
-    private val name: String = "smart-pool",
     private val maxSimultaneous: Int = 5
 ) {
-    private val threads = mutableSetOf<SmartThread>()
+    private val threads = ConcurrentSkipListMap<String, SmartThread>()
     private var aliveThreadCount = 0
-    private val lock = ReentrantLock()
     private val startedAt = System.currentTimeMillis()
 
 
     fun addTask(task: Task) {
         val thread = SmartThread(task, this)
-        threads.add(thread)
+        threads[thread.name] = thread
 
         if (aliveThreadCount < maxSimultaneous) {
             aliveThreadCount++
@@ -27,14 +25,17 @@ class SmartPool(
 
 
     fun remove(smartThread: SmartThread) {
-        lock.withLock {
-            threads.remove(smartThread)
+            threads.remove(smartThread.name)
             aliveThreadCount--
 
             if (aliveThreadCount < maxSimultaneous) {
-                threads.firstOrNull { !it.isAlive || it.isInterrupted }?.start()
+                threads.forEach {
+                    if (it.value.state == Thread.State.NEW && !it.value.isAlive) {
+                        it.value.start()
+                        return
+                    }
+                }
             }
-        }
     }
 
 

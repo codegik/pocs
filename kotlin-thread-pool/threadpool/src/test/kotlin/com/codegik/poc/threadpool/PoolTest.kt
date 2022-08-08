@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class PoolTest {
 
-	private val repeatTaskCreation = 30
+	private val repeatTaskCreation = 3000
 	private val timeOutList = listOf(
 		10000L, 4000L, 1000L, 200L, 200L, 100L, 100L, 100L, 100L, 50L,
 		5L, 50L, 4000L, 50L, 50L, 1000L, 50L, 50L, 5L, 10000L
@@ -14,9 +14,8 @@ class PoolTest {
 
 
 	@Test
-
 	fun smartPoolRunTasks() {
-		val smartPool = SmartPool()
+		val smartPool = SmartPool(1000)
 		var taskCount = 0
 
 		for (i in 0..repeatTaskCreation) {
@@ -33,7 +32,7 @@ class PoolTest {
 
 	@Test
 	fun threadPoolRunTasks() {
-		val threadPool = ThreadPool()
+		val threadPool = ThreadPool(1000)
 		var taskCount = 0
 
 		for (i in 0..repeatTaskCreation) {

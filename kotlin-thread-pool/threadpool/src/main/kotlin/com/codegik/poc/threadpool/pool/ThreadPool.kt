@@ -2,16 +2,14 @@ package com.codegik.poc.threadpool.pool
 
 import com.codegik.poc.threadpool.Task
 import com.codegik.poc.threadpool.thread.ReusableThread
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentSkipListMap
 
 class ThreadPool(
-    private val name: String = "thread-pool",
     private val maxSimultaneous: Int = 5
 ) {
-    private val threads = mutableMapOf<Long, ReusableThread>()
-    private val tasks = mutableSetOf<Task>()
-    private val lock = ReentrantLock()
+    private val threads = ConcurrentHashMap<Long, ReusableThread>()
+    private val tasks = ConcurrentSkipListMap<String, Task>()
     private val startedAt = System.currentTimeMillis()
 
     init {
@@ -24,32 +22,24 @@ class ThreadPool(
 
 
     fun addTask(task: Task) {
-        tasks.add(task)
+        tasks[task.name()] = task
     }
 
 
     fun removeThread(reusableThread: ReusableThread) {
-        lock.withLock {
-            threads.remove(reusableThread.id)
-        }
+        threads.remove(reusableThread.id)
     }
 
 
     fun findQueuedTask(): Task? {
-        lock.withLock {
-            val task = tasks.firstOrNull()
-            tasks.remove(task)
-            return task
-        }
+        return tasks.pollFirstEntry()?.value
     }
 
 
     fun waitToFinish(): Long {
         while (threads.isNotEmpty()) {
-            lock.withLock {
-                if (tasks.isEmpty()) {
-                    threads.forEach { it.value.stopLookingForTasks() }
-                }
+            if (tasks.isEmpty()) {
+                threads.forEach { it.value.stopLookingForTasks() }
             }
             Thread.sleep(1)
         }
