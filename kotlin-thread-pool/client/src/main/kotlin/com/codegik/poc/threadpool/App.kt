@@ -1,6 +1,7 @@
 package com.codegik.poc.threadpool
 
 import com.codegik.poc.threadpool.pool.ThreadPool
+import com.codegik.poc.threadpool.task.DelayTask
 
 class App
 

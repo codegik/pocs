@@ -1,4 +1,4 @@
-package com.codegik.poc.threadpool
+package com.codegik.poc.threadpool.task
 
 class DelayTask(private val name: String = "delay-task", private val timeout: Long = 5000) : Task {
 
