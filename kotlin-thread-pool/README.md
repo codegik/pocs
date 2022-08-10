@@ -17,12 +17,12 @@ mvn clean install
 
 ## Code sample
 
-This sample is creating a TaskPool named as "custom-task-manager" and the max simultaneous tasks is 3, the other tasks will be queued.
+This sample is creating a TaskPool and the max simultaneous tasks is 10, the other tasks will be queued.
 
 ```kotlin
-val threadPool = ThreadPool(1000)
+val threadPool = ThreadPool(10)
 
-for (i in 1..10) {
+for (i in 1..1000) {
     threadPool.addTask(DelayTask("delay-task-$i", 4000))
 }
 
