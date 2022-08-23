@@ -1,27 +1,29 @@
 
-class Solution:
-    def solve(self, input_text, input_dict):
+class Dictionary:
+    def replace(self, input_text, input_dict):
         buffer = ""
-        result = ""
+        result = input_text
+        startIndex = 0
+        endIndex = 0
 
-        for c in input_text:
+        for i, c in enumerate(input_text):
             if (c == "$"):
                 buffer = c
+                startIndex = i
             elif len(buffer) > 0:
-                if c == "$" or c == " ":
+                if c == "$" or c == " " or len(input_text) == i + 1:
                     if buffer in input_dict:
                         value = input_dict.get(buffer)
-                        result = result.replace(buffer, value)
+                        result = result[:startIndex] + value + result[i:]
+                    print(buffer)
                     buffer = ""
                 else:
                     buffer += c
 
-            print(buffer)
         return result
 
 def main():
-    print("Hello World!")
-    print(Solution().solve("My $name$is $name $lastname", {"$name": "Inacio", "$lastname": "Klassmann"}))
+    print(Dictionary().replace("My $name$is $name $lastname", {"$name": "Inacio", "$lastname": "Klassmann"}))
 
 if __name__ == "__main__":
     main()
