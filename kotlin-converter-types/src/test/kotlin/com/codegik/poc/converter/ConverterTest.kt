@@ -23,9 +23,10 @@ class ConverterTest {
 	fun convertPersonToFriend() {
 		val converter = PersonConverter()
 		val person = Person("Inacio", 38)
-		val friend = Friend("Inacio", 38)
+		val friend = converter.from(person)
 
-		assertEquals(friend, converter.from(person))
+		assertEquals(friend.name, person.name)
+		assertEquals(friend.age, person.age)
 	}
 
 
@@ -37,7 +38,7 @@ class ConverterTest {
 			Person("Gomes", 21),
 			Person("Klassmann", 66))
 
-		converter.fromList(personList).onEach {
+		converter.from(personList).onEach {
 			println(it)
 		}
 	}
