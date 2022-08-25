@@ -4,6 +4,10 @@ This is a Converter Types library where you can convert complex types.
 
 The `Converter` interface is responsible to define the operations.
 
+## Requirements
+- Java 17
+- Maven 3
+
 ## Compiling and Running
 
 ```

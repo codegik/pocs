@@ -1,6 +1,5 @@
 package com.codegik.poc.converter
 
-import com.codegik.poc.converter.domain.Friend
 import com.codegik.poc.converter.domain.Person
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal

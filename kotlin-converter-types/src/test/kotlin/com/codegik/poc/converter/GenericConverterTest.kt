@@ -7,21 +7,35 @@ import kotlin.test.assertEquals
 
 class GenericConverterTest {
 
+	private val converter = GenericConverter()
 
 	@Test
-	fun convertGeneric() {
-		val converter = GenericConverter()
-		val person1 = Person("Inacio", 38)
-		val friend1 = converter.from(person1).to(Friend::class.java)
+	fun personToFriend() {
+		val person = Person("Inacio", 38)
+		val friend = converter.from(person).to(Friend::class.java)
 
-		assertEquals(person1.name, friend1.name)
-		assertEquals(person1.age, friend1.age)
+		assertEquals(person.name, friend.name)
+		assertEquals(person.age, friend.age)
+		assertEquals(person.address, friend.email)
+	}
 
-		val friend2 = Friend("Diego", 55, "email@gmail.com")
-		val person2 = converter.from(friend2).to(Person::class.java)
+	@Test
+	fun friendToPerson() {
+		val friend = Friend("Diego", 55, "email@gmail.com")
+		val person = converter.from(friend).to(Person::class.java)
 
-		assertEquals(person2.name, friend2.name)
-		assertEquals(person2.age, friend2.age)
-		assertEquals("email@gmail.com", friend2.email)
+		assertEquals(person.name, friend.name)
+		assertEquals(person.age, friend.age)
+		assertEquals("email@gmail.com", friend.email)
+	}
+
+	@Test
+	fun friendToFriend() {
+		val friend = Friend("Diego", 55, "email@gmail.com")
+		val friendClone = converter.from(friend).to(Friend::class.java)
+
+		assertEquals(friendClone.name, friend.name)
+		assertEquals(friendClone.age, friend.age)
+		assertEquals(friendClone.email, friend.email)
 	}
 }
