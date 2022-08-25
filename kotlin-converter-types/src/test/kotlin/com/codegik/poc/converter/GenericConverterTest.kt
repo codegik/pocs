@@ -1,6 +1,7 @@
 package com.codegik.poc.converter
 
 import com.codegik.poc.converter.domain.Friend
+import com.codegik.poc.converter.domain.Neighbor
 import com.codegik.poc.converter.domain.Person
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -37,5 +38,14 @@ class GenericConverterTest {
 		assertEquals(friendClone.name, friend.name)
 		assertEquals(friendClone.age, friend.age)
 		assertEquals(friendClone.email, friend.email)
+	}
+
+	@Test
+	fun neighborToFriend() {
+		val neighbor = Neighbor("Diego", "Jump", "email@gmail.com")
+		val friend = converter.from(neighbor).to(Friend::class.java)
+
+		assertEquals(neighbor.name, friend.name)
+		assertEquals(neighbor.aim, friend.email)
 	}
 }

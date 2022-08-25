@@ -20,7 +20,8 @@ class GenericConverter(val cache: Map<Class<*>, Array<Field>> = mutableMapOf()) 
             args.addAll(
                 klass.declaredFields.map { klassField ->
                     from::class.memberProperties.firstOrNull { fromField ->
-                        klassField.name == fromField.name || klassField.name == fromField.findAnnotation<Alias>()?.name
+                        klassField.name == fromField.name ||
+                        klassField.name == fromField.findAnnotation<Alias>()?.name
                     }
                         ?.getter
                         ?.call(from)
