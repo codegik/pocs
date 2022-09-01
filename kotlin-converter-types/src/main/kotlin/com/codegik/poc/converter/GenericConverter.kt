@@ -1,24 +1,23 @@
 package com.codegik.poc.converter
 
 import com.codegik.poc.converter.annotation.Alias
-import java.lang.reflect.Field
+import com.codegik.poc.converter.cache.ReflectionCache
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 
-class GenericConverter(val cache: Map<Class<*>, Array<Field>> = mutableMapOf()) {
+class GenericConverter(private val cache: ReflectionCache = ReflectionCache()) {
 
     fun from(from: Any): Convert {
         return Convert(from)
     }
 
-
-    class Convert(private val from: Any) {
+    inner class Convert(private val from: Any) {
         fun <T> to(klass: Class<T>): T {
-            val constructor = klass.constructors.first()
+            val constructor = cache.constructor(klass)
             val args = mutableListOf<Any?>()
 
             args.addAll(
-                klass.declaredFields.map { klassField ->
+                cache.declaredFields(klass).map { klassField ->
                     from::class.memberProperties.firstOrNull { fromField ->
                         klassField.name == fromField.name ||
                         klassField.name == fromField.findAnnotation<Alias>()?.name
