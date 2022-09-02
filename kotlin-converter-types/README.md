@@ -11,7 +11,7 @@ The `Converter` interface is responsible to define the operations.
 ## Compiling and Running
 
 ```
-mvn clean install
+./mvnw clean install
 ```
 
 

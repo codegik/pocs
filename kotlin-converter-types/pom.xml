@@ -98,6 +98,11 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M6</version>
+				<configuration>
+					<argLine>
+						--add-opens java.base/java.lang=ALL-UNNAMED
+					</argLine>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

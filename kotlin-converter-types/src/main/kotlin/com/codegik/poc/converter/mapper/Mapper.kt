@@ -15,28 +15,28 @@ import kotlin.reflect.full.memberProperties
 
 class Mapper(private val originClass: KClass<*>, private val targetClass: KClass<*>) {
 
-    fun name(): String {
+    fun simpleClassName(): String {
         return "${originClass.simpleName}_to_${targetClass.simpleName}"
     }
 
-    fun  generate(): Any {
-        val className = "com.codegik.poc.converter.mapper.${name()}"
+    fun newInstance(): Any {
+        val fullClassName = "com.codegik.poc.converter.mapper.${simpleClassName()}"
 
         return try {
-            Class.forName(className)
+            Class.forName(fullClassName)
         } catch (e: ClassNotFoundException) {
-            buildClass(className)
+            buildClass(fullClassName)
         }.getDeclaredConstructor().newInstance()
     }
 
 
-    fun  buildClass(className: String): Class<*> {
+    fun buildClass(className: String): Class<*> {
         val pool: ClassPool = ClassPool.getDefault()
         pool.appendClassPath(LoaderClassPath(this::class.java.classLoader))
         pool.importPackage("com.codegik.poc.converter")
 
         val klass: CtClass = pool.makeClass(className)
-        klass.addConstructor(CtNewConstructor.make("public ${name()} () {}", klass))
+        klass.addConstructor(CtNewConstructor.make("public ${simpleClassName()} () {}", klass))
         klass.addMethod(buildConvertMethod(klass))
         klass.modifiers = Modifier.PUBLIC
 

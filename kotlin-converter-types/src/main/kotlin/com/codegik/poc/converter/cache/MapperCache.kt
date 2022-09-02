@@ -7,8 +7,8 @@ class MapperCache(
 ) {
 
     fun add(mapper: Mapper): Any {
-        return mapperCache.getOrPut(mapper.name()) {
-            mapper.generate()
+        return mapperCache.getOrPut(mapper.simpleClassName()) {
+            mapper.newInstance()
         }
     }
 }
