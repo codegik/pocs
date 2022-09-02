@@ -19,30 +19,28 @@ class Mapper(private val originClass: KClass<*>, private val targetClass: KClass
         return "${originClass.simpleName}_to_${targetClass.simpleName}"
     }
 
-    fun generate(): Class<*> {
-        val className: String = "com.codegik.poc.converter.mapper.${name()}"
+    fun  generate(): Any {
+        val className = "com.codegik.poc.converter.mapper.${name()}"
 
         return try {
             Class.forName(className)
         } catch (e: ClassNotFoundException) {
             buildClass(className)
-        }
+        }.getDeclaredConstructor().newInstance()
     }
 
 
-    fun buildClass(className: String): Class<*> {
+    fun  buildClass(className: String): Class<*> {
         val pool: ClassPool = ClassPool.getDefault()
-
         pool.appendClassPath(LoaderClassPath(this::class.java.classLoader))
         pool.importPackage("com.codegik.poc.converter")
 
         val klass: CtClass = pool.makeClass(className)
-
         klass.addConstructor(CtNewConstructor.make("public ${name()} () {}", klass))
         klass.addMethod(buildConvertMethod(klass))
         klass.modifiers = Modifier.PUBLIC
 
-        return Class.forName(className)
+        return klass.toClass()
     }
 
 

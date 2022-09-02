@@ -12,11 +12,9 @@ class GikConverter(private val cache: MapperCache = MapperCache()) {
 
 
     inner class GikConvert(private val from: Any) {
-
-        fun <T : Any> to(klass: KClass<T>): String {
-            val mapper = cache.map(Mapper(from::class, klass))
-            val result = mapper.generate()
-            return "d"
+        fun <T : Any> to(klass: KClass<T>): T {
+            val instance = cache.add(Mapper(from::class, klass)) as T
+            return instance.javaClass.declaredMethods.first().invoke(instance, from) as T
         }
     }
 }
