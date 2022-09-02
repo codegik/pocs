@@ -12,7 +12,7 @@ class GikConverterTest {
 	@Test
 	fun neighborToFriend() {
 		val neighbor = Neighbor("Diego", "Jump", "email@gmail.com")
-		val friend = converter.from(neighbor).to(Friend::class.java)
+		val friend = converter.from(neighbor).to(Friend::class)
 
 	}
 }

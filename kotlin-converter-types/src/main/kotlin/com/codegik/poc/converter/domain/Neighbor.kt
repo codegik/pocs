@@ -2,8 +2,8 @@ package com.codegik.poc.converter.domain
 
 import com.codegik.poc.converter.annotation.Alias
 
-data class Neighbor(
-    val name: String,
-    val lastName: String? = null,
+class Neighbor(
+    var name: String? = null,
+    var lastName: String? = null,
     @Alias("email")
-    val aim: String? = null)
+    var aim: String? = null)

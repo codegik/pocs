@@ -15,20 +15,27 @@ mvn clean install
 ```
 
 
-## Code sample
+## GenericConverter
 
-This sample is converting list of Person to list of Friend type.
+This sample is converting a Person to Friend type.
 
 ```kotlin
-val converter = PersonConverter()
-val personList = listOf(
-    Person("Inacio", 38),
-    Person("Gomes", 21),
-    Person("Klassmann", 66))
+val person = Person("Inacio", 38)
+val friend = converter.from(person).to(Friend::class.java)
 
-converter.fromList(personList).onEach {
-    println(it)
-}
+assertEquals(person.name, friend.name)
+assertEquals(person.age, friend.age)
+assertEquals(person.address, friend.email)
 ```
 
+## GikConverter
+
+This is a smart converter that create the converter class on runtime and cache the same.
+
+### Requirement
+
+To enable this feature, its necessary add jvm parameter as below.
+```
+--add-opens java.base/java.lang=ALL-UNNAMED
+```
 

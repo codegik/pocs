@@ -2,8 +2,8 @@ package com.codegik.poc.converter.domain
 
 import com.codegik.poc.converter.annotation.Alias
 
-data class Person(
-    val name: String,
-    val age: Int,
+class Person(
+    var name: String? = null,
+    var age: Int? = null,
     @Alias("email")
-    val address: String? = null)
+    var address: String? = null)
