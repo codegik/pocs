@@ -1,6 +1,6 @@
 package com.codegik.poc.converter.domain
 
 class Friend(
-    public var name: String? = null,
-    public var age: Int? = null,
-    public var email: String? = null)
+    var name: String? = null,
+    var age: Int? = null,
+    var email: String? = null)
