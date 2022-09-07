@@ -34,6 +34,8 @@ class GikConverterTest {
 		assertEquals(person2.age, friend2.age)
 		assertEquals(person2.address, friend2.email)
 
+		println("cache size ${converter.cache.size()}")
+
 	}
 
 
@@ -52,5 +54,6 @@ class GikConverterTest {
 		}
 
 		println("GenericConverter took ${System.currentTimeMillis() - startedAt}ms")
+		println("cache size ${converter.cache.size()}")
 	}
 }
