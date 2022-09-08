@@ -24,16 +24,14 @@ class PerformanceConverterTest {
     }
 
     @Test
-    fun testConvert100M() {
-        process(100 * 1000 * 1000)
+    fun testConvert20M() {
+        process(20 * 1000 * 1000)
     }
-
 
     @Test
-    fun testConvert1B() {
-        process(1000 * 1000 * 1000)
+    fun testConvert30M() {
+        process(30 * 1000 * 1000)
     }
-
 
 
     private fun process(maxLoop: Long) {
