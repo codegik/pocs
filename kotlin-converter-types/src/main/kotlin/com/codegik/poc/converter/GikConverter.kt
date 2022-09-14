@@ -13,8 +13,8 @@ class GikConverter(val cache: MapperCache = MapperCache()) {
 
     inner class GikConvert(private val from: Any) {
         fun <T : Any> to(klass: KClass<T>): T {
-            val instance = cache.add(Mapper(from::class, klass))
-            return instance.javaClass.declaredMethods.first().invoke(instance, from) as T
+            val runtimeConverter = cache.add(Mapper(from::class, klass))
+            return runtimeConverter.javaClass.declaredMethods.first().invoke(runtimeConverter, from) as T
         }
     }
 }

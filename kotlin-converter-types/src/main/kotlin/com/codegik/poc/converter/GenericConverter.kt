@@ -18,8 +18,8 @@ class GenericConverter(val cache: ReflectionCache = ReflectionCache()) {
             val constructor = cache.constructor(klass)
             val instance = constructor.newInstance() as T
 
-            cache.declaredFields(instance!!::class).map { targetField ->
-                from::class.memberProperties.firstOrNull { originField ->
+            cache.memberProperties(instance!!::class).map { targetField ->
+                cache.memberProperties(from::class).firstOrNull { originField ->
                     targetField.name == originField.name ||
                     targetField.name == originField.findAnnotation<Alias>()?.name ||
                     originField.name == targetField.findAnnotation<Alias>()?.name
