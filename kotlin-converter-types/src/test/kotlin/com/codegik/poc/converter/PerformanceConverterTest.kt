@@ -43,9 +43,8 @@ class PerformanceConverterTest {
     }
 
 
-    private fun runGikConverter(maxLoop: Long) {
+    private fun runGikConverter(maxLoop: Long, gikConverter: GikConverter = GikConverter()) {
         val startedAt = System.currentTimeMillis()
-        val gikConverter = GikConverter()
 
         for (i in 0..maxLoop) {
             val neighbor = Neighbor(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString())
@@ -61,9 +60,8 @@ class PerformanceConverterTest {
     }
 
 
-    private fun runGenericConverter(maxLoop: Long) {
+    private fun runGenericConverter(maxLoop: Long, genericConverter: GenericConverter = GenericConverter()) {
         val startedAt = System.currentTimeMillis()
-        val genericConverter = GenericConverter()
 
         for (i in 0..maxLoop) {
             val neighbor = Neighbor(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString())
@@ -79,9 +77,8 @@ class PerformanceConverterTest {
     }
 
 
-    private fun runUnsafeConverter(maxLoop: Long) {
+    private fun runUnsafeConverter(maxLoop: Long, unsafeConverter: UnsafeConverter = UnsafeConverter()) {
         val startedAt = System.currentTimeMillis()
-        val unsafeConverter = UnsafeConverter()
 
         for (i in 0..maxLoop) {
             val neighbor = Neighbor(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString())

@@ -15,19 +15,6 @@ The `Converter` interface is responsible to define the operations.
 ```
 
 
-## GenericConverter
-
-This sample is converting a Person to Friend type.
-
-```kotlin
-val person = Person("Inacio", 38, "me@mail.com")
-val friend = converter.from(person).to(Friend::class.java)
-
-assertEquals(person.name, friend.name)
-assertEquals(person.age, friend.age)
-assertEquals(person.address, friend.email)
-```
-
 ## GikConverter
 
 This is a smart converter that create the converter class on runtime and cache the same.
@@ -41,6 +28,7 @@ To enable this feature, its necessary add jvm parameter as below.
 
 This sample is converting a Person to Friend type.
 ```kotlin
+val converter = GikConverter()
 val friend = Friend(name = "Joana", age = 23, email = "nomail")
 val person = converter.from(friend).to(Person::class)
 
@@ -50,15 +38,48 @@ assertEquals(person.address, friend.email)
 ```
 
 
+## GenericConverter
+
+This sample is converting a Person to Friend type using reflections and cache.
+
+```kotlin
+val converter = GenericConverter()
+val person = Person("Inacio", 38, "me@mail.com")
+val friend = converter.from(person).to(Friend::class.java)
+
+assertEquals(person.name, friend.name)
+assertEquals(person.age, friend.age)
+assertEquals(person.address, friend.email)
+```
+
+
+## UnsafeConverter
+
+This sample is converting a Person to Friend type using reflections, Unsafe and cache.
+
+```kotlin
+val converter = UnsafeConverter()
+val person = Person("Inacio", 38, "me@mail.com")
+val friend = converter.from(person).to(Friend::class.java)
+
+assertEquals(person.name, friend.name)
+assertEquals(person.age, friend.age)
+assertEquals(person.address, friend.email)
+```
+
 ## Performance
 
 The performance test is available on `PerformanceConverterTest` class.
 
-Doing a comparison between two converter solutions we can observe the gain of `GikConverter` against `GenericConverter`:
+Doing a comparison between three converter solutions we can observe the time in milliseconds that took to process records:
 
-| Records | GikConverter (ms) | GenericConverter (ms) |  Gain  |
-|:-------:|:-----------------:|:---------:|:------:|
-|   1M    |       2574        |   3136    | 17,93% |
-|   10M   |       13673       |   27696   | 50,64% |
-|   20M   |       27045       |   54883   | 50,73% |
-|   30M   |       40558       |   82027   | 50,56% |
+
+| Records | GikConverter (ms) | GenericConverter (ms) | UnsafeConverter (ms) |
+|:-------:|:-----------------:|:---------------------:|:----------:|
+|   1M    |       2872        |         2047          |    2130    |
+|   2M    |       2769        |         3786          |    3844    |
+|   3M    |       3994        |         5471          |    5761    |
+|   10M   |       13132       |         17882         |    19338    |
+|   30M   |       39302       |         53535         |    57415    |
+
+
