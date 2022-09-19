@@ -3,6 +3,7 @@
 ## Requirements
 - Java 17
 - Maven 3
+- Toxiproxy Server
 
 ## Mysql proxy
 
