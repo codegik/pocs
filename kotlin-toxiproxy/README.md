@@ -16,7 +16,7 @@ $ toxiproxy-server
 $ mvn compile exec:java
 ```
 
-### Stop the container
+### Stop the container and toxiproxy server
 ```
 $ docker stop mysql
 $ killall toxiproxy-server
