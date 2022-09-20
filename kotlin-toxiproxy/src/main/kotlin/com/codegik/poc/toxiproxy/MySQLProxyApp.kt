@@ -14,7 +14,7 @@ fun main() {
     val connection = mysqlConnection()
     connection.createStatement().executeQuery("select 1")
     connection.close()
-    println("Without toxic Took ${System.currentTimeMillis() - startedAt}ms")
+    println("The first MySQL connection without toxic Took ${System.currentTimeMillis() - startedAt}ms")
 
     proxy.toxics().latency("my-latency-toxic", DOWNSTREAM, 1000).jitter = 15
 
@@ -22,7 +22,7 @@ fun main() {
     val connection2 = mysqlConnection()
     connection2.createStatement().executeQuery("select 1")
     connection2.close()
-    println("With toxic Took ${System.currentTimeMillis() - startedAt}ms")
+    println("The second MySQL connection with toxic Took ${System.currentTimeMillis() - startedAt}ms")
 
     exitProcess(1)
 }
