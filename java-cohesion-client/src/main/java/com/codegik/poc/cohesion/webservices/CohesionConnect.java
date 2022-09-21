@@ -1,14 +1,13 @@
 
 package com.codegik.poc.cohesion.webservices;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
+import java.net.URL;
 
 
 /**
@@ -17,7 +16,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CohesionConnect", targetNamespace = "http://fidelityifs.com/webservices", wsdlLocation = "file:/Users/iklassman/sources/pocs/cohesion-client/src/main/resources/service.wsdl")
+@WebServiceClient(name = "CohesionConnect", targetNamespace = "http://fidelityifs.com/webservices", wsdlLocation = "service.wsdl")
 public class CohesionConnect
     extends Service
 {
@@ -30,8 +29,8 @@ public class CohesionConnect
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/iklassman/sources/pocs/cohesion-client/src/main/resources/service.wsdl");
-        } catch (MalformedURLException ex) {
+            url = CohesionConnect.class.getClassLoader().getResource("service.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         COHESIONCONNECT_WSDL_LOCATION = url;

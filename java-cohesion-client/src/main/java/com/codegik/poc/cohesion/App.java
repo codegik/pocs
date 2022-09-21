@@ -25,7 +25,7 @@ public class App implements CommandLineRunner {
     public void run(String... args) {
         try {
             logger.info("Requesting Cohesion");
-            final URL url = new URL("http://localhost:8080/employeeservice?wsdl");
+            final URL url = new URL("https://cohesion2.fisglobal.com/");
             final CohesionConnect cohesionConnect = new CohesionConnect();
             final STran sTran = new STran();
             final MiserXMLInput miserXMLInput = new MiserXMLInput();
