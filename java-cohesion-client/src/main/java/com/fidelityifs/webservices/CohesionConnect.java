@@ -1,13 +1,14 @@
 
-package com.codegik.poc.cohesion.webservices;
+package com.fidelityifs.webservices;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
-import java.net.URL;
 
 
 /**
@@ -16,7 +17,7 @@ import java.net.URL;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CohesionConnect", targetNamespace = "http://fidelityifs.com/webservices", wsdlLocation = "service.wsdl")
+@WebServiceClient(name = "CohesionConnect", targetNamespace = "http://fidelityifs.com/webservices", wsdlLocation = "https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl")
 public class CohesionConnect
     extends Service
 {
@@ -29,8 +30,8 @@ public class CohesionConnect
         URL url = null;
         WebServiceException e = null;
         try {
-            url = CohesionConnect.class.getClassLoader().getResource("service.wsdl");
-        } catch (Exception ex) {
+            url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+        } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
         COHESIONCONNECT_WSDL_LOCATION = url;
@@ -69,11 +70,6 @@ public class CohesionConnect
     @WebEndpoint(name = "CohesionConnectSoap")
     public CohesionConnectSoap getCohesionConnectSoap() {
         return super.getPort(new QName("http://fidelityifs.com/webservices", "CohesionConnectSoap"), CohesionConnectSoap.class);
-    }
-
-    @WebEndpoint(name = "CohesionConnectSoap")
-    public CohesionConnectSoap getCohesionConnectSoap(QName qName) {
-        return super.getPort(qName, CohesionConnectSoap.class);
     }
 
     /**

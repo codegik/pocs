@@ -22,10 +22,10 @@ public class App implements CommandLineRunner {
         SpringApplication.run(App.class, args);
     }
 
-    public void run(String... args) {
+    public void connectOriginal() {
         try {
-            logger.info("Requesting Cohesion");
-            final URL url = new URL("https://cohesion2.fisglobal.com/");
+            final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("Requesting Cohesion to " + url);
             final CohesionConnect cohesionConnect = new CohesionConnect();
             final STran sTran = new STran();
             final MiserXMLInput miserXMLInput = new MiserXMLInput();
@@ -40,5 +40,39 @@ public class App implements CommandLineRunner {
         } catch (Exception e) {
             logger.error("Error", e);
         }
+    }
+
+    public void connectSegregated() {
+        try {
+            final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("Requesting Cohesion");
+            final com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect cohesionConnect = new com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect(url);
+            final com.codegik.poc.cohesion.segregated.vbtp.STran sTran = new com.codegik.poc.cohesion.segregated.vbtp.STran();
+            final com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest vbtpRequest = new com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest();
+            final com.codegik.poc.cohesion.segregated.vbtp.Transaction transaction = new com.codegik.poc.cohesion.segregated.vbtp.Transaction();
+
+            vbtpRequest.setTransaction(transaction);
+            sTran.setVBTPRequest(vbtpRequest);
+            cohesionConnect.getCohesionConnectSoap().getHostReply(sTran);
+            logger.info("Success");
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
+
+    public void connect() {
+        logger.info("Requesting Cohesion from wsimport");
+
+        com.fidelityifs.webservices.CohesionConnect cohesionConnect = new com.fidelityifs.webservices.CohesionConnect();
+        final String response = cohesionConnect.getCohesionConnectSoap().ping();
+
+        logger.info("Success " + response);
+    }
+
+
+    public void run(String... args) {
+//        connectOriginal();
+        connectSegregated();
+//        connect();
     }
 }
