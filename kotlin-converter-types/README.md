@@ -67,6 +67,15 @@ assertEquals(person.age, friend.age)
 assertEquals(person.address, friend.email)
 ```
 
+## JniConverter
+
+### Requirements
+
+- Java 17
+- Have to install homebrew for intel simulated with Rosetta. Here are some options:
+  - https://www.wisdomgeek.com/development/installing-intel-based-packages-using-homebrew-on-the-m1-mac/
+  - https://gist.github.com/progrium/b286cd8c82ce0825b2eb3b0b3a0720a0
+- It will only run on arch x86_64, so you can use `Rosetta Terminal` or set zsh to `arch -x86_64 zsh`.
 ## Performance
 
 The performance test is available on `PerformanceConverterTest` class.
