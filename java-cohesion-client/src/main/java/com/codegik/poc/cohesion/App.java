@@ -3,10 +3,15 @@ package com.codegik.poc.cohesion;
 import com.codegik.poc.cohesion.miser.tpsl.MiserXMLInput;
 import com.codegik.poc.cohesion.miser.vbtp.Transaction;
 import com.codegik.poc.cohesion.miser.vbtp.VBTPRequest;
+import com.codegik.poc.cohesion.segregated.tpsl.GetHostReplyResponse;
+import com.codegik.poc.cohesion.segregated.tpsl.IsSessionPresentResponse;
+import com.codegik.poc.cohesion.segregated.tpsl.LogonResponse;
+import com.codegik.poc.cohesion.spring.TPSLCohesionClient;
 import com.codegik.poc.cohesion.webservices.CohesionConnect;
 import com.codegik.poc.cohesion.webservices.STran;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +22,9 @@ import java.net.URL;
 public class App implements CommandLineRunner {
     private static Logger logger = LoggerFactory.getLogger(App.class);
 
+    @Autowired
+    private TPSLCohesionClient tpslCohesionClient;
+
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
@@ -25,7 +33,7 @@ public class App implements CommandLineRunner {
     public void connectOriginal() {
         try {
             final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
-            logger.info("Requesting Cohesion to " + url);
+            logger.info("Requesting Cohesion with WSDL from repository");
             final CohesionConnect cohesionConnect = new CohesionConnect();
             final STran sTran = new STran();
             final MiserXMLInput miserXMLInput = new MiserXMLInput();
@@ -45,8 +53,10 @@ public class App implements CommandLineRunner {
     public void connectSegregated() {
         try {
             final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
-            logger.info("Requesting Cohesion");
-            final com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect cohesionConnect = new com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect(url);
+            logger.info("Requesting Cohesion with segregated WSDL");
+
+            final com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect cohesionConnect =
+                    new com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect(url);
             final com.codegik.poc.cohesion.segregated.vbtp.STran sTran = new com.codegik.poc.cohesion.segregated.vbtp.STran();
             final com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest vbtpRequest = new com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest();
             final com.codegik.poc.cohesion.segregated.vbtp.Transaction transaction = new com.codegik.poc.cohesion.segregated.vbtp.Transaction();
@@ -60,19 +70,64 @@ public class App implements CommandLineRunner {
         }
     }
 
-    public void connect() {
-        logger.info("Requesting Cohesion from wsimport");
+    public void connectWithWSDLFromServer() {
+        try {
+            logger.info("Requesting Cohesion WSDL downloaded from server");
+            final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
 
-        com.fidelityifs.webservices.CohesionConnect cohesionConnect = new com.fidelityifs.webservices.CohesionConnect();
-        final String response = cohesionConnect.getCohesionConnectSoap().ping();
+            com.fidelityifs.webservices.CohesionConnect cohesionConnect = new com.fidelityifs.webservices.CohesionConnect(url);
+            final String response = cohesionConnect.getCohesionConnectSoap().ping();
 
-        logger.info("Success " + response);
+            logger.info("Success " + response);
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
+
+    public void connectSegregatedFromSpringClient() {
+        try {
+            logger.info("Requesting connectSegregatedFromSpringClient");
+
+            GetHostReplyResponse response = tpslCohesionClient.getHostReply("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("Success");
+            logger.info("result -> " + response.getGetHostReplyResult());
+            logger.info("MiserXMLReply -> " + response.getGetHostReplyResult().getMiserXMLReply());
+            logger.info("HeaderData -> " + response.getGetHostReplyResult().getMiserXMLReply().getHeaderData());
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
+
+    public void connectSegregatedIsSessionPresent() {
+        try {
+            logger.info("Requesting connectSegregatedIsSessionPresent");
+
+            IsSessionPresentResponse result = tpslCohesionClient.isSessionPresent("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("success? " + result.isIsSessionPresentResult());
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
+
+    public void connectSegregatedLogon() {
+        try {
+            logger.info("Requesting connectSegregatedLogon");
+
+            LogonResponse result = tpslCohesionClient.logon("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("success? " + result.getLogonResult());
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
     }
 
 
     public void run(String... args) {
 //        connectOriginal();
-        connectSegregated();
-//        connect();
+//        connectSegregated();
+//        connectWithWSDLFromServer();
+        connectSegregatedFromSpringClient();
+        connectSegregatedIsSessionPresent();
+        connectSegregatedLogon();
     }
+
 }

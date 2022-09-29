@@ -1,14 +1,13 @@
 
 package com.fidelityifs.webservices;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
+import java.net.URL;
 
 
 /**
@@ -30,8 +29,8 @@ public class CohesionConnect
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
-        } catch (MalformedURLException ex) {
+            url = CohesionConnect.class.getClassLoader().getResource("cohesionconnect.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         COHESIONCONNECT_WSDL_LOCATION = url;
