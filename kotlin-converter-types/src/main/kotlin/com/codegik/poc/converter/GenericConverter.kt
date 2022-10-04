@@ -4,7 +4,6 @@ import com.codegik.poc.converter.annotation.Alias
 import com.codegik.poc.converter.cache.ReflectionCache
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.memberProperties
 
 class GenericConverter(val cache: ReflectionCache = ReflectionCache()) {
 

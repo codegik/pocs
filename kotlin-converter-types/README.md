@@ -76,6 +76,19 @@ assertEquals(person.address, friend.email)
   - https://www.wisdomgeek.com/development/installing-intel-based-packages-using-homebrew-on-the-m1-mac/
   - https://gist.github.com/progrium/b286cd8c82ce0825b2eb3b0b3a0720a0
 - It will only run on arch x86_64, so you can use `Rosetta Terminal` or set zsh to `arch -x86_64 zsh`.
+
+### Running tests
+Since JNI converter is using c++ library, you must compile and install the library before by running this command.
+```shell
+./build-dylib.sh
+```
+
+Then you can test JNI converter running this command or running the tests from your IDE.
+```shell
+mvn test -Dtest="JniConverterTest"
+```
+
+
 ## Performance
 
 The performance test is available on `PerformanceConverterTest` class.
