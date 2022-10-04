@@ -17,6 +17,7 @@ public class TPSLCohesionClient extends WebServiceGatewaySupport {
     private final ObjectFactory objectFactory = new ObjectFactory();
 
     public GetHostReplyResponse getHostReply(String url) {
+        final ObjectFactory objectFactory = new ObjectFactory();
         final GetHostReply hostReply = objectFactory.createGetHostReply();
         final STran sTran = objectFactory.createSTran();
         final MiserXMLInput miserXMLInput = objectFactory.createMiserXMLInput();
@@ -25,22 +26,23 @@ public class TPSLCohesionClient extends WebServiceGatewaySupport {
         headerData.setApplicationCode("MS");
         headerData.setTransactionCode("XT$");
         headerData.setPosition(1);
+        headerData.setReasonCode("4");
+        headerData.setMode("any");
+        headerData.setStatus("any");
 
         miserXMLInput.setHeaderData(headerData);
-        miserXMLInput.getInputField().add(buildInputField(00462001, "000122012346"));
-        miserXMLInput.getInputField().add(buildInputField(00461001, "10"));
-        miserXMLInput.getInputField().add(buildInputField(00463001, "000000000100"));
-        miserXMLInput.getInputField().add(buildInputField(00464, null));
-        miserXMLInput.getInputField().add(buildInputField(00462002, "000122012345"));
-        miserXMLInput.getInputField().add(buildInputField(00461002, "10"));
-        miserXMLInput.getInputField().add(buildInputField(00465001, null));
-        miserXMLInput.getInputField().add(buildInputField(00466, "test test "));
-        miserXMLInput.getInputField().add(buildInputField(00465002, null));
-        miserXMLInput.getInputField().add(buildInputField(00467001, null));
-        miserXMLInput.getInputField().add(buildInputField(00467002, null));
-
+        miserXMLInput.getInputField().add(createInputField(00462001, "000122012346", "IMT-ACCT-NBR", "Donor Account"));
+        miserXMLInput.getInputField().add(createInputField(00461001, "10", "IMT-APPL-CODE", "Donor Application"));
+        miserXMLInput.getInputField().add(createInputField(00463001, "000000000100", "IMT-TRAN-AMT", "Transaction Amount"));
+        miserXMLInput.getInputField().add(createInputField(00464, null, "IMT-EFF-DT", "Effective Date"));
+        miserXMLInput.getInputField().add(createInputField(00462002, "000122012345", "IMT-ACCT-NBR", "Recipient Account"));
+        miserXMLInput.getInputField().add(createInputField(00461002, "10", "IMT-APPL-CODE", "Recipient Application"));
+        miserXMLInput.getInputField().add(createInputField(00465001, null, "IMT-MISC-ID", "Miscellaneous ID (debit)"));
+        miserXMLInput.getInputField().add(createInputField(00466, "test test ", "IMT-DESC", "Description"));
+        miserXMLInput.getInputField().add(createInputField(00465002, null, "IMT-MISC-ID", "Miscellaneous ID (credit)"));
+        miserXMLInput.getInputField().add(createInputField(00467001, "TFR", "IMT-TRCD-OVR", "Tran Code Indicator 1"));
+        miserXMLInput.getInputField().add(createInputField(00467002, "TFR", "IMT-TRCD-OVR", "Tran Code Indicator 2"));
         sTran.setMiserXMLInput(miserXMLInput);
-
         hostReply.setSTran(sTran);
 
         return (GetHostReplyResponse) getWebServiceTemplate()
@@ -67,11 +69,14 @@ public class TPSLCohesionClient extends WebServiceGatewaySupport {
                         "http://fidelityifs.com/webservices/Logon"));
     }
 
-    private InputField buildInputField(int fieldNbr, String fieldData) {
+    private InputField createInputField(int fieldNbr, String fieldData, String fieldName, String fieldDesc) {
+        final ObjectFactory objectFactory = new ObjectFactory();
         final InputField inputField = objectFactory.createInputField();
 
         inputField.setFieldNbr(fieldNbr);
         inputField.setFieldData(fieldData);
+        inputField.setFieldName(fieldName);
+        inputField.setFieldDesc(fieldDesc);
 
         return inputField;
     }

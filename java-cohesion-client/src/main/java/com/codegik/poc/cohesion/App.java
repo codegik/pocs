@@ -7,6 +7,7 @@ import com.codegik.poc.cohesion.segregated.tpsl.GetHostReplyResponse;
 import com.codegik.poc.cohesion.segregated.tpsl.IsSessionPresentResponse;
 import com.codegik.poc.cohesion.segregated.tpsl.LogonResponse;
 import com.codegik.poc.cohesion.spring.TPSLCohesionClient;
+import com.codegik.poc.cohesion.spring.VBTPCohesionClient;
 import com.codegik.poc.cohesion.webservices.CohesionConnect;
 import com.codegik.poc.cohesion.webservices.STran;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class App implements CommandLineRunner {
 
     @Autowired
     private TPSLCohesionClient tpslCohesionClient;
+
+    @Autowired
+    private VBTPCohesionClient vbtpCohesionClient;
 
 
     public static void main(String[] args) {
@@ -50,25 +54,6 @@ public class App implements CommandLineRunner {
         }
     }
 
-    public void connectSegregated() {
-        try {
-            final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
-            logger.info("Requesting Cohesion with segregated WSDL");
-
-            final com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect cohesionConnect =
-                    new com.codegik.poc.cohesion.segregated.vbtp.CohesionConnect(url);
-            final com.codegik.poc.cohesion.segregated.vbtp.STran sTran = new com.codegik.poc.cohesion.segregated.vbtp.STran();
-            final com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest vbtpRequest = new com.codegik.poc.cohesion.segregated.vbtp.VBTPRequest();
-            final com.codegik.poc.cohesion.segregated.vbtp.Transaction transaction = new com.codegik.poc.cohesion.segregated.vbtp.Transaction();
-
-            vbtpRequest.setTransaction(transaction);
-            sTran.setVBTPRequest(vbtpRequest);
-            cohesionConnect.getCohesionConnectSoap().getHostReply(sTran);
-            logger.info("Success");
-        } catch (Exception e) {
-            logger.error("Error", e);
-        }
-    }
 
     public void connectWithWSDLFromServer() {
         try {
@@ -84,9 +69,9 @@ public class App implements CommandLineRunner {
         }
     }
 
-    public void connectSegregatedFromSpringClient() {
+    public void connectTPSLSegregatedGetHostReply() {
         try {
-            logger.info("Requesting connectSegregatedFromSpringClient");
+            logger.info("Requesting connectTPSLSegregatedGetHostReply");
 
             GetHostReplyResponse response = tpslCohesionClient.getHostReply("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
             logger.info("Success");
@@ -98,7 +83,21 @@ public class App implements CommandLineRunner {
         }
     }
 
-    public void connectSegregatedIsSessionPresent() {
+    public void connectVBTPSegregadtedGetHostReply() {
+        try {
+            logger.info("Requesting connectVBTPSegregadtedGetHostReply");
+
+            com.codegik.poc.cohesion.segregated.vbtp.GetHostReplyResponse response = vbtpCohesionClient.getHostReply("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
+            logger.info("Success");
+            logger.info("result -> " + response.getGetHostReplyResult());
+            logger.info("VBTPReply -> " + response.getGetHostReplyResult().getVBTPReply());
+            logger.info("Content -> " + response.getGetHostReplyResult().getVBTPReply().getContent());
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+    }
+
+    public void connectTPSLSegregatedIsSessionPresent() {
         try {
             logger.info("Requesting connectSegregatedIsSessionPresent");
 
@@ -125,9 +124,10 @@ public class App implements CommandLineRunner {
 //        connectOriginal();
 //        connectSegregated();
 //        connectWithWSDLFromServer();
-        connectSegregatedFromSpringClient();
-        connectSegregatedIsSessionPresent();
-        connectSegregatedLogon();
+//        connectTPSLSegregatedGetHostReply();
+//        connectVBTPSegregadtedGetHostReply();
+        connectTPSLSegregatedIsSessionPresent();
+//        connectSegregatedLogon();
     }
 
 }
