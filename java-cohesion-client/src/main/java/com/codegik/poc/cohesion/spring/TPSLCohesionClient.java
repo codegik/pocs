@@ -40,8 +40,8 @@ public class TPSLCohesionClient extends WebServiceGatewaySupport {
         miserXMLInput.getInputField().add(createInputField(00465001, null, "IMT-MISC-ID", "Miscellaneous ID (debit)"));
         miserXMLInput.getInputField().add(createInputField(00466, "test test ", "IMT-DESC", "Description"));
         miserXMLInput.getInputField().add(createInputField(00465002, null, "IMT-MISC-ID", "Miscellaneous ID (credit)"));
-        miserXMLInput.getInputField().add(createInputField(00467001, "TFR", "IMT-TRCD-OVR", "Tran Code Indicator 1"));
-        miserXMLInput.getInputField().add(createInputField(00467002, "TFR", "IMT-TRCD-OVR", "Tran Code Indicator 2"));
+        miserXMLInput.getInputField().add(createInputField(00467001, "7", "IMT-TRCD-OVR", "Tran Code Indicator 1"));
+        miserXMLInput.getInputField().add(createInputField(00467002, "7", "IMT-TRCD-OVR", "Tran Code Indicator 2"));
         sTran.setMiserXMLInput(miserXMLInput);
         hostReply.setSTran(sTran);
 

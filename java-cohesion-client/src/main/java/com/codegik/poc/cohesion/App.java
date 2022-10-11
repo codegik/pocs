@@ -124,9 +124,9 @@ public class App implements CommandLineRunner {
 //        connectOriginal();
 //        connectSegregated();
 //        connectWithWSDLFromServer();
-//        connectTPSLSegregatedGetHostReply();
+        connectTPSLSegregatedGetHostReply();
 //        connectVBTPSegregadtedGetHostReply();
-        connectTPSLSegregatedIsSessionPresent();
+//        connectTPSLSegregatedIsSessionPresent();
 //        connectSegregatedLogon();
     }
 
