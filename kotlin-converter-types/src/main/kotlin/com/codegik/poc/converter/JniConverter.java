@@ -9,15 +9,16 @@ public class JniConverter {
 
     private native String sayHello();
 
-    private native String convertType(Object from);
+    private native String convertType(Object from, Class klass);
 
     public JniConverter from(Object from)  {
         this.from = from;
         return this;
     }
 
-    public String to() {
-        return convertType(from);
+    public String to(Class klass) {
+        klass.getDeclaredFields();
+        return convertType(from, klass);
     }
 
     public String getStringFromJNI() {

@@ -18,10 +18,10 @@ JNIEXPORT jstring JNICALL Java_com_codegik_poc_converter_JniConverter_sayHello
 /*
  * Class:     com_codegik_poc_converter_JniConverter
  * Method:    convertType
- * Signature: (Ljava/lang/Object;)Ljava/lang/String;
+ * Signature: (Ljava/lang/Object;Ljava/lang/Class;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_codegik_poc_converter_JniConverter_convertType
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jobject, jclass);
 
 #ifdef __cplusplus
 }

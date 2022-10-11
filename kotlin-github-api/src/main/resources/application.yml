@@ -1,4 +1,5 @@
 
 github:
   uri: "https://github.tlcinternal.com/api/v3"
-  repositories: LendingClub/batch-script-data, LendingClub/lc-bank-operations, LendingClub/service-catalog, Release/lc-bank-operations, Release/prod-config, Release/key-rotation 
+  repositories: LendingClub/batch-script-data, LendingClub/lc-bank-operations, LendingClub/service-catalog, Release/lc-bank-operations, Release/prod-config, Release/key-rotation, LendingClub/bank-gateway-service
+
