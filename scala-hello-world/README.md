@@ -71,11 +71,14 @@ println(Student(name = "Diego"))
 
 functions
 case class Student(var id: Int = 1, var name: String = "Inacio") {
-    def sayHi() = println("hi")
+    def sayHi() = "hi"
 }
+println(Student(name = "Diego").sayHi())
+
 
 anonymous functions
 val sum = (x: Int, y: Int) => x + y
+println(sum(5, 9))
 
 
 filter
@@ -86,8 +89,22 @@ objects - don't need to instantiate, like static classes
 object Math {
     def sum(a: Int, b: Int) = a + b
 }
+println(Math.sum(4, 9))
 
 
+fun functions - add to Math
+def add(x: Int, y: Int, f: (Int, Int) => Int): Int = f(x, y)
+println(Math.add(20, 30, (x, y) => x + y))
+println(Math.add(20, 30, _ + _))
+println(Math.add(20, 30, _ max _))
 
-fun functions
-def add(x: Int, y: Int, z: Int, f: (Int, Int) => Int): Int = f(x, y)
+
+pattern matching
+val x: Int = Random.nextInt(10)
+
+println(x match {
+  case 0 => "zero"
+  case 1 => "one"
+  case 2 => "two"
+  case _ => "other"
+})
