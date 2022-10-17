@@ -38,7 +38,7 @@ public class App implements CommandLineRunner {
         try {
             final URL url = new URL("https://cohesion2.fisglobal.com/LendingClubNarmiAWSTest/cohesionconnect.asmx?wsdl");
             logger.info("Requesting Cohesion with WSDL from repository");
-            final CohesionConnect cohesionConnect = new CohesionConnect();
+            final CohesionConnect cohesionConnect = new CohesionConnect(url);
             final STran sTran = new STran();
             final MiserXMLInput miserXMLInput = new MiserXMLInput();
             final VBTPRequest vbtpRequest = new VBTPRequest();
@@ -121,9 +121,8 @@ public class App implements CommandLineRunner {
 
 
     public void run(String... args) {
-//        connectOriginal();
-//        connectSegregated();
-//        connectWithWSDLFromServer();
+        connectOriginal();
+        connectWithWSDLFromServer();
         connectTPSLSegregatedGetHostReply();
 //        connectVBTPSegregadtedGetHostReply();
 //        connectTPSLSegregatedIsSessionPresent();
