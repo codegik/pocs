@@ -9,8 +9,7 @@ import kotlin.reflect.full.memberProperties
 
 class ReflectionCache(
     private val cacheConstructor: MutableMap<Class<*>, Constructor<*>> = ConcurrentHashMap(),
-    private val cacheDeclaredField: MutableMap<KClass<out Any>, Collection<KProperty1<*, *>>> = ConcurrentHashMap(),
-    private val cacheField: MutableMap<String, Field> = ConcurrentHashMap()
+    private val cacheDeclaredField: MutableMap<KClass<out Any>, Collection<KProperty1<*, *>>> = ConcurrentHashMap()
 ) {
 
     fun constructor(klass: Class<*>): Constructor<*> {
