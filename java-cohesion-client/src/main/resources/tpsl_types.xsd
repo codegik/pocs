@@ -22,6 +22,7 @@
         <xs:element ref="TransactionCode"/>
         <xs:element ref="Position"/>
         <xs:element ref="ReasonCode"/>
+        <xs:element ref="FundType"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -45,6 +46,7 @@
   <xs:element name="ApplicationCode" type="xs:string"/>
   <xs:element name="TransactionCode" type="xs:string"/>
   <xs:element name="ReasonCode" type="xs:string"/>
+  <xs:element name="FundType" type="xs:string"/>
   <xs:element name="Position" type="xs:int"/>
   <xs:element name="FieldName" type="xs:string"/>
   <xs:element name="FieldDesc" type="xs:string"/>

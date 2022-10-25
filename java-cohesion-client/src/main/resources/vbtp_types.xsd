@@ -248,7 +248,7 @@
   <xs:element name="PriAcctNbr" type="xs:string"/>
   <xs:element name="PrivacyInd" type="xs:string"/>
   <xs:element name="ProdCode" type="xs:int"/>
-  <xs:element name="ReasonCode" type="xs:int"/>
+<!--  <xs:element name="ReasonCode" type="xs:int"/>-->
   <xs:element name="RegDLimitFlag" type="xs:string"/>
   <xs:element name="RegPlanFlag" type="xs:string"/>
   <xs:element name="RelCode" type="xs:string"/>
@@ -375,7 +375,7 @@
   <xs:element name="ApplicationCode1" type="xs:string"/>
   <xs:element name="ServicerAccountNumber1" type="xs:string"/>
   <xs:element name="Amount" type="xs:decimal"/>
-  <xs:element name="ApplicationCode" type="xs:string"/>
+<!--  <xs:element name="ApplicationCode" type="xs:string"/>-->
   <xs:element name="ServicerAccountNumber2" type="xs:string"/>
 <!--  <xs:element name="Description" type="xs:string"/>-->
 
@@ -628,7 +628,7 @@
       <xs:sequence>
         <xs:element ref="vbtp:ApplCode" xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp"/>
         <xs:element ref="vbtp:TranCode" xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp"/>
-        <xs:element ref="vbtp:ReasonCode" xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp"/>
+        <xs:element ref="vbtp:Reasoncode" xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp"/>
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:FundsType"/>
       </xs:sequence>
     </xs:complexType>
@@ -668,7 +668,7 @@
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ApplicationCode1"/>
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ServicerAccountNumber1"/>
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:Amount"/>
-        <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ApplicationCode"/>
+<!--        <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ApplicationCode"/>-->
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ServicerAccountNumber2"/>
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:Description"/>
         <xs:element xmlns:vbtp="http://schemas.fidelityinfoservices.com/webservices/miser/vbtp" ref="vbtp:ApplCode"/>
