@@ -1,0 +1,9 @@
+*.tfstate
+.terraform
+*.backup
+ansible/hosts
+*.retry
+manifest.json
+.DS_Store
+
+

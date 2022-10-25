@@ -1,3 +1,1 @@
-# POCs
-
-POCs for LC.
+Studying by POCs
