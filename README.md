@@ -1,1 +1,1 @@
-Java Pocs
+Studying by POCs
