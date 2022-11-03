@@ -11,8 +11,6 @@
 
 
 (defn sellBook [book amount kind]
-  ;(<= 1 5 amount
-  ;    (throw (Exception. "Amount range should be 1-5")))
   (let [discount (get kind amount)]
     (let [value (get books book)]
       (let [total (* value amount)]

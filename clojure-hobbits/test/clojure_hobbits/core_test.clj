@@ -26,4 +26,31 @@
             (Sale. "hobbits"  (sellBook "book2" 3 hobbits))
             (Sale. "orcs"     (sellBook "book2" 5 orcs)))]
       (is (= (:kindStr (topBuyer sales)) "orcs"))))
+
+  (testing "features"
+    ; anonymous functions
+    (fn [message] (println message))
+    (#(filter even? %) [1 2 3 4 5 6])
+
+    (def evens (fn [coll] (filter even? coll)))
+    (evens [1 2 3 4 5 6])
+
+    ; filter
+    (filter even? (range 10)) ; (0 2 4 6 8)
+
+    ; filter string length == 1
+    (filter (fn [x] (= (count x) 1)) ["a" "aa" "b" "n" "f" "lisp" "clojure" "q" ""]) ; ("a" "b" "n" "f" "q")
+
+    ; reduce
+    (reduce + [1 2 3 4 5])                                  ; 15
+
+    ;; reduce - Add one collection to another
+    (reduce conj [1 2 3] [4 5 6])                           ; [1 2 3 4 5 6]
+
+    ; map - sum two collections
+    (map + [1 2 3] [4 5 6])                                 ; (5 7 9)
+
+    ; map - apply function on collection
+    (map #(str "Hello " % "!" ) ["Ford" "Arthur" "Tricia"]) ; ("Hello Ford!" "Hello Arthur!" "Hello Tricia!")
+    )
   )
