@@ -25,7 +25,7 @@ class PersonServiceProxy(): PersonService() {
                 field.isAccessible = true
                 field.annotations.map { annotation ->
                     annotation.annotationClass.findAnnotation<ValidatorClass>().let {validator ->
-                        val validator: Validator = validator!!.klass.constructors.first().call() as Validator
+                        val validator: Validator = validator!!.className.constructors.first().call() as Validator
                         validator.validate(field.get(person), annotation)
                     }
                 }.filter { !it.first }
