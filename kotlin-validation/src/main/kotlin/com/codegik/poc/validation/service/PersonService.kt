@@ -1,6 +1,5 @@
 package com.codegik.poc.validation.service
 
-import com.codegik.poc.validation.annotation.Validate
 import com.codegik.poc.validation.domain.Person
 
 open class PersonService {
@@ -10,7 +9,6 @@ open class PersonService {
         Person("Klassmann", 12, "email3@gmail.com"),
     )
 
-    @Validate
     open fun save(person: Person): Person {
         persons += person
         return person
