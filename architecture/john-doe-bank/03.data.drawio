@@ -1,9 +1,18 @@
-<mxfile host="app.diagrams.net" modified="2023-01-03T16:48:15.808Z" agent="5.0 (Macintosh)" etag="4YHrjbGEp_hFQ0XwVbE-" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-03T17:11:15.153Z" agent="5.0 (Macintosh)" etag="I61AtYjnbElY3new8IRD" version="20.7.4" type="github">
   <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
     <mxGraphModel dx="1361" dy="769" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="84sIudhRGq0uBs1lburQ-36" value="Domain Layer" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="800" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="84sIudhRGq0uBs1lburQ-38" value="API Layer" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="830" width="800" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="84sIudhRGq0uBs1lburQ-37" value="Service Layer" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="800" height="180" as="geometry" />
+        </mxCell>
         <object label="Customer" id="17acba5748e5396b-20">
           <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" parent="1" vertex="1">
             <mxGeometry x="340" y="150" width="160" height="120" as="geometry">
@@ -56,7 +65,7 @@
             </mxGeometry>
           </mxCell>
         </object>
-        <mxCell id="84sIudhRGq0uBs1lburQ-11" value="&lt;div&gt;SAVING: AccountType&lt;br&gt;&lt;/div&gt;&lt;div&gt;CHECKING: AccountType&lt;/div&gt;&lt;div&gt;CREDIT_CARD: AccountType&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-10">
+        <mxCell id="84sIudhRGq0uBs1lburQ-11" value="&lt;div&gt;SAVING: AccountType&lt;br&gt;&lt;/div&gt;&lt;div&gt;CHECKING: AccountType&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-10">
           <mxGeometry y="26" width="180" height="84" as="geometry" />
         </mxCell>
         <object label="Transaction" id="84sIudhRGq0uBs1lburQ-17">
@@ -85,14 +94,14 @@
             <mxPoint x="450" y="340" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <object label="BankOperation" id="84sIudhRGq0uBs1lburQ-23">
+        <object label="BankService" id="84sIudhRGq0uBs1lburQ-23">
           <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
-            <mxGeometry x="80" y="360" width="160" height="120" as="geometry">
+            <mxGeometry x="90" y="670" width="160" height="120" as="geometry">
               <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
             </mxGeometry>
           </mxCell>
         </object>
-        <mxCell id="84sIudhRGq0uBs1lburQ-24" value="&lt;div&gt;bookTransfer()&lt;/div&gt;&lt;div&gt;customerInquiry()&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-23">
+        <mxCell id="84sIudhRGq0uBs1lburQ-24" value="&lt;div&gt;bookTransfer()&lt;/div&gt;&lt;div&gt;customerInquiry()&lt;br&gt;&lt;/div&gt;&lt;div&gt;accountHistory()&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-23">
           <mxGeometry y="26" width="160" height="94" as="geometry" />
         </mxCell>
         <mxCell id="84sIudhRGq0uBs1lburQ-25" value="" style="endArrow=none;html=1;rounded=0;endSize=15;exitX=1;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="84sIudhRGq0uBs1lburQ-17" target="84sIudhRGq0uBs1lburQ-7">
@@ -101,10 +110,60 @@
             <mxPoint x="560" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="84sIudhRGq0uBs1lburQ-26" value="" style="endArrow=none;html=1;rounded=0;endSize=15;" edge="1" parent="1" source="84sIudhRGq0uBs1lburQ-23" target="84sIudhRGq0uBs1lburQ-17">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="510" y="382" as="sourcePoint" />
-            <mxPoint x="620" y="331.6315789473683" as="targetPoint" />
+        <object label="BankOperationApi" id="84sIudhRGq0uBs1lburQ-27">
+          <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
+            <mxGeometry x="90" y="870" width="160" height="120" as="geometry">
+              <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="84sIudhRGq0uBs1lburQ-28" value="&lt;div&gt;bookTransfer()&lt;/div&gt;&lt;div&gt;customerInquiry()&lt;/div&gt;&lt;div&gt;accountHistory()&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-27">
+          <mxGeometry y="26" width="160" height="94" as="geometry" />
+        </mxCell>
+        <object label="CreditCard" id="84sIudhRGq0uBs1lburQ-30">
+          <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
+            <mxGeometry x="90" y="360" width="160" height="150" as="geometry">
+              <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="84sIudhRGq0uBs1lburQ-31" value="&lt;div&gt;id: string&lt;/div&gt;&lt;div&gt;customer: Customer&lt;/div&gt;&lt;div&gt;number: string&lt;/div&gt;&lt;div&gt;name: string&lt;/div&gt;&lt;div&gt;flag: string&lt;/div&gt;&lt;div&gt;address: Address&lt;br&gt;&lt;/div&gt;&lt;div&gt;limit: double&lt;/div&gt;&lt;div&gt;usedLimit: double&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-30">
+          <mxGeometry y="26" width="160" height="124" as="geometry" />
+        </mxCell>
+        <object label="CreditCardService" id="84sIudhRGq0uBs1lburQ-32">
+          <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
+            <mxGeometry x="310" y="670" width="160" height="120" as="geometry">
+              <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="84sIudhRGq0uBs1lburQ-33" value="&lt;div&gt;payment()&lt;/div&gt;&lt;div&gt;newCreditCard()&lt;br&gt;&lt;/div&gt;&lt;div&gt;creditCardHistory()&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-32">
+          <mxGeometry y="26" width="160" height="94" as="geometry" />
+        </mxCell>
+        <object label="ScoreService" id="84sIudhRGq0uBs1lburQ-34">
+          <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
+            <mxGeometry x="540" y="670" width="160" height="80" as="geometry">
+              <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="84sIudhRGq0uBs1lburQ-35" value="checkScore()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-34">
+          <mxGeometry y="26" width="160" height="54" as="geometry" />
+        </mxCell>
+        <object label="CreditCardApi" id="84sIudhRGq0uBs1lburQ-39">
+          <mxCell style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;" vertex="1" parent="1">
+            <mxGeometry x="310" y="870" width="160" height="120" as="geometry">
+              <mxRectangle x="350" y="42" width="90" height="30" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="84sIudhRGq0uBs1lburQ-40" value="&lt;div&gt;payment()&lt;/div&gt;&lt;div&gt;newCreditCard()&lt;br&gt;&lt;/div&gt;&lt;div&gt;creditCardHistory()&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="84sIudhRGq0uBs1lburQ-39">
+          <mxGeometry y="26" width="160" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="84sIudhRGq0uBs1lburQ-41" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;endSize=15;" edge="1" parent="1" source="17acba5748e5396b-20" target="84sIudhRGq0uBs1lburQ-30">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="510" y="233" as="sourcePoint" />
+            <mxPoint x="620" y="112" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
