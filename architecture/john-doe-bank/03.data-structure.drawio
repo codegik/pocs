@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-01-13T17:46:37.725Z" agent="5.0 (Macintosh)" etag="cbNPUWWOQTh9ndb8wZyk" version="20.8.3" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-16T17:41:39.013Z" agent="5.0 (Macintosh)" etag="qadKPIOa-TcebhYeJdGA" version="20.8.3" type="github">
   <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
-    <mxGraphModel dx="1361" dy="1569" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1361" dy="1528" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -26,16 +26,13 @@
           <mxGeometry x="90" y="-380" width="450" height="40" as="geometry" />
         </mxCell>
         <mxCell id="NxVjPYoNFYyn3bsQmdru-10" value="Checking Account (book transfer)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;dashed=1;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="30" y="-280" width="630" height="180" as="geometry" />
+          <mxGeometry x="30" y="-280" width="630" height="160" as="geometry" />
         </mxCell>
         <mxCell id="NxVjPYoNFYyn3bsQmdru-11" value="insert into transaction (id, user_id, from_account_number, to_account_number, amount, createDate)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="90" y="-240" width="550" height="40" as="geometry" />
         </mxCell>
         <mxCell id="NxVjPYoNFYyn3bsQmdru-12" value="update account set balance = ? where account_number = :from_account_number" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="90" y="-200" width="550" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="NxVjPYoNFYyn3bsQmdru-13" value="update account set balance = ? where account_number = :to_account_number" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="90" y="-160" width="550" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
