@@ -1,0 +1,3 @@
+(test
+ (name pizza_test)
+ (libraries ounit2 dojo))
