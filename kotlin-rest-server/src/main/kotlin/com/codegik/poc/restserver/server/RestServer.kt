@@ -6,11 +6,14 @@ import com.codegik.poc.restserver.handler.GetRequestHandler
 import com.sun.net.httpserver.HttpServer
 import java.io.File
 import java.net.InetSocketAddress
+import java.net.ServerSocket
+import java.net.Socket
 import java.util.*
 import java.util.concurrent.Executors
 
 
 class RestServer {
+    private val serverSocket: ServerSocket? = ServerSocket(6666)
 
     fun start(): List<String> {
         val threadPoolExecutor = Executors.newFixedThreadPool(10)
