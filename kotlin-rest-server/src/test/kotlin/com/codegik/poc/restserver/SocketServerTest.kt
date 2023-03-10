@@ -2,12 +2,9 @@ package com.codegik.poc.restserver
 
 import com.codegik.poc.restserver.server.SocketServer
 import org.junit.jupiter.api.Test
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.PrintWriter
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.net.Socket
-
-
 
 
 class SocketServerTest {
@@ -20,11 +17,16 @@ class SocketServerTest {
         server.start()
 
         val clientSocket = Socket("127.0.0.1", 6666)
-        val out = PrintWriter(clientSocket.getOutputStream(), true)
-        val input = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
-        out.println("hey dude")
-        val resp = input.readLine()
-        println("response: $resp")
+        val output = ObjectOutputStream(clientSocket.getOutputStream())
+        val input = ObjectInputStream(clientSocket.getInputStream());
+
+        output.writeObject("hey dude");
+
+        val resp = input.readObject()
+
+        println("Client received: $resp")
+        input.close()
+        output.close()
 
         server.stop()
     }

@@ -1,12 +1,14 @@
 package com.codegik.poc.restserver.server
 
 import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
+
 
 class SocketServer(private val port: Int = 6666) {
     private val serverSocket: ServerSocket = ServerSocket(port)
@@ -19,10 +21,16 @@ class SocketServer(private val port: Int = 6666) {
     fun start() {
         thread {
             clientSocket = serverSocket.accept()
-            output = PrintWriter(clientSocket.getOutputStream(), true)
-            input = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
-            val greeting = input.readLine()
-            println("Server received $greeting")
+            val input = ObjectInputStream(clientSocket.getInputStream())
+            val output = ObjectOutputStream(clientSocket.getOutputStream())
+            val message = input.readObject()
+
+            println("Server received: $message")
+            output.writeObject("hey man");
+
+            input.close()
+            output.close()
+            clientSocket.close()
         }
     }
 
@@ -32,9 +40,6 @@ class SocketServer(private val port: Int = 6666) {
     }
 
     fun stop() {
-        input.close()
-        output.close()
-        clientSocket.close()
         serverSocket.close()
     }
 }
