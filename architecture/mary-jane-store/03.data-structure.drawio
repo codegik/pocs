@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" modified="2023-03-31T23:41:50.087Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/111.0" etag="UF_JZM27UKg_59Oct_vU" version="21.1.1" type="github">
+  <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
+    <mxGraphModel dx="1834" dy="1569" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="J_87TDdWaZLhvV1NkpfK-1" value="Play" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="-10" y="-800" width="680" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="NxVjPYoNFYyn3bsQmdru-5" value="Playlist" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;dashed=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="30" y="-750" width="590" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="NxVjPYoNFYyn3bsQmdru-6" value="select * from playlist where user = ?" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="-710" width="450" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NxVjPYoNFYyn3bsQmdru-7" value="select * from playlist where playlist_id = ?" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="-650" width="450" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sFGH5UeLvlSR75vzRJCh-1" value="insert into playlist (playlist_id, name)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="-590" width="450" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sFGH5UeLvlSR75vzRJCh-2" value="delete playlist where playlist_id = ?" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="-480" width="450" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sFGH5UeLvlSR75vzRJCh-3" value="insert into playlist_song (playlist_id, song_id)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="-550" width="450" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sFGH5UeLvlSR75vzRJCh-4" value="delete playlist_song where playlist_id = ?" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="-440" width="450" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
