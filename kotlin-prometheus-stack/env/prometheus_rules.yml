@@ -1,0 +1,10 @@
+groups:
+  - name: App Down Alert
+    rules:
+      - alert: InstanceDown
+        expr: up{job="prometheus-stack-app"} == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance [{{ $labels.instance }}] down"
