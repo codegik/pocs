@@ -1,10 +1,10 @@
 # Top Selling Albums
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Nim_logo.svg/800px-Nim_logo.svg.png [upload.wikimedia.org]" width="200" height="200" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Nim_logo.svg/800px-Nim_logo.svg.png" width="200" height="200" />
 
-<img src="https://townsquare.media/site/295/files/2022/05/attachment-top-40-11th-albums.jpg?w=1200&h=0&zc=1&s=0&a=t&q=89 [townsquare.media]" width="200" height="200" />
+<img src="https://townsquare.media/site/295/files/2022/05/attachment-top-40-11th-albums.jpg?w=1200&h=0&zc=1&s=0&a=t&q=89" width="200" height="200" />
 
-<img src="https://cdn-icons-png.flaticon.com/512/1486/1486474.png [cdn-icons-png.flaticon.com]" width="200" height="200" /> 
+<img src="https://cdn-icons-png.flaticon.com/512/1486/1486474.png" width="200" height="200" /> 
 <BR/><BR/>
 
 Mr Sucess has a hit maker selling label called: The Knights say Nim Records(KSNR).
