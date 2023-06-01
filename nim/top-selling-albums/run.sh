@@ -1,4 +1,4 @@
 #!/bin/bash 
 
-nim c -r main.nim
-rm main
+nim c -r src/main.nim
+rm src/main
