@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-06-22T19:23:00.238Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0" etag="h92Xh24I1LjVdbj4l3kj" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-22T19:31:04.712Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0" etag="7cU-rloHls711_HOODEn" version="21.3.8" type="github">
   <diagram name="Page-1" id="tjbKaKhlfUkzczWWm1Vc">
-    <mxGraphModel dx="1789" dy="1350" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1789" dy="1750" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -235,7 +235,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="361E3foUAe-FWCX1Zc84-11" value="Classes by year" style="shape=table;startSize=40;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;fontSize=14;strokeColor=#434343;" vertex="1" parent="1">
-          <mxGeometry x="-510" y="-725" width="740" height="138" as="geometry" />
+          <mxGeometry x="-507" y="-806" width="740" height="138" as="geometry" />
         </mxCell>
         <mxCell id="361E3foUAe-FWCX1Zc84-15" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="361E3foUAe-FWCX1Zc84-11">
           <mxGeometry y="40" width="740" height="32" as="geometry" />
@@ -277,7 +277,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="361E3foUAe-FWCX1Zc84-29" value="Classes by state" style="shape=table;startSize=40;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;fontSize=14;strokeColor=#434343;" vertex="1" parent="1">
-          <mxGeometry x="-510" y="-548" width="740" height="138" as="geometry" />
+          <mxGeometry x="-507" y="-629" width="740" height="138" as="geometry" />
         </mxCell>
         <mxCell id="361E3foUAe-FWCX1Zc84-30" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="361E3foUAe-FWCX1Zc84-29">
           <mxGeometry y="40" width="740" height="32" as="geometry" />
@@ -300,7 +300,7 @@
             <mxRectangle width="371" height="34" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="361E3foUAe-FWCX1Zc84-35" value="To add or remove taxes every year, then need to update all tax classes" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-33">
+        <mxCell id="361E3foUAe-FWCX1Zc84-35" value="To add or remove taxes every year, then need to update all tax classes by state" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-33">
           <mxGeometry x="371" width="369" height="34" as="geometry">
             <mxRectangle width="369" height="34" as="alternateBounds" />
           </mxGeometry>
@@ -314,6 +314,48 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="361E3foUAe-FWCX1Zc84-38" value="Possible conflict resolution needed when updating tax classes" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-36">
+          <mxGeometry x="371" width="369" height="32" as="geometry">
+            <mxRectangle width="369" height="32" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-39" value="Classes by year and state" style="shape=table;startSize=40;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;fontSize=14;strokeColor=#434343;" vertex="1" parent="1">
+          <mxGeometry x="-507" y="-460" width="740" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-40" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="361E3foUAe-FWCX1Zc84-39">
+          <mxGeometry y="40" width="740" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-41" value="PROS" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-40">
+          <mxGeometry width="371" height="32" as="geometry">
+            <mxRectangle width="371" height="32" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-42" value="CONS" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-40">
+          <mxGeometry x="371" width="369" height="32" as="geometry">
+            <mxRectangle width="369" height="32" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-43" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="361E3foUAe-FWCX1Zc84-39">
+          <mxGeometry y="72" width="740" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-44" value="Removing the logic from a class and distribute in many classes" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-43">
+          <mxGeometry width="371" height="34" as="geometry">
+            <mxRectangle width="371" height="34" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-45" value="Too much granular, in matter of adding taxes, it will be necessary to create one class per state x year." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-43">
+          <mxGeometry x="371" width="369" height="34" as="geometry">
+            <mxRectangle width="369" height="34" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-46" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="361E3foUAe-FWCX1Zc84-39">
+          <mxGeometry y="106" width="740" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-47" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-46">
+          <mxGeometry width="371" height="32" as="geometry">
+            <mxRectangle width="371" height="32" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="361E3foUAe-FWCX1Zc84-48" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" vertex="1" parent="361E3foUAe-FWCX1Zc84-46">
           <mxGeometry x="371" width="369" height="32" as="geometry">
             <mxRectangle width="369" height="32" as="alternateBounds" />
           </mxGeometry>
