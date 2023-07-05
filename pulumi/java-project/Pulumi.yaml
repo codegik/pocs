@@ -1,0 +1,3 @@
+name: java-project
+runtime: java
+description: A minimal AWS Java Pulumi program
