@@ -1,0 +1,3 @@
+name: java-infra-with-node-app
+runtime: java
+description: A minimal Java Pulumi program with Gradle builds

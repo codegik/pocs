@@ -1,0 +1,2 @@
+rootProject.name = 'java-infra-with-node-app'
+include('app')

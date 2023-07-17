@@ -30,7 +30,7 @@ public class App {
             try {
                 final String filePath = Paths.get(App.class.getClassLoader().getResource(fileName).toURI()).toString();
 
-                var ownershipControls = new BucketOwnershipControls("ownershipControls", BucketOwnershipControlsArgs.builder()
+                new BucketOwnershipControls("ownershipControls", BucketOwnershipControlsArgs.builder()
                         .bucket(bucket.id())
                         .rule(BucketOwnershipControlsRuleArgs.builder().objectOwnership("ObjectWriter").build())
                         .build());

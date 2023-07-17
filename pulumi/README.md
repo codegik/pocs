@@ -45,4 +45,8 @@ pulumi stack rm dev
 ## Notes
 
 - Pulumi persist all data in its own platform by default.
-- Command `pulumi destroy` deletes cloud infrastructure, but doen't delete persisted data in the plaftorm. It must run `pulumi stack rm dev` to delete from platform.
+  - Build history
+  - Infrastructure state
+- Command `pulumi destroy` deletes cloud infrastructure, but doen't delete persisted data in the plaftorm.
+- It must run `pulumi stack rm dev` to delete from platform.
+- Looks like pulumi is using Terraform internally. NEED TO CONFIRM
