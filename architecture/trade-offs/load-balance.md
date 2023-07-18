@@ -17,15 +17,17 @@
 
 ### Pros
 
-- Load awareness to improve the balancing.
+- Improve the balancing due load awareness.
 
 ### Cons
 
-- Overloaded servers due long lived connections.
+- Overloaded servers due hotspot.
 
-## Least-load
+## Least-load / Resource-based
 
 ### Pros
+
+-
 
 ### Cons
 
@@ -124,5 +126,3 @@ Work stealing
 ### Pros
 
 ### Cons
-
--
