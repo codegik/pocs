@@ -31,6 +31,7 @@ class RestServer {
                 // todo: add more request type here
             }
         }
+
         server.executor = threadPoolExecutor
         server.start()
         return mappedEndpoints
