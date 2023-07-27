@@ -85,12 +85,12 @@ class RequestDispatcher(private val clientSocket: Socket) {
         output = PrintWriter(clientSocket.getOutputStream())
         output.println("$HTTP_VERSION ${httpResponse.status}")
 
-        httpResponse.headers[CONTENT_LENGTH] = (httpResponse.body.length + 1).toString()
+        httpResponse.headers[CONTENT_LENGTH] = (httpResponse.body.length).toString()
         httpResponse.headers[CONNECTION] = "close"
         httpResponse.headers.forEach { output.println("${it.key.trim()}: ${it.value.trim()}") }
 
         output.println("")
-        output.println(httpResponse.body);
+        output.print(httpResponse.body);
         output.flush()
 
         return true

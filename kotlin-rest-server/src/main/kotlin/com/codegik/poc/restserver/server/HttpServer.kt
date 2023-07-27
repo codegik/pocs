@@ -1,23 +1,26 @@
 package com.codegik.poc.restserver.server
 
 import java.net.ServerSocket
-import kotlin.concurrent.thread
+import java.util.concurrent.Executors
 
 
-class HttpServer(port: Int = 6666) {
+class HttpServer(
+    port: Int = 6666,
+    numThreads: Int = 100
+) {
     private var isAcceptingRequests = true
     private val serverSocket: ServerSocket = ServerSocket(port)
+    private val workerPool = Executors.newFixedThreadPool(numThreads)
 
     fun start() {
-        println("Server start listening")
-        while (isAcceptingRequests) {
-            val clientSocket = serverSocket.accept()
-            // TODO: use thread pool instead create new thread every call
-            thread {
-                RequestDispatcher(clientSocket).process()
+        workerPool.submit {
+            println("Server start listening")
+            while (isAcceptingRequests) {
+                val clientSocket = serverSocket.accept()
+                workerPool.submit { RequestDispatcher(clientSocket).process() }
             }
+            println("Server stop listening")
         }
-        println("Server stop listening")
     }
 
 

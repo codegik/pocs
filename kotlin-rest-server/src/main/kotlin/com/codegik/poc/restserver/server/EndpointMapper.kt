@@ -1,25 +1,31 @@
 package com.codegik.poc.restserver.server
 
 import com.codegik.poc.restserver.annotation.Get
+import com.codegik.poc.restserver.annotation.Post
 import com.codegik.poc.restserver.annotation.RestApi
 import com.codegik.poc.restserver.handler.HttpRequestHandler
 import java.io.File
 
 
 object EndpointMapper {
-    val mappedEndpoints = scanEndpoints().toMutableMap()
+    val mappedEndpoints = registerEndpoints().toMutableMap()
 
-    private fun scanEndpoints(): Map<String, HttpRequestHandler> {
+    private fun registerEndpoints(): Map<String, HttpRequestHandler> {
         val mappedEndpoints = mutableMapOf<String, HttpRequestHandler>()
         loadRestApiClasses().forEach { restApiClass ->
             val instance = restApiClass.constructors[0].newInstance()
+
             restApiClass.declaredMethods.forEach { method ->
                 method.getAnnotation(Get::class.java).let {
                     val key = "${Get::class.simpleName!!.uppercase()} ${it.path}"
                     mappedEndpoints[key] = HttpRequestHandler(instance, method)
                     println("Mapping endpoint $key -> ${restApiClass.name}.${method.name}")
                 }
-                // todo: add more request type here
+                method.getAnnotation(Post::class.java).let {
+                    val key = "${Post::class.simpleName!!.uppercase()} ${it.path}"
+                    mappedEndpoints[key] = HttpRequestHandler(instance, method)
+                    println("Mapping endpoint $key -> ${restApiClass.name}.${method.name}")
+                }
             }
         }
 
