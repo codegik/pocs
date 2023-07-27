@@ -9,13 +9,15 @@ import com.codegik.poc.restserver.http.HttpMethod.POST
 import com.codegik.poc.restserver.http.HttpRequest
 import com.codegik.poc.restserver.http.HttpResponse
 import com.codegik.poc.restserver.http.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
+import com.codegik.poc.restserver.http.HttpStatus.HTTP_NOT_FOUND
 import com.codegik.poc.restserver.http.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
+import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 
-class RequestDispatcher(private val clientSocket: Socket, private val httpServer: HttpServer) {
+class RequestDispatcher(private val clientSocket: Socket) {
     private lateinit var input: BufferedReader
     private lateinit var output: PrintWriter
 
@@ -47,14 +49,18 @@ class RequestDispatcher(private val clientSocket: Socket, private val httpServer
 
 
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
-        val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
-
         return try {
-            val handler = httpServer.getEndpointHandler(httpRequest.endpoint)
-            return handler.execute()
+            val key = "${httpRequest.method} ${httpRequest.endpoint}"
+            if (mappedEndpoints.containsKey(key)) {
+                return mappedEndpoints[key]?.handle(httpRequest)!!
+            }
+
+            val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
+            return HttpResponse(headers = headers, status = HTTP_NOT_FOUND, body = "Not found")
         } catch (e: Exception) {
-            val message = e.message ?: "internal server error"
-            HttpResponse(headers = headers, status = HTTP_INTERNAL_SERVER_ERROR, body = message)
+            println(e.message)
+            val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
+            return HttpResponse(headers = headers, status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
         }
     }
 
