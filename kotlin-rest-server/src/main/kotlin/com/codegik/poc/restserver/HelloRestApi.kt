@@ -1,7 +1,6 @@
 package com.codegik.poc.restserver
 
 import com.codegik.poc.restserver.annotation.Get
-import com.codegik.poc.restserver.annotation.Post
 import com.codegik.poc.restserver.annotation.RestApi
 import com.codegik.poc.restserver.http.HttpHeader.CONTENT_TYPE
 import com.codegik.poc.restserver.http.HttpResponse
@@ -16,9 +15,4 @@ class HelloRestApi {
         return HttpResponse(headers = headers, status = HTTP_OK, body = "hello world!")
     }
 
-    @Post("/hello")
-    fun save(): HttpResponse {
-        val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
-        return HttpResponse(headers = headers, status = HTTP_OK, body = "hello world!")
-    }
 }
