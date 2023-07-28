@@ -1,4 +1,4 @@
-package com.codegik.poc.restserver.http
+package com.codegik.poc.restserver.model
 
 data class HttpRequest(
     val headers: Map<String, String>,

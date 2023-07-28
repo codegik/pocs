@@ -1,10 +1,10 @@
-package com.codegik.poc.restserver
+package com.codegik.poc.restserver.api
 
 import com.codegik.poc.restserver.annotation.Get
 import com.codegik.poc.restserver.annotation.RestApi
-import com.codegik.poc.restserver.http.HttpHeader.CONTENT_TYPE
-import com.codegik.poc.restserver.http.HttpResponse
-import com.codegik.poc.restserver.http.HttpStatus.HTTP_OK
+import com.codegik.poc.restserver.model.HttpHeader.CONTENT_TYPE
+import com.codegik.poc.restserver.model.HttpResponse
+import com.codegik.poc.restserver.model.HttpStatus.HTTP_OK
 
 @RestApi
 class HelloRestApi {

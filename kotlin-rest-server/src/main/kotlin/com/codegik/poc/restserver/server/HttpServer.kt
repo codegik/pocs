@@ -9,7 +9,7 @@ class HttpServer(
     numThreads: Int = 100
 ) {
     private var isAcceptingRequests = true
-    private val serverSocket: ServerSocket = ServerSocket(port)
+    private val serverSocket = ServerSocket(port)
     private val workerPool = Executors.newFixedThreadPool(numThreads)
 
     fun start() {

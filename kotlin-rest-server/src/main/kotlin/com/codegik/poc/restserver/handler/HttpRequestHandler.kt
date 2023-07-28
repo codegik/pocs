@@ -1,7 +1,7 @@
 package com.codegik.poc.restserver.handler
 
-import com.codegik.poc.restserver.http.HttpRequest
-import com.codegik.poc.restserver.http.HttpResponse
+import com.codegik.poc.restserver.model.HttpRequest
+import com.codegik.poc.restserver.model.HttpResponse
 import java.lang.reflect.Method
 
 

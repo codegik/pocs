@@ -1,4 +1,4 @@
-package com.codegik.poc.restserver.http
+package com.codegik.poc.restserver.model
 
 object HttpStatus {
     const val HTTP_OK = "200"

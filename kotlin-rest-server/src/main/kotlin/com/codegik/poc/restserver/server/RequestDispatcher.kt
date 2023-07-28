@@ -1,16 +1,16 @@
 package com.codegik.poc.restserver.server
 
-import com.codegik.poc.restserver.http.HttpHeader.CONNECTION
-import com.codegik.poc.restserver.http.HttpHeader.CONTENT_LENGTH
-import com.codegik.poc.restserver.http.HttpHeader.CONTENT_TYPE
-import com.codegik.poc.restserver.http.HttpHeader.HTTP_VERSION
-import com.codegik.poc.restserver.http.HttpMethod
-import com.codegik.poc.restserver.http.HttpMethod.POST
-import com.codegik.poc.restserver.http.HttpRequest
-import com.codegik.poc.restserver.http.HttpResponse
-import com.codegik.poc.restserver.http.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
-import com.codegik.poc.restserver.http.HttpStatus.HTTP_NOT_FOUND
-import com.codegik.poc.restserver.http.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
+import com.codegik.poc.restserver.model.HttpHeader.CONNECTION
+import com.codegik.poc.restserver.model.HttpHeader.CONTENT_LENGTH
+import com.codegik.poc.restserver.model.HttpHeader.CONTENT_TYPE
+import com.codegik.poc.restserver.model.HttpHeader.HTTP_VERSION
+import com.codegik.poc.restserver.model.HttpMethod
+import com.codegik.poc.restserver.model.HttpMethod.POST
+import com.codegik.poc.restserver.model.HttpRequest
+import com.codegik.poc.restserver.model.HttpResponse
+import com.codegik.poc.restserver.model.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
+import com.codegik.poc.restserver.model.HttpStatus.HTTP_NOT_FOUND
+import com.codegik.poc.restserver.model.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
 import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -24,13 +24,13 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
     fun process(): Boolean {
         val httpRequest: HttpRequest
-        val request = readRequest()
+        val strRequest = readRequestAsString()
 
         println("Received request")
-        println(request)
+        println(strRequest)
 
         try {
-            httpRequest = parseRequest(request)
+            httpRequest = parseRequest(strRequest)
         } catch (e: Exception) {
             val message = "Invalid http request protocol"
             val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
@@ -49,17 +49,17 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
 
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
+        val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
+
         return try {
             val key = "${httpRequest.method} ${httpRequest.endpoint}"
             if (mappedEndpoints.containsKey(key)) {
                 return mappedEndpoints[key]?.handle(httpRequest)!!
             }
 
-            val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
             return HttpResponse(headers = headers, status = HTTP_NOT_FOUND, body = "Not found")
         } catch (e: Exception) {
             println(e.message)
-            val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
             return HttpResponse(headers = headers, status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
         }
     }
@@ -85,7 +85,7 @@ class RequestDispatcher(private val clientSocket: Socket) {
         output = PrintWriter(clientSocket.getOutputStream())
         output.println("$HTTP_VERSION ${httpResponse.status}")
 
-        httpResponse.headers[CONTENT_LENGTH] = (httpResponse.body.length).toString()
+        httpResponse.headers[CONTENT_LENGTH] = httpResponse.body.length.toString()
         httpResponse.headers[CONNECTION] = "close"
         httpResponse.headers.forEach { output.println("${it.key.trim()}: ${it.value.trim()}") }
 
@@ -97,7 +97,7 @@ class RequestDispatcher(private val clientSocket: Socket) {
     }
 
 
-    private fun readRequest(): String {
+    private fun readRequestAsString(): String {
         input = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
 
         var line: String

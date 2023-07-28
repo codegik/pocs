@@ -1,4 +1,4 @@
-package com.codegik.poc.restserver
+package com.codegik.poc.restserver.api
 
 import com.codegik.poc.restserver.server.HttpServer
 import org.junit.jupiter.api.AfterAll

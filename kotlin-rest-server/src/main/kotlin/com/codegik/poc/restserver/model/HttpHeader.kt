@@ -1,4 +1,4 @@
-package com.codegik.poc.restserver.http
+package com.codegik.poc.restserver.model
 
 object HttpHeader {
     const val HTTP_VERSION      = "HTTP/1.1"
