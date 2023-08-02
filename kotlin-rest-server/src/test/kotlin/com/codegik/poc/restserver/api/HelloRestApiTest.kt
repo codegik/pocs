@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestInstance
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
+import java.net.http.HttpRequest.BodyPublishers
 import java.net.http.HttpResponse
 import kotlin.test.assertEquals
 
@@ -44,7 +45,21 @@ class HelloRestApiTest {
 
 
 	@Test
-	fun shouldFailDueMethodCallNoiSupported() {
+	fun shouldSuccessWhenPostRequest() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello"))
+			.POST(BodyPublishers.ofString("body content"))
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello world!", response.body())
+	}
+
+
+	@Test
+	fun shouldFailDueMethodCallNotSupported() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello"))
 			.DELETE()

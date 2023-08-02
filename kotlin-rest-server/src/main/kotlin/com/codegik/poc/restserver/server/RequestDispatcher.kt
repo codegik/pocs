@@ -91,7 +91,7 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
         output.println("")
         output.print(httpResponse.body);
-        output.flush()
+        output.flush() // move to the caller
 
         return true
     }

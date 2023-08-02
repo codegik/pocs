@@ -1,6 +1,7 @@
 package com.codegik.poc.restserver.server
 
 import com.codegik.poc.restserver.annotation.Get
+import com.codegik.poc.restserver.annotation.Post
 import com.codegik.poc.restserver.annotation.RestApi
 import com.codegik.poc.restserver.handler.HttpRequestHandler
 import com.codegik.poc.restserver.model.HttpResponse
@@ -13,24 +14,34 @@ object EndpointMapper {
 
 
     private fun registerEndpoints(): Map<String, HttpRequestHandler> {
-        val mappedEndpoints = mutableMapOf<String, HttpRequestHandler>()
+        val mappingEndpoints = mutableMapOf<String, HttpRequestHandler>()
+
         loadRestApiClasses().forEach { restApiClass ->
             val instance = restApiClass.constructors[0].newInstance()
 
             restApiClass.declaredMethods.forEach { method ->
-                method.getAnnotation(Get::class.java).let {
-                    val key = "${Get::class.simpleName!!.uppercase()} ${it.path}"
-                    if (method.returnType == HttpResponse::class.java) {
-                        mappedEndpoints[key] = HttpRequestHandler(instance, method)
-                        println("Mapping endpoint $key -> ${restApiClass.name}.${method.name}")
-                    } else {
-                        println("Mapping endpoint $key -> ${restApiClass.name}.${method.name} -> FAILED (doesn't return HttpResponse type)")
+                if (method.returnType != HttpResponse::class.java) {
+                    println("Mapping method ${restApiClass.name}.${method.name} -> FAILED (doesn't return HttpResponse type)")
+                } else {
+                    method.annotations.forEach {
+                        var key = when (it) {
+                            is Get  -> "${Get::class.simpleName!!.uppercase()} ${it.path}"
+                            is Post -> "${Post::class.simpleName!!.uppercase()} ${it.path}"
+                            else    -> ""
+                        }
+
+                        if (key.isEmpty()) {
+                            println("Mapping endpoint $key -> FAILED ($it not supported)")
+                        } else {
+                            mappingEndpoints[key] = HttpRequestHandler(instance, method)
+                            println("Mapping endpoint $key -> ${restApiClass.name}.${method.name}")
+                        }
                     }
                 }
             }
         }
 
-        return mappedEndpoints
+        return mappingEndpoints
     }
 
 
