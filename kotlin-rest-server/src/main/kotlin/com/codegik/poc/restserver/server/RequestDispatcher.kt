@@ -5,7 +5,6 @@ import com.codegik.poc.restserver.model.HttpHeader.CONTENT_LENGTH
 import com.codegik.poc.restserver.model.HttpHeader.CONTENT_TYPE
 import com.codegik.poc.restserver.model.HttpHeader.HTTP_VERSION
 import com.codegik.poc.restserver.model.HttpMethod
-import com.codegik.poc.restserver.model.HttpMethod.POST
 import com.codegik.poc.restserver.model.HttpRequest
 import com.codegik.poc.restserver.model.HttpResponse
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
@@ -15,6 +14,7 @@ import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
+import java.lang.Thread.sleep
 import java.net.Socket
 
 class RequestDispatcher(private val clientSocket: Socket) {
@@ -69,15 +69,24 @@ class RequestDispatcher(private val clientSocket: Socket) {
     private fun parseRequest(requestText: String): HttpRequest {
         val lines = requestText.split("\n")
         val (method, endpoint, version) = lines[0].split(" ")
-        val body = if (method == POST.name) lines.last() else ""
         val headers = mutableMapOf<String, String>()
+        var isBodyContent = false
+        var body = ""
 
-        for (line in lines.subList(1, lines.size - 1)) {
-            val (key, value) = line.split(":")
-            headers[key.trim()] = value.trim()
+        for (line in lines.subList(1, lines.size)) {
+            if (line.isEmpty()) {
+                isBodyContent = true
+                continue
+            }
+            if (isBodyContent) {
+                body += line + "\n"
+            } else {
+                val (key, value) = line.split(":")
+                headers[key.trim()] = value.trim()
+            }
         }
 
-        return HttpRequest(headers = headers, endpoint = endpoint, method = HttpMethod.valueOf(method), body = body)
+        return HttpRequest(headers = headers, endpoint = endpoint, method = HttpMethod.valueOf(method), body = body.trim())
     }
 
 
@@ -104,8 +113,21 @@ class RequestDispatcher(private val clientSocket: Socket) {
         var request = ""
 
         while (input.readLine().also { line = it } != null) {
-            if (line.isEmpty()) break
+            if (line.isEmpty())
+                break
             request += "$line\n"
+        }
+
+        request += "\n"
+        /**
+         * WTF sleep(5): have to write that shi* to make java.net.http.HttpClient works,
+         * otherwise it will not read the body in POST requests.
+         * The Unit Tests might fail in other machines.
+         * Fortunately its working using curl and postman clients without sleep(5).
+         */
+        sleep(5)
+        while (input.ready()) {
+            request += input.read().toChar()
         }
 
         return request

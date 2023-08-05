@@ -17,9 +17,15 @@ class HelloRestApi {
     }
 
     @Post("/hello")
-    fun saveHello(): HttpResponse {
+    fun saveHelloWithoutRequestPayload(): HttpResponse {
         val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
         return HttpResponse(headers = headers, status = HTTP_OK, body = "hello world!")
+    }
+
+    @Post("/hello-with-body")
+    fun saveHelloWithRequestPayload(requestPayload: String): HttpResponse {
+        val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
+        return HttpResponse(headers = headers, status = HTTP_OK, body = requestPayload)
     }
 
     @Get("/not-return-http-response")

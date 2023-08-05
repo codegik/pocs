@@ -59,6 +59,36 @@ class HelloRestApiTest {
 
 
 	@Test
+	fun shouldSuccessWhenPostRequestWithoutBody() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello"))
+			.POST(BodyPublishers.noBody())
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello world!", response.body())
+	}
+
+
+	@Test
+	fun shouldSuccessWhenPostRequestWithBody() {
+		val response = HttpClient.newHttpClient().send(
+			HttpRequest.newBuilder()
+				.uri(URI.create("$rootUrl/hello-with-body"))
+				.headers("Content-Type", "text/plain;charset=UTF-8")
+				.POST(BodyPublishers.ofString("body content"))
+				.build(),
+			HttpResponse.BodyHandlers.ofString()
+		)
+
+		assertEquals(200, response.statusCode())
+		assertEquals("body content", response.body())
+	}
+
+
+	@Test
 	fun shouldFailDueMethodCallNotSupported() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello"))
