@@ -60,12 +60,12 @@ class HelloRestApiTest {
 
 	@Test
 	fun shouldSuccessWhenPostRequestWithoutBody() {
-		val request = HttpRequest.newBuilder()
-			.uri(URI("$rootUrl/hello"))
-			.POST(BodyPublishers.noBody())
-			.build()
-
-		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+		val response = HttpClient.newHttpClient().send(
+			HttpRequest.newBuilder()
+				.uri(URI("$rootUrl/hello"))
+				.POST(BodyPublishers.noBody())
+				.build(), HttpResponse.BodyHandlers.ofString()
+		)
 
 		assertEquals(200, response.statusCode())
 		assertEquals("hello world!", response.body())
