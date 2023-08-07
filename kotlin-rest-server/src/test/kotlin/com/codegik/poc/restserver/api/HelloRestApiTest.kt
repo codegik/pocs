@@ -77,7 +77,6 @@ class HelloRestApiTest {
 		val response = HttpClient.newHttpClient().send(
 			HttpRequest.newBuilder()
 				.uri(URI.create("$rootUrl/hello-with-body"))
-				.headers("Content-Type", "text/plain;charset=UTF-8")
 				.POST(BodyPublishers.ofString("body content"))
 				.build(),
 			HttpResponse.BodyHandlers.ofString()
@@ -92,7 +91,7 @@ class HelloRestApiTest {
 	fun shouldFailDueMethodCallNotSupported() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello"))
-			.DELETE()
+			.PUT(BodyPublishers.noBody())
 			.build()
 
 		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
@@ -113,6 +112,34 @@ class HelloRestApiTest {
 
 		assertEquals(404, response.statusCode())
 		assertEquals("Not found", response.body())
+	}
+
+
+	@Test
+	fun shouldSuccessWhenDeleteEndpoint() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello"))
+			.DELETE()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello delete!", response.body())
+	}
+
+
+	@Test
+	fun shouldSuccessWhenGetHelloName() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello/Inácio"))
+			.GET()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello Inácio!", response.body())
 	}
 
 }

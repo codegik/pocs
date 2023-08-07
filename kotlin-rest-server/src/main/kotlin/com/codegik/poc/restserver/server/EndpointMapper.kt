@@ -1,5 +1,6 @@
 package com.codegik.poc.restserver.server
 
+import com.codegik.poc.restserver.annotation.Delete
 import com.codegik.poc.restserver.annotation.Get
 import com.codegik.poc.restserver.annotation.Post
 import com.codegik.poc.restserver.annotation.RestApi
@@ -13,8 +14,8 @@ object EndpointMapper {
     val mappedEndpoints = registerEndpoints().toMutableMap()
 
 
-    private fun registerEndpoints(): Map<String, HttpRequestHandler> {
-        val mappingEndpoints = mutableMapOf<String, HttpRequestHandler>()
+    private fun registerEndpoints(): Map<Pair<String, String>, HttpRequestHandler> {
+        val mappingEndpoints = mutableMapOf<Pair<String, String>, HttpRequestHandler>()
 
         loadRestApiClasses().forEach { restApiClass ->
             val instance = restApiClass.constructors[0].newInstance()
@@ -25,16 +26,21 @@ object EndpointMapper {
                 } else {
                     method.annotations.forEach {
                         var key = when (it) {
-                            is Get  -> "${Get::class.simpleName!!.uppercase()} ${it.path}"
-                            is Post -> "${Post::class.simpleName!!.uppercase()} ${it.path}"
-                            else    -> ""
+                            is Get      -> Pair("${Get::class.simpleName!!.uppercase()}", "${it.path}")
+                            is Post     -> Pair("${Post::class.simpleName!!.uppercase()}", "${it.path}")
+                            is Delete   -> Pair("${Delete::class.simpleName!!.uppercase()}", "${it.path}")
+                            else        -> Pair("", "")
                         }
 
-                        if (key.isEmpty()) {
+                        if (key.first.isEmpty()) {
                             println("Mapping endpoint $key -> FAILED ($it not supported)")
                         } else {
-                            mappingEndpoints[key] = HttpRequestHandler(instance, method)
-                            println("Mapping endpoint $key -> ${restApiClass.name}.${method.name}")
+                            var cleanKey = key
+                            while (cleanKey.second.last() == '/') {
+                                cleanKey = Pair(key.first, cleanKey.second.dropLast(1))
+                            }
+                            mappingEndpoints[cleanKey] = HttpRequestHandler(instance, method)
+                            println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
                         }
                     }
                 }

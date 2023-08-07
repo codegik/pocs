@@ -2,7 +2,6 @@ package com.codegik.poc.restserver.server
 
 import com.codegik.poc.restserver.model.HttpHeader.CONNECTION
 import com.codegik.poc.restserver.model.HttpHeader.CONTENT_LENGTH
-import com.codegik.poc.restserver.model.HttpHeader.CONTENT_TYPE
 import com.codegik.poc.restserver.model.HttpHeader.HTTP_VERSION
 import com.codegik.poc.restserver.model.HttpMethod
 import com.codegik.poc.restserver.model.HttpRequest
@@ -33,10 +32,9 @@ class RequestDispatcher(private val clientSocket: Socket) {
             httpRequest = parseRequest(strRequest)
         } catch (e: Exception) {
             val message = "Invalid http request protocol"
-            val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
 
             println(message)
-            writeResponse(HttpResponse(headers = headers, status = HTTP_VERSION_NOT_SUPPORTED, body = message))
+            writeResponse(HttpResponse(status = HTTP_VERSION_NOT_SUPPORTED, body = message))
             close()
 
             return false
@@ -49,18 +47,31 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
 
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
-        val headers = mutableMapOf(CONTENT_TYPE to "text/plain;charset=utf-8")
-
         return try {
-            val key = "${httpRequest.method} ${httpRequest.endpoint}"
+            val key = Pair("${httpRequest.method}", "${httpRequest.endpoint}")
             if (mappedEndpoints.containsKey(key)) {
                 return mappedEndpoints[key]?.handle(httpRequest)!!
+            } else {
+                val requestPaths = httpRequest.endpoint.split("/")
+                mappedEndpoints.keys.forEach {
+                    val endpointPaths = it.second.split("/")
+                    if (requestPaths.size == endpointPaths.size) {
+                        endpointPaths.forEachIndexed { index, path ->
+                            // TODO: continue validating the matching path
+                            // possible use stack to reduce the values
+                            // for each * path founded should add into array of parameters, this array will be passed to the method
+                            if (requestPaths[index] == path) {
+
+                            }
+                        }
+                    }
+                }
             }
 
-            return HttpResponse(headers = headers, status = HTTP_NOT_FOUND, body = "Not found")
+            return HttpResponse(status = HTTP_NOT_FOUND, body = "Not found")
         } catch (e: Exception) {
             println(e.message)
-            return HttpResponse(headers = headers, status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
+            return HttpResponse(status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
         }
     }
 

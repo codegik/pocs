@@ -1,5 +1,5 @@
 package com.codegik.poc.restserver.model
 
 enum class HttpMethod {
-    GET, POST
+    GET, POST, DELETE
 }
