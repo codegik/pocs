@@ -47,9 +47,11 @@
 
 ### Pros
 
--
+- Server capacity awareness to improve the balancing.
 
 ### Cons
+
+-
 
 ## Randomized static
 
