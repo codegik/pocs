@@ -27,16 +27,17 @@
 
 ### Pros
 
-- Server resources (cpu, mem, load, etc) awareness to improve the balancing.
+- Availability, costs and less. Server resources (cpu, mem, load, etc) awareness to improve the balancing.
 
 ### Cons
 
-- It might overload servers that are not providing health information due agent failures.
+- Response time, timeout, less availability. It might overload servers that are not providing health information due agent failures.
 
 ## Weighted round robin
 
 ### Pros
 
+-
 - Server capacity awareness to improve the balancing.
 
 ### Cons
