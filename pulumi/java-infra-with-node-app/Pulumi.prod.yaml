@@ -1,0 +1,9 @@
+config:
+  docker:host: unix:///Users/iklassman/.docker/run/docker.sock
+  java-infra-with-node-app:backendPort: "3000"
+  java-infra-with-node-app:database: cart
+  java-infra-with-node-app:frontendPort: "3001"
+  java-infra-with-node-app:mongoHost: mongodb://mongo:27017
+  java-infra-with-node-app:mongoPort: "27017"
+  java-infra-with-node-app:nodeEnvironment: development
+  java-infra-with-node-app:protocol: http://
