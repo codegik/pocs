@@ -142,4 +142,5 @@ class HelloRestApiTest {
 		assertEquals("hello Inácio!", response.body())
 	}
 
+	// todo: create scenario: call get endpoint with more parameters than exists. Ex: /hello/1/b/c/d/e
 }

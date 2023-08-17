@@ -11,6 +11,11 @@ import java.lang.reflect.Method
 class HttpRequestHandler(private val instance: Any, private val method: Method) {
 
     fun handle(httpRequest: HttpRequest): HttpResponse {
+        /**
+         * todo:
+         * - httpRequest should have number of pathParameters
+         * - httpRequest should have pathParameters mapped to use as parameter in invoke
+         */
         val result = when (httpRequest.method) {
             GET -> method.invoke(instance)
             POST, DELETE -> {

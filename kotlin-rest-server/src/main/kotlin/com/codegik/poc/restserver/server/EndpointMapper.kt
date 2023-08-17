@@ -11,7 +11,10 @@ import java.io.File
 
 object EndpointMapper {
 
+    private val pathVariablePattern = """\{[^}]*\}""".toRegex()
     val mappedEndpoints = registerEndpoints().toMutableMap()
+    val mappedMatchPatterns = registerMatchPatterns().toMutableMap()
+
 
 
     private fun registerEndpoints(): Map<Pair<String, String>, HttpRequestHandler> {
@@ -24,21 +27,22 @@ object EndpointMapper {
                 if (method.returnType != HttpResponse::class.java) {
                     println("Mapping method ${restApiClass.name}.${method.name} -> FAILED (doesn't return HttpResponse type)")
                 } else {
-                    method.annotations.forEach {
-                        var key = when (it) {
-                            is Get      -> Pair("${Get::class.simpleName!!.uppercase()}", "${it.path}")
-                            is Post     -> Pair("${Post::class.simpleName!!.uppercase()}", "${it.path}")
-                            is Delete   -> Pair("${Delete::class.simpleName!!.uppercase()}", "${it.path}")
+                    method.annotations.forEach { annotation ->
+                        var key = when (annotation) {
+                            is Get      -> Pair("${Get::class.simpleName!!.uppercase()}", "${annotation.path}")
+                            is Post     -> Pair("${Post::class.simpleName!!.uppercase()}", "${annotation.path}")
+                            is Delete   -> Pair("${Delete::class.simpleName!!.uppercase()}", "${annotation.path}")
                             else        -> Pair("", "")
                         }
 
                         if (key.first.isEmpty()) {
-                            println("Mapping endpoint $key -> FAILED ($it not supported)")
+                            println("Mapping endpoint $key -> FAILED ($annotation not supported)")
                         } else {
                             var cleanKey = key
                             while (cleanKey.second.last() == '/') {
                                 cleanKey = Pair(key.first, cleanKey.second.dropLast(1))
                             }
+
                             mappingEndpoints[cleanKey] = HttpRequestHandler(instance, method)
                             println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
                         }
@@ -48,6 +52,25 @@ object EndpointMapper {
         }
 
         return mappingEndpoints
+    }
+
+
+    private fun registerMatchPatterns(): Map<String, Regex> {
+        val mappingMatchPattern = mutableMapOf<String, Regex>()
+
+        mappedEndpoints.forEach { (key, pair) ->
+            if (key.second.contains("{")) {
+                var endpointPattern = key.second.replace("/", "\\/")
+
+                pathVariablePattern.findAll(key.second).forEach { variable ->
+                    endpointPattern = endpointPattern.replace(variable.value, "[a-zA-Z0-9%]+")
+                }
+
+                mappingMatchPattern[key.second] = "$endpointPattern$".toRegex()
+            }
+        }
+
+        return mappingMatchPattern
     }
 
 
@@ -86,4 +109,5 @@ object EndpointMapper {
 
         return classes
     }
+
 }

@@ -20,6 +20,11 @@ class HelloRestApi {
         return HttpResponse(status = HTTP_OK, body = "hello $name!")
     }
 
+    @Get("/hello/{name}/{nickname}")
+    fun getHelloName(name: String, nickname: String): HttpResponse {
+        return HttpResponse(status = HTTP_OK, body = "hello $name $nickname!")
+    }
+
     @Post("/hello")
     fun saveHelloWithoutRequestPayload(): HttpResponse {
         return HttpResponse(status = HTTP_OK, body = "hello world!")

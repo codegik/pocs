@@ -10,6 +10,7 @@ import com.codegik.poc.restserver.model.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_NOT_FOUND
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
 import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
+import com.codegik.poc.restserver.server.EndpointMapper.mappedMatchPatterns
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
@@ -48,21 +49,16 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
         return try {
-            val key = Pair("${httpRequest.method}", "${httpRequest.endpoint}")
-            if (mappedEndpoints.containsKey(key)) {
-                return mappedEndpoints[key]?.handle(httpRequest)!!
-            } else {
-                val requestPaths = httpRequest.endpoint.split("/")
-                mappedEndpoints.keys.forEach {
-                    val endpointPaths = it.second.split("/")
-                    if (requestPaths.size == endpointPaths.size) {
-                        endpointPaths.forEachIndexed { index, path ->
-                            // TODO: continue validating the matching path
-                            // possible use stack to reduce the values
-                            // for each * path founded should add into array of parameters, this array will be passed to the method
-                            if (requestPaths[index] == path) {
+            val requestKey = Pair("${httpRequest.method}", "${httpRequest.endpoint}")
 
-                            }
+            if (mappedEndpoints.containsKey(requestKey)) {
+                return mappedEndpoints[requestKey]?.handle(httpRequest)!!
+            } else {
+                mappedMatchPatterns.forEach { (endpoint, pathParamPattern) ->
+                    if (pathParamPattern.matches(httpRequest.endpoint)) {
+                        val matchKey = Pair("${httpRequest.method}", endpoint)
+                        if (mappedEndpoints.containsKey(matchKey)) {
+                            return mappedEndpoints[matchKey]?.handle(httpRequest)!!
                         }
                     }
                 }
@@ -70,7 +66,7 @@ class RequestDispatcher(private val clientSocket: Socket) {
 
             return HttpResponse(status = HTTP_NOT_FOUND, body = "Not found")
         } catch (e: Exception) {
-            println(e.message)
+            e.printStackTrace()
             return HttpResponse(status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
         }
     }
