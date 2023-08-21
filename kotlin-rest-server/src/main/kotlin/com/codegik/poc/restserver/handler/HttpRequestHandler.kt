@@ -17,7 +17,7 @@ class HttpRequestHandler(private val instance: Any, private val method: Method) 
          * - httpRequest should have pathParameters mapped to use as parameter in invoke
          */
         val result = when (httpRequest.method) {
-            GET -> method.invoke(instance)
+            GET -> method.invoke(instance, httpRequest.pathParameters)
             POST, DELETE -> {
                 if (method.parameters.size == 1) {
                     method.invoke(instance, httpRequest.body)

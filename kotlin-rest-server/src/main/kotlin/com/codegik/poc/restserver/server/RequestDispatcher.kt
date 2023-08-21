@@ -11,6 +11,7 @@ import com.codegik.poc.restserver.model.HttpStatus.HTTP_NOT_FOUND
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
 import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
 import com.codegik.poc.restserver.server.EndpointMapper.mappedMatchPatterns
+import com.codegik.poc.restserver.server.EndpointMapper.pathVariablePattern
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
@@ -55,9 +56,12 @@ class RequestDispatcher(private val clientSocket: Socket) {
                 return mappedEndpoints[requestKey]?.handle(httpRequest)!!
             } else {
                 mappedMatchPatterns.forEach { (endpoint, pathParamPattern) ->
+                    val matchKey = Pair("${httpRequest.method}", endpoint)
                     if (pathParamPattern.matches(httpRequest.endpoint)) {
-                        val matchKey = Pair("${httpRequest.method}", endpoint)
                         if (mappedEndpoints.containsKey(matchKey)) {
+                            val pathParameters = pathParamPattern.findAll(httpRequest.endpoint)
+                                .map { it.groupValues }
+//                            val httpRequestEnchant = httpRequest.copy(pathParameters = pathParameters)
                             return mappedEndpoints[matchKey]?.handle(httpRequest)!!
                         }
                     }
@@ -147,5 +151,14 @@ class RequestDispatcher(private val clientSocket: Socket) {
         clientSocket.close()
 
         return true
+    }
+
+
+    private fun getPathParameters(endpoint: String): List<String> {
+        if (endpoint.contains("{")) {
+            return pathVariablePattern.findAll(endpoint).map { it.toString() }.toList()
+        }
+
+        return listOf()
     }
 }

@@ -11,7 +11,7 @@ import java.io.File
 
 object EndpointMapper {
 
-    private val pathVariablePattern = """\{[^}]*\}""".toRegex()
+    val pathVariablePattern = """\{[^}]*\}""".toRegex()
     val mappedEndpoints = registerEndpoints().toMutableMap()
     val mappedMatchPatterns = registerMatchPatterns().toMutableMap()
 
