@@ -8,13 +8,12 @@ import org.junit.jupiter.api.TestInstance
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
-import java.net.http.HttpRequest.BodyPublishers
 import java.net.http.HttpResponse
 import kotlin.test.assertEquals
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class HelloRestApiTest {
+class GetDummyApiTest {
 
 	private val rootUrl = "http://localhost:9999"
 	private val server = HttpServer(9999)
@@ -31,7 +30,7 @@ class HelloRestApiTest {
 
 
 	@Test
-	fun shouldSuccessWhenGetRequest() {
+	fun shouldSuccessWhenRequestEndpoint() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello"))
 			.GET()
@@ -45,92 +44,7 @@ class HelloRestApiTest {
 
 
 	@Test
-	fun shouldSuccessWhenPostRequest() {
-		val request = HttpRequest.newBuilder()
-			.uri(URI("$rootUrl/hello"))
-			.POST(BodyPublishers.ofString("body content"))
-			.build()
-
-		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
-
-		assertEquals(200, response.statusCode())
-		assertEquals("hello world!", response.body())
-	}
-
-
-	@Test
-	fun shouldSuccessWhenPostRequestWithoutBody() {
-		val response = HttpClient.newHttpClient().send(
-			HttpRequest.newBuilder()
-				.uri(URI("$rootUrl/hello"))
-				.POST(BodyPublishers.noBody())
-				.build(), HttpResponse.BodyHandlers.ofString()
-		)
-
-		assertEquals(200, response.statusCode())
-		assertEquals("hello world!", response.body())
-	}
-
-
-	@Test
-	fun shouldSuccessWhenPostRequestWithBody() {
-		val response = HttpClient.newHttpClient().send(
-			HttpRequest.newBuilder()
-				.uri(URI.create("$rootUrl/hello-with-body"))
-				.POST(BodyPublishers.ofString("body content"))
-				.build(),
-			HttpResponse.BodyHandlers.ofString()
-		)
-
-		assertEquals(200, response.statusCode())
-		assertEquals("body content", response.body())
-	}
-
-
-	@Test
-	fun shouldFailDueMethodCallNotSupported() {
-		val request = HttpRequest.newBuilder()
-			.uri(URI("$rootUrl/hello"))
-			.PUT(BodyPublishers.noBody())
-			.build()
-
-		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
-
-		assertEquals(505, response.statusCode())
-		assertEquals("Invalid http request protocol", response.body())
-	}
-
-
-	@Test
-	fun shouldFailDueWrongEndpoint() {
-		val request = HttpRequest.newBuilder()
-			.uri(URI("$rootUrl/hello-there"))
-			.GET()
-			.build()
-
-		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
-
-		assertEquals(404, response.statusCode())
-		assertEquals("Not found", response.body())
-	}
-
-
-	@Test
-	fun shouldSuccessWhenDeleteEndpoint() {
-		val request = HttpRequest.newBuilder()
-			.uri(URI("$rootUrl/hello"))
-			.DELETE()
-			.build()
-
-		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
-
-		assertEquals(200, response.statusCode())
-		assertEquals("hello delete!", response.body())
-	}
-
-
-	@Test
-	fun shouldSuccessWhenGetHelloName() {
+	fun shouldSuccessWhenRequestEndpointWithOnePathVariable() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello/Inácio"))
 			.GET()
@@ -139,8 +53,63 @@ class HelloRestApiTest {
 		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
 
 		assertEquals(200, response.statusCode())
-		assertEquals("hello Inácio!", response.body())
+		assertEquals("hello In%C3%A1cio!", response.body())
 	}
 
-	// todo: create scenario: call get endpoint with more parameters than exists. Ex: /hello/1/b/c/d/e
+
+	@Test
+	fun shouldSuccessWhenRequestEndpointWithTwoPathVariable() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello/Inácio/klassmann"))
+			.GET()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello In%C3%A1cio klassmann!", response.body())
+	}
+
+
+	@Test
+	fun shouldSuccessWhenRequestEndpointWithOnePathVariablePlusPash() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello/Inácio/my/friend"))
+			.GET()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello In%C3%A1cio my friend!", response.body())
+	}
+
+
+	@Test
+	fun shouldSuccessWhenRequestEndpointWithTwoPathVariablePlusPash() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello/Inácio/klassmann/my/friend"))
+			.GET()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(200, response.statusCode())
+		assertEquals("hello In%C3%A1cio klassmann my friend!", response.body())
+	}
+
+
+	@Test
+	fun shouldFailWhenRequestEndpointWithoutThreeParameters() {
+		val request = HttpRequest.newBuilder()
+			.uri(URI("$rootUrl/hello/Inácio/Gomes/klassmann/my/friend"))
+			.GET()
+			.build()
+
+		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+		assertEquals(400, response.statusCode())
+		assertEquals("number of parameters doesn't match with number of arguments", response.body())
+	}
+
 }

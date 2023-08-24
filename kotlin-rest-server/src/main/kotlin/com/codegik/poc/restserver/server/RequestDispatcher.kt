@@ -48,6 +48,10 @@ class RequestDispatcher(private val clientSocket: Socket) {
     }
 
 
+    /**
+     * TODO
+     *  - create mechanism to classify the requests in number of arguments, this way we can avoid searching big list of endpoints every call
+     */
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
         return try {
             val requestKey = Pair("${httpRequest.method}", "${httpRequest.endpoint}")
@@ -61,8 +65,11 @@ class RequestDispatcher(private val clientSocket: Socket) {
                         if (mappedEndpoints.containsKey(matchKey)) {
                             val pathParameters = pathParamPattern.findAll(httpRequest.endpoint)
                                 .map { it.groupValues }
-//                            val httpRequestEnchant = httpRequest.copy(pathParameters = pathParameters)
-                            return mappedEndpoints[matchKey]?.handle(httpRequest)!!
+                                .filter { it.size > 1 }
+                                .flatMap { it.subList(1, it.size)}
+                                .toList()
+                            val httpRequestEnchant = httpRequest.copy(pathParameters = pathParameters)
+                            return mappedEndpoints[matchKey]?.handle(httpRequestEnchant)!!
                         }
                     }
                 }

@@ -1,37 +1,46 @@
 package com.codegik.poc.restserver.handler
 
-import com.codegik.poc.restserver.model.HttpMethod.DELETE
-import com.codegik.poc.restserver.model.HttpMethod.GET
 import com.codegik.poc.restserver.model.HttpMethod.POST
 import com.codegik.poc.restserver.model.HttpRequest
 import com.codegik.poc.restserver.model.HttpResponse
+import com.codegik.poc.restserver.model.HttpStatus.HTTP_BAD_REQUEST
 import java.lang.reflect.Method
 
 
+/**
+ * TODO
+ * - add urlencode/decode support for request parameters
+ */
 class HttpRequestHandler(private val instance: Any, private val method: Method) {
 
     fun handle(httpRequest: HttpRequest): HttpResponse {
-        /**
-         * todo:
-         * - httpRequest should have number of pathParameters
-         * - httpRequest should have pathParameters mapped to use as parameter in invoke
-         */
-        val result = when (httpRequest.method) {
-            GET -> method.invoke(instance, httpRequest.pathParameters)
-            POST, DELETE -> {
-                if (method.parameters.size == 1) {
-                    method.invoke(instance, httpRequest.body)
-                } else {
-                    method.invoke(instance)
-                }
+        val parameters = arrayListOf<Any>()
+
+        if (httpRequest.method == POST) {
+            if (httpRequest.body.isNotEmpty()) {
+                parameters.add(httpRequest.body)
             }
         }
 
-        if (result is HttpResponse) {
-            return result
+        if (httpRequest.pathParameters.isNotEmpty()) {
+            parameters.addAll(httpRequest.pathParameters)
         }
 
-        throw RuntimeException("${instance.javaClass.simpleName}.${method.name} is not returning a HttpResponse type")
+        if (parameters.size == method.parameters.size) {
+            val result = method.invoke(instance, *parameters.toArray())
+
+            if (result is HttpResponse) {
+                return result
+            }
+
+            throw RuntimeException("${instance.javaClass.simpleName}.${method.name} is not returning a HttpResponse type")
+        }
+
+        println("${instance.javaClass.simpleName}.${method.name} " +
+                "is expecting arguments ${method.parameters.map { it.annotatedType }}, " +
+                "but its receiving ${parameters.map { it.javaClass }}")
+
+        return HttpResponse(status = HTTP_BAD_REQUEST, body = "number of parameters doesn't match with number of arguments")
     }
 
 }

@@ -9,8 +9,17 @@ import com.codegik.poc.restserver.model.HttpResponse
 import java.io.File
 
 
+/**
+ * TODO
+ *  - do not allow duplicated endpoint mapping
+ *  - do not map method with number of request param different than number of arguments
+ *      - ex:
+ *          @Get("/hello/{name}/{midName}/{lastNme}/my/friend")
+ *          fun helloWithThreeRequestParamWithoutThreeParameters(name: String, nickname: String): HttpResponse
+ */
 object EndpointMapper {
 
+    private const val pathVariableReplacement = "([a-zA-Z0-9%]+)"
     val pathVariablePattern = """\{[^}]*\}""".toRegex()
     val mappedEndpoints = registerEndpoints().toMutableMap()
     val mappedMatchPatterns = registerMatchPatterns().toMutableMap()
@@ -63,10 +72,10 @@ object EndpointMapper {
                 var endpointPattern = key.second.replace("/", "\\/")
 
                 pathVariablePattern.findAll(key.second).forEach { variable ->
-                    endpointPattern = endpointPattern.replace(variable.value, "[a-zA-Z0-9%]+")
+                    endpointPattern = endpointPattern.replace(variable.value, pathVariableReplacement)
                 }
 
-                mappingMatchPattern[key.second] = "$endpointPattern$".toRegex()
+                mappingMatchPattern[key.second] = endpointPattern.toRegex()
             }
         }
 
