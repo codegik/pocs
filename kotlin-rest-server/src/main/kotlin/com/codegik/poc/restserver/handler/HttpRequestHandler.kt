@@ -11,10 +11,26 @@ import java.lang.reflect.Method
  * TODO
  * - add urlencode/decode support for request parameters
  */
-class HttpRequestHandler(private val instance: Any, private val method: Method) {
+class HttpRequestHandler(
+    private val instance: Any,
+    private val method: Method
+): RequestHandler {
 
-    fun handle(httpRequest: HttpRequest): HttpResponse {
+    private lateinit var httpRequest: HttpRequest
+
+
+    override fun httpRequest(httpRequest: HttpRequest): HttpRequestHandler {
+        this.httpRequest = httpRequest
+        return this
+    }
+
+
+    override fun handle(): HttpResponse {
         val parameters = arrayListOf<Any>()
+
+        if (httpRequest == null) {
+            throw RuntimeException("Bad usage of HttpRequestHandler, HttpRequest is missing")
+        }
 
         if (httpRequest.method == POST) {
             if (httpRequest.body.isNotEmpty()) {

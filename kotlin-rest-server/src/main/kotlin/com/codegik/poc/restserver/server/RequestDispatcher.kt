@@ -7,11 +7,8 @@ import com.codegik.poc.restserver.model.HttpMethod
 import com.codegik.poc.restserver.model.HttpRequest
 import com.codegik.poc.restserver.model.HttpResponse
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
-import com.codegik.poc.restserver.model.HttpStatus.HTTP_NOT_FOUND
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
-import com.codegik.poc.restserver.server.EndpointMapper.mappedEndpoints
-import com.codegik.poc.restserver.server.EndpointMapper.mappedMatchPatterns
-import com.codegik.poc.restserver.server.EndpointMapper.pathVariablePattern
+import com.codegik.poc.restserver.handler.RequestHandlerFactory.getHttpRequestHandler
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
@@ -54,28 +51,7 @@ class RequestDispatcher(private val clientSocket: Socket) {
      */
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
         return try {
-            val requestKey = Pair("${httpRequest.method}", "${httpRequest.endpoint}")
-
-            if (mappedEndpoints.containsKey(requestKey)) {
-                return mappedEndpoints[requestKey]?.handle(httpRequest)!!
-            } else {
-                mappedMatchPatterns.forEach { (endpoint, pathParamPattern) ->
-                    val matchKey = Pair("${httpRequest.method}", endpoint)
-                    if (pathParamPattern.matches(httpRequest.endpoint)) {
-                        if (mappedEndpoints.containsKey(matchKey)) {
-                            val pathParameters = pathParamPattern.findAll(httpRequest.endpoint)
-                                .map { it.groupValues }
-                                .filter { it.size > 1 }
-                                .flatMap { it.subList(1, it.size)}
-                                .toList()
-                            val httpRequestEnchant = httpRequest.copy(pathParameters = pathParameters)
-                            return mappedEndpoints[matchKey]?.handle(httpRequestEnchant)!!
-                        }
-                    }
-                }
-            }
-
-            return HttpResponse(status = HTTP_NOT_FOUND, body = "Not found")
+            return getHttpRequestHandler(httpRequest).handle()
         } catch (e: Exception) {
             e.printStackTrace()
             return HttpResponse(status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
@@ -158,14 +134,5 @@ class RequestDispatcher(private val clientSocket: Socket) {
         clientSocket.close()
 
         return true
-    }
-
-
-    private fun getPathParameters(endpoint: String): List<String> {
-        if (endpoint.contains("{")) {
-            return pathVariablePattern.findAll(endpoint).map { it.toString() }.toList()
-        }
-
-        return listOf()
     }
 }
