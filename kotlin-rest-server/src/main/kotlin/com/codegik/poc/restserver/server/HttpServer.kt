@@ -1,5 +1,6 @@
 package com.codegik.poc.restserver.server
 
+import com.codegik.poc.restserver.handler.RequestHandlerMapper.registerRequestHandlers
 import java.net.ServerSocket
 import java.util.concurrent.Executors
 
@@ -14,11 +15,15 @@ class HttpServer(
 
 
     fun start() {
+        val handlersMap = registerRequestHandlers()
+
         workerPool.submit {
-            println("Server start listening")
+            println("Server started on port ${serverSocket.localPort}")
             while (isAcceptingRequests) {
                 val clientSocket = serverSocket.accept()
-                workerPool.submit { RequestDispatcher(clientSocket).process() }
+                workerPool.submit {
+                    RequestDispatcher(clientSocket, handlersMap).process()
+                }
             }
             println("Server stop listening")
         }

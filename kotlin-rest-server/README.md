@@ -9,10 +9,11 @@ There are no external dependencies, everything is self-contained.
 - Java 17
 - Maven 3
 
+
 ## How it works
-```
-TDB
-```
+- The server start listening on port `6666` with `100` threads by default.
+- There is scan package at startup looking for endpoint definition.
+- Mapped endpoints are classified by number of path parameters.
 
 ## Compiling and Testing
 
@@ -22,10 +23,6 @@ TDB
 
 ## Running
 ```
-TBD
+./run
 ```
 
-## Samples
-```
-TBD
-```

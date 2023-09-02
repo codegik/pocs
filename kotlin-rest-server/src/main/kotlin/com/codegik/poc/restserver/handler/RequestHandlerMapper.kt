@@ -3,9 +3,8 @@ package com.codegik.poc.restserver.handler
 import com.codegik.poc.restserver.annotation.Delete
 import com.codegik.poc.restserver.annotation.Get
 import com.codegik.poc.restserver.annotation.Post
-import com.codegik.poc.restserver.model.HttpRequest
+import com.codegik.poc.restserver.model.Constants.Companion.PATH_VARIABLE_PATTERN
 import com.codegik.poc.restserver.model.HttpResponse
-import com.codegik.poc.restserver.model.PartitionedEndpointMap
 import com.codegik.poc.restserver.server.PackageScanner
 
 
@@ -17,17 +16,12 @@ import com.codegik.poc.restserver.server.PackageScanner
  *          @Get("/hello/{name}/{midName}/{lastNme}/my/friend")
  *          fun helloWithThreeRequestParamWithoutThreeParameters(name: String, nickname: String): HttpResponse
  */
-object RequestHandlerFactory {
+object RequestHandlerMapper {
 
-    private val scanner = PackageScanner()
-    private val pathVariablePattern = """\{[^}]*\}""".toRegex()
-    private val partitionedEndpointMap = registerEndpoints()
+    fun registerRequestHandlers(): RequestHandlerMap {
+        val requestHandlerMap = RequestHandlerMap()
 
-
-    private fun registerEndpoints(): PartitionedEndpointMap {
-        val partitionedEndpointMap = PartitionedEndpointMap()
-
-        scanner.loadRestApiClasses().forEach { restApiClass ->
+        PackageScanner().loadRestApiClasses().forEach { restApiClass ->
             val instance = restApiClass.constructors[0].newInstance()
 
             restApiClass.declaredMethods.forEach { method ->
@@ -35,7 +29,7 @@ object RequestHandlerFactory {
                     println("Mapping method ${restApiClass.name}.${method.name} -> FAILED (doesn't return HttpResponse type)")
                 } else {
                     method.annotations.forEach { annotation ->
-                        var key = when (annotation) {
+                        val key = when (annotation) {
                             is Get      -> Pair("${Get::class.simpleName!!.uppercase()}", "${annotation.path}")
                             is Post     -> Pair("${Post::class.simpleName!!.uppercase()}", "${annotation.path}")
                             is Delete   -> Pair("${Delete::class.simpleName!!.uppercase()}", "${annotation.path}")
@@ -50,9 +44,9 @@ object RequestHandlerFactory {
                                 cleanKey = Pair(key.first, cleanKey.second.dropLast(1))
                             }
 
-                            val countParameters = pathVariablePattern.findAll(cleanKey.second).count()
+                            val countParameters = PATH_VARIABLE_PATTERN.findAll(cleanKey.second).count()
 
-                            partitionedEndpointMap.put(countParameters, cleanKey, HttpRequestHandler(instance, method))
+                            requestHandlerMap.put(countParameters, cleanKey, HttpRequestHandler(instance, method))
                             println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
                         }
                     }
@@ -60,12 +54,6 @@ object RequestHandlerFactory {
             }
         }
 
-        return partitionedEndpointMap
+        return requestHandlerMap
     }
-
-
-    fun getHttpRequestHandler(httpRequest: HttpRequest): RequestHandler {
-        return partitionedEndpointMap.get(httpRequest);
-    }
-
 }

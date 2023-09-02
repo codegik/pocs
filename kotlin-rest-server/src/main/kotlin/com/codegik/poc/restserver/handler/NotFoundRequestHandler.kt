@@ -2,7 +2,6 @@ package com.codegik.poc.restserver.handler
 
 import com.codegik.poc.restserver.model.HttpRequest
 import com.codegik.poc.restserver.model.HttpResponse
-import com.codegik.poc.restserver.model.HttpStatus.HTTP_BAD_REQUEST
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_NOT_FOUND
 
 

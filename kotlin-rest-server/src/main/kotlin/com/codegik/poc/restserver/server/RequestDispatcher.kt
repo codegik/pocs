@@ -1,5 +1,6 @@
 package com.codegik.poc.restserver.server
 
+import com.codegik.poc.restserver.handler.RequestHandlerMap
 import com.codegik.poc.restserver.model.HttpHeader.CONNECTION
 import com.codegik.poc.restserver.model.HttpHeader.CONTENT_LENGTH
 import com.codegik.poc.restserver.model.HttpHeader.HTTP_VERSION
@@ -8,14 +9,16 @@ import com.codegik.poc.restserver.model.HttpRequest
 import com.codegik.poc.restserver.model.HttpResponse
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_INTERNAL_SERVER_ERROR
 import com.codegik.poc.restserver.model.HttpStatus.HTTP_VERSION_NOT_SUPPORTED
-import com.codegik.poc.restserver.handler.RequestHandlerFactory.getHttpRequestHandler
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.lang.Thread.sleep
 import java.net.Socket
 
-class RequestDispatcher(private val clientSocket: Socket) {
+class RequestDispatcher(
+    private val clientSocket: Socket,
+    private val endpointMap: RequestHandlerMap
+) {
     private lateinit var input: BufferedReader
     private lateinit var output: PrintWriter
 
@@ -45,13 +48,9 @@ class RequestDispatcher(private val clientSocket: Socket) {
     }
 
 
-    /**
-     * TODO
-     *  - create mechanism to classify the requests in number of arguments, this way we can avoid searching big list of endpoints every call
-     */
     private fun processRequest(httpRequest: HttpRequest): HttpResponse {
         return try {
-            return getHttpRequestHandler(httpRequest).handle()
+            return endpointMap.get(httpRequest).handle()
         } catch (e: Exception) {
             e.printStackTrace()
             return HttpResponse(status = HTTP_INTERNAL_SERVER_ERROR, body = "internal server error")
