@@ -10,7 +10,6 @@ import com.codegik.poc.restserver.server.PackageScanner
 
 /**
  * TODO
- *  - do not allow duplicated endpoint mapping
  *  - do not map method with number of request param different than number of arguments
  *      - ex:
  *          @Get("/hello/{name}/{midName}/{lastNme}/my/friend")
@@ -46,8 +45,12 @@ object RequestHandlerMapper {
 
                             val countParameters = PATH_VARIABLE_PATTERN.findAll(cleanKey.second).count()
 
-                            requestHandlerMap.put(countParameters, cleanKey, HttpRequestHandler(instance, method))
-                            println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
+                            if (requestHandlerMap.hasKey(cleanKey)) {
+                                println("Mapping method ${restApiClass.name}.${method.name} -> FAILED (path is duplicated)")
+                            } else {
+                                requestHandlerMap.put(countParameters, cleanKey, HttpRequestHandler(instance, method))
+                                println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
+                            }
                         }
                     }
                 }

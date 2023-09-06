@@ -43,6 +43,11 @@ class GetDummyApi {
         return "Hello world!"
     }
 
+    @Get("/hello/{budy}/my/friend")
+    fun helloWithDuplicatedPath(budy: String): HttpResponse {
+        return HttpResponse(status = HTTP_OK, body = "hello $budy my friend!")
+    }
+
     fun notAnnotatedWithApiMethod(): HttpResponse {
         return HttpResponse(status = HTTP_OK, body = "hello world!")
     }

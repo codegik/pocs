@@ -14,6 +14,19 @@ class RequestHandlerMap {
     private val mappedMatchPatterns = ConcurrentHashMap<String, Regex>()
 
 
+    fun hasKey(pair: Pair<String, String>): Boolean {
+        if (zeroParamEndpointMap.containsKey(pair)) {
+            return true
+        }
+
+        val containsDuplicated = makeRegex(pair.second)?.let { pathRegex ->
+            mappedMatchPatterns.keys.any { key -> pathRegex.pattern == makeRegex(key)!!.pattern }
+        }
+
+        return containsDuplicated ?: false
+    }
+
+
     fun put(count: Int, pair: Pair<String, String>, httpRequestHandler: HttpRequestHandler): Boolean {
         when (count) {
             0 -> zeroParamEndpointMap[pair] = httpRequestHandler
@@ -23,14 +36,8 @@ class RequestHandlerMap {
             else -> manyParamEndpointMap[pair] = httpRequestHandler
         }
 
-        if (pair.second.contains("{")) {
-            var endpointPattern = pair.second.replace("/", "\\/")
-
-            PATH_VARIABLE_PATTERN.findAll(pair.second).forEach { variable ->
-                endpointPattern = endpointPattern.replace(variable.value, PATH_VARIABLE_REPLACEMENT)
-            }
-
-            mappedMatchPatterns[pair.second] = endpointPattern.toRegex()
+        makeRegex(pair.second)?.also {
+            mappedMatchPatterns[pair.second] = it
         }
 
         return true
@@ -74,5 +81,20 @@ class RequestHandlerMap {
             3 -> threeParamEndpointMap[pair]
             else -> manyParamEndpointMap[pair]
         }
+    }
+
+
+    private fun makeRegex(path: String): Regex? {
+        if (path.contains("{")) {
+            var endpointPattern = path.replace("/", "\\/")
+
+            PATH_VARIABLE_PATTERN.findAll(path).forEach { variable ->
+                endpointPattern = endpointPattern.replace(variable.value, PATH_VARIABLE_REPLACEMENT)
+            }
+
+            return endpointPattern.toRegex()
+        }
+
+        return null
     }
 }
