@@ -8,13 +8,6 @@ import com.codegik.poc.restserver.model.HttpResponse
 import com.codegik.poc.restserver.server.PackageScanner
 
 
-/**
- * TODO
- *  - do not map method with number of request param different than number of arguments
- *      - ex:
- *          @Get("/hello/{name}/{midName}/{lastNme}/my/friend")
- *          fun helloWithThreeRequestParamWithoutThreeParameters(name: String, nickname: String): HttpResponse
- */
 object RequestHandlerMapper {
 
     fun registerRequestHandlers(): RequestHandlerMap {
@@ -45,10 +38,18 @@ object RequestHandlerMapper {
 
                             val countParameters = PATH_VARIABLE_PATTERN.findAll(cleanKey.second).count()
 
-                            if (requestHandlerMap.hasKey(cleanKey)) {
+                            if (annotation !is Post && countParameters != method.parameterCount) {
+                                println("Mapping method ${restApiClass.name}.${method.name} -> FAILED " +
+                                        "(path is expecting $countParameters parameters, " +
+                                        "but found ${method.parameterCount} in method)")
+                            } else if (requestHandlerMap.hasKey(cleanKey)) {
                                 println("Mapping method ${restApiClass.name}.${method.name} -> FAILED (path is duplicated)")
                             } else {
-                                requestHandlerMap.put(countParameters, cleanKey, HttpRequestHandler(instance, method))
+                                requestHandlerMap.put(
+                                    countParameters,
+                                    cleanKey,
+                                    HttpRequestHandler(instance, method)
+                                )
                                 println("Mapping endpoint $cleanKey -> ${restApiClass.name}.${method.name}")
                             }
                         }

@@ -100,7 +100,7 @@ class GetDummyApiTest {
 
 
 	@Test
-	fun shouldFailWhenRequestEndpointWithoutThreeParameters() {
+	fun shouldFailWhenRequestEndpointNotMapped() {
 		val request = HttpRequest.newBuilder()
 			.uri(URI("$rootUrl/hello/Inácio/Gomes/klassmann/my/friend"))
 			.GET()
@@ -108,8 +108,7 @@ class GetDummyApiTest {
 
 		val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
 
-		assertEquals(400, response.statusCode())
-		assertEquals("number of parameters doesn't match with number of arguments", response.body())
+		assertEquals(404, response.statusCode())
 	}
 
 }
