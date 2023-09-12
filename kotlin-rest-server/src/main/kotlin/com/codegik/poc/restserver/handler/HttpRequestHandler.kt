@@ -7,10 +7,6 @@ import com.codegik.poc.restserver.model.HttpStatus.HTTP_BAD_REQUEST
 import java.lang.reflect.Method
 
 
-/**
- * TODO
- * - add urlencode/decode support for request parameters
- */
 class HttpRequestHandler(
     private val instance: Any,
     private val method: Method
