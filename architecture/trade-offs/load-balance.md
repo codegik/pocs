@@ -37,12 +37,11 @@
 
 ### Pros
 
--
-- Server capacity awareness to improve the balancing.
+- The request assignment is deterministic and it is easy to determine the assigned server.
 
 ### Cons
 
-- Overloaded servers due long lived connections.
+- Overloaded servers due expensive service time or when each request have different service time.
 
 ## Weighted response time
 
