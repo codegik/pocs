@@ -1,0 +1,21 @@
+app:
+  name: sample-generated-app
+
+  domain:
+    - Product:
+      - name: id
+        type: String
+        isKey: true
+      - name: description
+        type: String
+    - User:
+      - name: email
+        type: String
+        isKey: true
+      - name: fullName
+        type: String
+
+  controller:
+    - Product:
+      - GET
+      - POST
