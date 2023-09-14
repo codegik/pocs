@@ -6,7 +6,6 @@ app:
       fields:
       - name: id
         type: String
-        isKey: true
       - name: description
         type: String
     - name: User
@@ -19,6 +18,3 @@ app:
 
   controllers:
     - domain: Product
-      methods:
-        - GET
-        - POST

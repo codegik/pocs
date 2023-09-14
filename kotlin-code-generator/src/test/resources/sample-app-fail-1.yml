@@ -22,3 +22,6 @@ app:
       methods:
         - GET
         - POST
+    - domain: InvalidDomainName
+      methods:
+        - GET
