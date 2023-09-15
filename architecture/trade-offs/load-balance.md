@@ -47,11 +47,11 @@
 
 ### Pros
 
-- Server capacity awareness to improve the balancing.
+- Server average response time awareness to reduce the response time in scenarios where response time is the most important thing.
 
 ### Cons
 
--
+- Considering only response time average could overload server servers.
 
 ## Randomized static
 
