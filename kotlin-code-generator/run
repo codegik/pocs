@@ -1,5 +1,5 @@
 #!/bin/sh
 
-mvn clean compile exec:java -Dexec.mainClass=com.codegik.poc.restserver.AppKt
+mvn clean compile exec:java -Dexec.mainClass=com.codegik.poc.codegen.AppKt
 
 exit 0
