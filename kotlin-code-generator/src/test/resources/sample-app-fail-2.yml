@@ -1,6 +1,4 @@
 app:
-  name: sample-generated-app
-
   domains:
     - name: Product
       fields:

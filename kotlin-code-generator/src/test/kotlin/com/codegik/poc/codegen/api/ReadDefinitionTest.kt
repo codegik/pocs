@@ -14,7 +14,6 @@ class ReadDefinitionTest {
 	fun shouldSuccessWhenReadYml() {
 		val yml = ReadDefinition().fromYml("src/test/resources/sample-app.yml")
 
-		assertEquals("sample-generated-app", yml!!.app.name)
 		assertEquals("Product", yml!!.app.domains[0].name)
 		assertEquals("id", yml!!.app.domains[0].fields[0].name)
 		assertEquals("String", yml!!.app.domains[0].fields[0].type)

@@ -5,9 +5,9 @@ data class YmlDefinition(
 )
 
 data class App(
-    val name: String,
-    val domains: List<Domain>,
-    val controllers: List<Controller>
+    val packageName: String = "com.generated",
+    val domains: List<Domain> = listOf(),
+    val controllers: List<Controller> = listOf()
 )
 
 data class Domain(
