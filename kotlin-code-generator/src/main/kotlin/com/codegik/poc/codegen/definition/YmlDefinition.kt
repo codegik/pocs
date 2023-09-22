@@ -1,4 +1,4 @@
-package com.codegik.poc.codegen
+package com.codegik.poc.codegen.definition
 
 data class YmlDefinition(
     val app: App

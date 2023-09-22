@@ -1,6 +1,6 @@
-package com.codegik.poc.codegen
+package com.codegik.poc.codegen.definition
 
-import com.codegik.poc.codegen.MapperConfig.mapper
+import com.codegik.poc.codegen.config.MapperConfig.mapper
 import kotlin.io.path.Path
 
 class ReadDefinition {

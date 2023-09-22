@@ -1,4 +1,4 @@
-package com.codegik.poc.codegen
+package com.codegik.poc.codegen.config
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.DeserializationFeature

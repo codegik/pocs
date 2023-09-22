@@ -1,6 +1,6 @@
-package com.codegik.poc.codegen.api
+package com.codegik.poc.codegen.definition
 
-import com.codegik.poc.codegen.ReadDefinition
+import com.codegik.poc.codegen.definition.ReadDefinition
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
