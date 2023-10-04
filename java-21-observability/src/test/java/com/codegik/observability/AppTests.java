@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Random;
+
 import static com.codegik.observability.Metrics.measureLatency;
 import static com.codegik.observability.Metrics.metricsMap;
 import static com.codegik.observability.Metrics.reset;
@@ -55,7 +57,25 @@ class AppTests {
 	}
 
 
-	private void sleep(Integer time) {
+	@Test
+	void shouldRegisterMetricPercentiles() {
+		final Random r = new Random();
+		for (int i = 0; i < 100; i++) {
+			measureLatency("sleep", () -> {
+				sleep(r.nextInt(100));
+				return true;
+			});
+		}
+
+		var metricsMap = metricsMap();
+
+		assertEquals(100, metricsMap.get("sleep.latency.success"));
+		assertTrue(metricsMap.get("sleep.latency.p50") < metricsMap.get("sleep.latency.p90"));
+		assertTrue(metricsMap.get("sleep.latency.p90") < metricsMap.get("sleep.latency.p99"));
+	}
+
+
+	private void sleep(int time) {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
