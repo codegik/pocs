@@ -18,6 +18,7 @@ build = {
 	modules = {
 		setup = "config/setup.lua",
 		account = "src/account.lua",
+		transaction = "src/transaction.lua",
 		main = "src/app.lua",
 	},
 }

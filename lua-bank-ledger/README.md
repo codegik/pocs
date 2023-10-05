@@ -2,8 +2,13 @@
 
 ## Requirements
 
-- Lua 5.4.6 (brew install lua)
-- LuaRocks 3.9.2 (brew install luarocks)
+- Lua 5.4.6
+- LuaRocks 3.9.2
+
+```shell
+brew install lua
+brew install luarocks
+```
 
 ## Installing dependencies
 
@@ -18,7 +23,7 @@ luarocks install --deps-only lua-bank-ledger-dev-1.rockspec
 Need to create system variable to recognize the dependencies.
 
 ```shell
-export LUA_INIT="@src/setup.lua"
+export LUA_INIT="@config/setup.lua"
 ```
 
 ## Building
