@@ -2,3 +2,8 @@
 /lua
 /lua_modules
 /.luarocks
+.idea
+.vscode
+.DS_Store
+target
+

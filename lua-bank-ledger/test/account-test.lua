@@ -1,7 +1,9 @@
 local lu = require("luaunit")
-require("account")
+require("src/account")
 
-function testNegativeAmount()
+local TestAccount = {}
+
+function TestAccount:testShouldHaveNegativeAmount()
 	local account = Account("1234")
 
 	account.addBalance(4)
@@ -10,7 +12,7 @@ function testNegativeAmount()
 	lu.assertEquals(-6, account.getBalance())
 end
 
-function testPositiveAmount()
+function TestAccount:testShouldHavePositiveAmount()
 	local account = Account("1234")
 
 	account.addBalance(4)
@@ -18,4 +20,4 @@ function testPositiveAmount()
 	lu.assertEquals(4, account.getBalance())
 end
 
-os.exit(lu.LuaUnit.run())
+return TestAccount

@@ -10,19 +10,19 @@ description = {
 }
 dependencies = {
 	"lua >= 5.1, < 5.5",
-	"luaunit >= 3.4-1",
 	"inspect >= 3.1",
 }
 build = {
 	type = "builtin",
 	modules = {
-		setup = "config/setup.lua",
-		account = "src/account.lua",
-		transaction = "src/transaction.lua",
-		main = "src/app.lua",
+		["lua-bank-ledger"] = "src/app.lua",
 	},
 }
 test = {
 	type = "command",
-	script = "test/account.test.lua",
+	command = "lua test/test.lua -o TAP",
+}
+
+test_dependencies = {
+	"luaunit >= 3.4",
 }

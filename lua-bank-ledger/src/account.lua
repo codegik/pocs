@@ -1,4 +1,7 @@
-function Account(number, balance)
+function Account(
+	number, --[[string]]
+	balance --[[int]]
+)
 	local self = {}
 
 	local number = number
@@ -16,12 +19,16 @@ function Account(number, balance)
 		return balance
 	end
 
-	function self.addBalance(amount)
+	function self.addBalance(
+		amount --[[int]]
+	)
 		balance = balance + amount
 		return balance
 	end
 
-	function self.subtractBalance(amount)
+	function self.subtractBalance(
+		amount --[[int]]
+	)
 		balance = balance - amount
 		return balance
 	end
