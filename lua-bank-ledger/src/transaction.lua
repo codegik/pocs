@@ -16,7 +16,15 @@ function Transaction(
 		to.addBalance(amount)
 
 		-- md5;from acc number;to acc number;amount
-		local tx = from.getNumber() .. ";" .. to.getNumber() .. ";" .. amount .. ";" .. from.getBalance()
+		local tx = from.getNumber()
+			.. ";"
+			.. to.getNumber()
+			.. ";"
+			.. amount
+			.. ";"
+			.. from.getBalance()
+			.. ";"
+			.. to.getBalance()
 		tx = md5.sumhexa(tx) .. ";" .. tx
 
 		return tx

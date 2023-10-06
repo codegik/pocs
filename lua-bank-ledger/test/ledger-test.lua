@@ -30,7 +30,10 @@ function TestLedger:testShouldRestoreTxs()
 	ledger.process(Transaction(account2, account1, 2))
 	ledger.process(Transaction(account1, account2, 7))
 
-	ledger.restore()
+	local accounts = ledger.restore()
+
+	lu.assertEquals(account1.getBalance(), accounts[account1.getNumber()].getBalance())
+	lu.assertEquals(account2.getBalance(), accounts[account2.getNumber()].getBalance())
 end
 
 return TestLedger
