@@ -2,7 +2,7 @@ rockspec_format = "3.0"
 package = "lua-bank-ledger"
 version = "dev-1"
 source = {
-	url = "git+ssh://git@github.tlcinternal.com/iklassman/pocs.git",
+	url = "https://github.com/codegik/pocs.git",
 }
 description = {
 	homepage = "*** please enter a project homepage ***",
