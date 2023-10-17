@@ -7,17 +7,18 @@ import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
+import java.lang.Thread.sleep
 import java.net.Socket
 import java.util.concurrent.Executors
 
 
 class MinionClient(
-    host: String,
-    port: Int = 6666
+    private val host: String,
+    private val port: Int = 6666
 ) {
-    private val clientSocket = Socket(host, port)
-    private val output = PrintWriter(clientSocket.getOutputStream(), true)
-    private val input = BufferedReader(InputStreamReader(clientSocket.inputStream))
+    private var clientSocket = Socket(host, port)
+    private var output = PrintWriter(clientSocket.getOutputStream(), true)
+    private var input = BufferedReader(InputStreamReader(clientSocket.inputStream))
     private val workerPool = Executors.newFixedThreadPool(10)
     private val gson = Gson()
 
@@ -31,8 +32,8 @@ class MinionClient(
 
     private fun startListening(): Boolean {
         try {
-            println("[Minion] connected")
             while (!clientSocket.isClosed) {
+                println("[Minion] Connected")
                 val success = readMessageAsString { strMessage ->
                     println("[Minion] received message: $strMessage")
                     processRequest(strMessage) { response ->
@@ -42,7 +43,8 @@ class MinionClient(
 
                 if (!success) {
                     println("[Minion] Gru disconnected me")
-                    break
+                    close()
+                    reconnect()
                 }
             }
 
@@ -92,5 +94,25 @@ class MinionClient(
         output.println(gson.toJson(response))
 
         return true
+    }
+
+
+    private fun reconnect(): Boolean {
+        while (true) {
+            try {
+                sleep(5000)
+
+                if (clientSocket.isClosed) {
+                    clientSocket = Socket(host, port)
+                    output = PrintWriter(clientSocket.getOutputStream(), true)
+                    input = BufferedReader(InputStreamReader(clientSocket.inputStream))
+                    return true
+                }
+            } catch (e: Exception) {
+                println("[Minion] Trying to reconnect")
+            }
+        }
+
+        return false
     }
 }

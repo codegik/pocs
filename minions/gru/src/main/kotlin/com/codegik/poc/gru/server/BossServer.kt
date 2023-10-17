@@ -18,7 +18,7 @@ class BossServer(
 
     fun start() {
         workerPool.submit {
-            println("Boss Server started on port ${serverSocket.localPort}")
+            println("[Gru] Listening on port ${serverSocket.localPort}")
             while (isAcceptingRequests) {
                 val clientSocket = serverSocket.accept()
                 val id = "${UUID.randomUUID().toString()}"
@@ -27,7 +27,7 @@ class BossServer(
                     minionConnections[id]?.startListening()
                 }
             }
-            println("Boss Server stop listening")
+            println("[Gru] Stop listening")
         }
     }
 
