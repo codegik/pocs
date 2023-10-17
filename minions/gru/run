@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mvn clean compile exec:java -Dexec.mainClass=com.codegik.poc.gru.AppKt
+
+exit 0
