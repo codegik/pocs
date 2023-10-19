@@ -1,7 +1,6 @@
 package com.codegik.poc.gru.server
 
-import com.codegik.poc.gru.model.Action
-import com.codegik.poc.gru.model.Message
+import com.codegik.poc.gru.model.StressTestConfig
 import com.google.gson.Gson
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -14,21 +13,21 @@ import java.net.Socket
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BossServerTest {
+class GruServerTest {
 	private val host = "localhost"
 	private val port = 9999
-	private val bossServer = BossServer(9999)
+	private val gruServer = GruServer(9999)
 
 
 	@BeforeAll
 	fun before() {
-		bossServer.start()
+		gruServer.start()
 	}
 
 
 	@AfterAll
 	fun after() {
-		bossServer.stop()
+		gruServer.stop()
 	}
 
 
@@ -37,7 +36,7 @@ class BossServerTest {
 		val client = Socket(host, port)
 		val output = PrintWriter(client.getOutputStream(), true)
 		val input = BufferedReader(InputStreamReader(client.inputStream))
-		val json = Gson().toJson(Message(Action.LOG, listOf("hey", "dude")))
+		val json = Gson().toJson(StressTestConfig("https://google.com", 10))
 
 		println("[Minion] sending: $json")
 		output.println(json)

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+HOST="localhost"
+PORT=6666
+
+if [ $# -gt 0 ]; then
+  HOST=$1
+fi
+
+if [ $# -gt 1 ]; then
+  PORT=$2
+fi
+
+echo "[Minion] Looking for lovely Gru on $HOST $PORT"
+mvn -q clean compile exec:java -Dexec.mainClass=com.codegik.poc.minion.AppKt -Dexec.args="$HOST $PORT" -Djdk.internal.httpclient.disableHostnameVerification=true
+
+exit 0

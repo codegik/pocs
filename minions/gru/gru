@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+send_command() {
+  command=$1
+  json=$2
+
+  echo "$command -> $json" | nc -w 2 localhost 6666
+}
+
+if [ $# -eq 0 ]; then
+  echo "[Gru] Starting command server"
+  mvn -q clean compile exec:java -Dexec.mainClass=com.codegik.poc.gru.AppKt
+else if [ $# -eq 2 ]; then
+    case $1 in
+      "test") send_command "$1" "$2" ;;
+      *) echo "Invalid option '$1'"
+    esac
+  fi
+fi
+
+
+exit 0

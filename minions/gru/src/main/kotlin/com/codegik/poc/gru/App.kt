@@ -1,7 +1,7 @@
 package com.codegik.poc.gru
 
-import com.codegik.poc.gru.server.BossServer
+import com.codegik.poc.gru.server.GruServer
 
 fun main(args: Array<String>) {
-    BossServer().start()
+    GruServer().start()
 }

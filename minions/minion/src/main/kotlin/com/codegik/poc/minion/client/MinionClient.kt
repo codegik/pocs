@@ -1,8 +1,11 @@
 package com.codegik.poc.minion.client
 
-import com.codegik.poc.minion.model.Message
+import com.codegik.poc.minion.model.Command.SEPARATOR
+import com.codegik.poc.minion.model.Command.TEST
 import com.codegik.poc.minion.model.Response
 import com.codegik.poc.minion.model.Status
+import com.codegik.poc.minion.model.StressTestConfig
+import com.codegik.poc.minion.rest.RestClient
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -13,12 +16,12 @@ import java.util.concurrent.Executors
 
 
 class MinionClient(
-    private val host: String,
+    private val host: String = "localhost",
     private val port: Int = 6666
 ) {
-    private var clientSocket = Socket(host, port)
-    private var output = PrintWriter(clientSocket.getOutputStream(), true)
-    private var input = BufferedReader(InputStreamReader(clientSocket.inputStream))
+    private var clientSocket: Socket? = null
+    private var output: PrintWriter? = null
+    private var input: BufferedReader? = null
     private val workerPool = Executors.newFixedThreadPool(10)
     private val gson = Gson()
 
@@ -32,25 +35,25 @@ class MinionClient(
 
     private fun startListening(): Boolean {
         try {
-            while (!clientSocket.isClosed) {
-                println("[Minion] Connected")
+            connect()
+            while (!clientSocket?.isClosed!!) {
                 val success = readMessageAsString { strMessage ->
-                    println("[Minion] received message: $strMessage")
+                    println("[Minion] Gru told me to to this: $strMessage")
                     processRequest(strMessage) { response ->
                         writeResponse(response)
                     }
                 }
 
                 if (!success) {
-                    println("[Minion] Gru disconnected me")
+                    println("[Minion] Gru kicked me")
                     close()
-                    reconnect()
+                    connect()
                 }
             }
 
             return false
         } catch (e: Exception) {
-            println("[Minion] Gru disconnected me")
+            println("[Minion] Gru kicked me")
             e.printStackTrace()
             close()
 
@@ -60,16 +63,16 @@ class MinionClient(
 
 
     private fun close(): Boolean {
-        input.close()
-        output.close()
-        clientSocket.close()
+        input?.close()
+        output?.close()
+        clientSocket?.close()
 
         return true
     }
 
 
     private fun readMessageAsString(process: (String) -> Boolean): Boolean {
-        val message = input.readLine()
+        val message = input?.readLine()
 
         if (message != null && message.trim().isNotEmpty()) {
             return process(message)
@@ -80,8 +83,14 @@ class MinionClient(
 
 
     private fun processRequest(message: String, process: (Response) -> Boolean): Boolean {
-        return try {
-            val msg = gson.fromJson(message, Message::class.java)
+        try {
+            val (command, json) = message.split(SEPARATOR)
+            val data = gson.fromJson(json, StressTestConfig::class.java)
+
+            when (command) {
+                TEST -> return RestClient(data).start()
+            }
+
             return process(Response(status = Status.OK))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -91,25 +100,25 @@ class MinionClient(
 
 
     private fun writeResponse(response: Response): Boolean {
-        output.println(gson.toJson(response))
+        output?.println(gson.toJson(response))
 
         return true
     }
 
 
-    private fun reconnect(): Boolean {
+    private fun connect(): Boolean {
         while (true) {
             try {
-                sleep(5000)
-
-                if (clientSocket.isClosed) {
+                if (clientSocket == null || clientSocket!!.isClosed) {
                     clientSocket = Socket(host, port)
-                    output = PrintWriter(clientSocket.getOutputStream(), true)
-                    input = BufferedReader(InputStreamReader(clientSocket.inputStream))
+                    output = PrintWriter(clientSocket!!.getOutputStream(), true)
+                    input = BufferedReader(InputStreamReader(clientSocket!!.inputStream))
+                    println("[Minion] I'm in the party")
                     return true
                 }
             } catch (e: Exception) {
-                println("[Minion] Trying to reconnect")
+                println("[Minion] Trying to join the party")
+                sleep(5000)
             }
         }
 
