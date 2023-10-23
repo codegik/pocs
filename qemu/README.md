@@ -1,5 +1,7 @@
 # Installing Xubuntu in MacOS M1 with QEMU
 
+This is a complete installation of Xubuntu including GUI and network.
+
 ## Installing QEMU
 
 ```
