@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+    <title>Todos</title>
+    <h1>hello</h1>
+
+    <div th:each="todo : ${todos}">
+        <span th:text="${todo.id}"></span> - <span th:text="${todo.title}"></span>
+        <button th:attr="hx-delete=@{/todos/{id}(id=${todo.id})}">delete</button>
+    </div>
+</body>
+</html>
