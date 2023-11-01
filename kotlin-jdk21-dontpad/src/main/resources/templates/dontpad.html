@@ -22,12 +22,18 @@
 <body>
     <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
     <h1>Dontpad = Kotlin + Thymeleaf + Websocket + Htmx</h1>
+    <h2><span th:text="${dontpadName}"></span></h2>
 
     <div style="display: block;">
         <div class="boxsizingBorder">
-            <textarea cols="2" rows="10"></textarea>
+            <textarea cols="2" rows="10" name="dontpadValue" th:text="${dontpadValue}"></textarea>
         </div>
         <a href="/">Back to home</a>
+        <button th:attr="hx-post=@{/dontpad/{dontpadName}(dontpadName=${dontpadName})}"
+                hx-include="[name='dontpadValue']"
+                hx-swap="none">
+            Update
+        </button>
     </div>
 
 </body>
