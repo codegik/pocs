@@ -3,16 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dontpad</title>
 </head>
+
 <body>
     <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
-    <title>Todos</title>
-    <h1>hello</h1>
+    <h1>Dontpad = Kotlin + Thymeleaf + Websocket + Htmx</h1>
 
-    <div th:each="todo : ${todos}">
-        <span th:text="${todo.id}"></span> - <span th:text="${todo.title}"></span>
-        <button th:attr="hx-delete=@{/todos/{id}(id=${todo.id})}">delete</button>
-    </div>
+    <input name="dontpad-name" />
+    <button hx-post="/dontpad" hx-include="[name='dontpad-name']" hx-target="body">Create</button>
 </body>
 </html>
