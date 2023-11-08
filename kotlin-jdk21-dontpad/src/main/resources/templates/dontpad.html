@@ -21,19 +21,26 @@
 
 <body>
     <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+
     <h1>Dontpad = Kotlin + Thymeleaf + Websocket + Htmx</h1>
     <h2><span th:text="${dontpadName}"></span></h2>
+    <hr/>
 
     <div style="display: block;">
         <div class="boxsizingBorder">
-            <textarea cols="2" rows="10" name="dontpadValue" th:text="${dontpadValue}"></textarea>
+            <div hx-ext="ws" ws-connect="/my-websocket-endpoint">
+                <p/><div id="notifications"></div></p>
+                <form ws-send hx-posted="javascript:this.reset();">
+                    <textarea cols="2" rows="10" id="dontpadValue" name="dontpadValue" th:text="${dontpadValue}"></textarea>
+                    <input type="hidden" id="dontpadName" name="dontpadName" th:value="${dontpadName}" />
+                    <p>
+                        <a href="/">Back to home</a>
+                        <input type="submit" value="Update" />
+                    </p>
+                </form>
+            </div>
         </div>
-        <a href="/">Back to home</a>
-        <button th:attr="hx-post=@{/dontpad/{dontpadName}(dontpadName=${dontpadName})}"
-                hx-include="[name='dontpadValue']"
-                hx-swap="none">
-            Update
-        </button>
     </div>
 
 </body>

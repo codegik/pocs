@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
 
-data class Todo(val id: Int, val title: String)
 
 @Controller
 @RequestMapping("/")
@@ -42,17 +40,6 @@ class DontpadView(val dontpadService: DontpadService) {
         if (dontpadService.create(dontpadName)) {
             response.addHeader("HX-Redirect", "/dontpad/$dontpadName")
         }
-
-        return "";
-    }
-
-
-    @PostMapping("/dontpad/{dontpadName}")
-    @ResponseBody
-    fun update(@PathVariable("dontpadName") dontpadName: String,
-               @RequestParam("dontpadValue") dontpadValue: String): String {
-
-        dontpadService.update(dontpadName, dontpadValue)
 
         return "";
     }
