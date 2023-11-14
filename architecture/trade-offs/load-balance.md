@@ -1,6 +1,6 @@
 # Load Balancers
 
-## Round-robin
+## 1. Round-robin
 
 ### Cons
 
@@ -13,7 +13,7 @@
 - easy to implement
 - zero overhead beside hotspot
 
-## Least-connected
+## 2. Least-connected
 
 ### Pros
 
@@ -23,7 +23,7 @@
 
 - Overloaded servers due hotspot.
 
-## Least-load / Resource-based
+## 3. Least-load / Resource-based
 
 ### Pros
 
@@ -33,7 +33,7 @@
 
 - Response time, timeout, less availability. It might overload servers that are not providing health information due agent failures.
 
-## Weighted round robin
+## 4. Weighted round robin
 
 ### Pros
 
@@ -43,7 +43,7 @@
 
 - Overloaded servers due expensive service time or when each request have different service time.
 
-## Weighted response time
+## 5. Weighted response time
 
 ### Pros
 
@@ -51,9 +51,9 @@
 
 ### Cons
 
-- Considering only response time average could overload server servers.
+- Considering only response time average could overload servers.
 
-## Randomized static
+## 6. Randomized static
 
 ### Pros
 
@@ -63,23 +63,29 @@
 
 - The performance of this strategy (measured in total execution time for a given fixed set of tasks) decreases with the maximum size of the tasks.
 
-Work stealing
+## 7. Work stealing
 
-## Client Side
+### Pros
+
+- Reduce the idle time of workers since each worker can steal subtask from others.
+- Reduce overload of workers due well adapt to dynamic and irregular worloads.
 
 ### Cons
 
-- Client-side load balancing tends to suffer worse latency than server-side load balancing.
-- The client may have to wait for a timeout before it tries another server.
--
+- Could introduce non-determinism and unpredictability since the subtast execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
+
+## 8. Client Side
 
 ### Pro
 
 - tends to enjoy greater throughput than server-side load balancing.
 
-## Server Side
-
 ### Cons
+
+- Client-side load balancing tends to suffer worse latency than server-side load balancing.
+- The client may have to wait for a timeout before it tries another server.
+
+## 9. Server Side
 
 ### Pros
 
@@ -87,18 +93,20 @@ Work stealing
 - no latency penalty to the client
 - unique destination for many clients
 
-## Prefix Sum
+### Cons
+
+## 10. Prefix Sum
+
+### Pros
+
+- By dividing the tasks in such a way as to give the same amount of computation to each processor
 
 ### Cons
 
 - Only works for tasks can be subdivided
 - Most of the time, the execution time of a task is unknown and only rough approximations are available, so is not viable for these scenarios.
 
-### Pros
-
-- By dividing the tasks in such a way as to give the same amount of computation to each processor
-
-## Master-Worker
+## 11. Master-Worker
 
 ### Pros
 
@@ -109,25 +117,27 @@ Work stealing
 - it has difficulty adapting to a large number of processors because of the high amount of necessary communications
 - lack of scalability makes it quickly inoperable in very large servers or very large parallel computers
 
-## Work stealing
+## 12. IP Hash
 
 ### Pros
 
+- Allows dropped connections be returned to the same server originally handling it.
+
 ### Cons
 
-## IP hash
+- The re-hashing could unecessary move active connections to other server due weight change event cousing low performance.
+
+## 13. Consistent Hashing
 
 ### Pros
 
-### Cons
-
-## Consistent Hashing
-
-### Pros
+- The re-hashing doesn't move active connections to other server.
 
 ### Cons
 
-## Resource-based / Custom metrics
+- Skewed Load when add/remove server.
+
+## 14. Resource-based / Custom metrics
 
 ### Pros
 
