@@ -37,59 +37,61 @@
 
 ### Pros
 
-- The request assignment is deterministic and it is easy to determine the assigned server.
+- Performance: Most request assignment could be influentiated to determine the assigned server.
 
 ### Cons
 
-- Overloaded servers due expensive service time or when each request have different service time.
+- Performance: long running requests could overload servers with less weigh.
 
 ## 5. Weighted response time
 
 ### Pros
 
-- Server average response time awareness to reduce the response time in scenarios where response time is the most important thing.
+- Performance: Server average response time awareness where response time is the most important thing.
 
 ### Cons
 
-- Considering only response time average could overload servers.
+- Overload servers: its considering only response time average.
 
 ## 6. Randomized static
 
 ### Pros
 
-- Don't need for a distribution master because every processor knows what task is assigned to it.
+- Avoid communication costs: don't need for a distribution master because every is assigned randomly.
 
 ### Cons
 
-- The performance of this strategy (measured in total execution time for a given fixed set of tasks) decreases with the maximum size of the tasks.
+- Decrease performance and server overload: its not considering server resources to distribute a task.
+
 
 ## 7. Work stealing
 
 ### Pros
 
-- Reduce the idle time of workers since each worker can steal subtask from others.
-- Reduce overload of workers due well adapt to dynamic and irregular worloads.
+- Reduce the idle time of workers: each worker can steal subtask from others.
+- Reduce overload of workers: well adaptation to dynamic and irregular worloads.
 
 ### Cons
 
-- Could introduce non-determinism and unpredictability since the subtast execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
+- Introducing non-determinism and Unpredictability: the task execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
 
 ## 8. Client Side
 
 ### Pro
 
-- tends to enjoy greater throughput than server-side load balancing.
+- Less latency: the client can directly invoke the backend servers removing an extra hop for the load balancer.
+- Reduce costs: no need server-side load balancer.
 
 ### Cons
 
-- Client-side load balancing tends to suffer worse latency than server-side load balancing.
-- The client may have to wait for a timeout before it tries another server.
+- Server overload: the client is not aware of the server resources.
+
 
 ## 9. Server Side
 
 ### Pros
 
-- it could obtain server availability much faster.
+- Server awareness: it could obtain server resource awareness to distribute the work properly.
 - no latency penalty to the client
 - unique destination for many clients
 
