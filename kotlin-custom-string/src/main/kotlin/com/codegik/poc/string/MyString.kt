@@ -1,7 +1,7 @@
 package com.codegik.poc.string
 
 class MyString(private val value: String) {
-    // foreach,reverse,equals,replace,substring,trim,toJson,hashCode
+    // substring,trim,toJson
 
     private var length: Int = -1;
 
@@ -17,9 +17,11 @@ class MyString(private val value: String) {
 
     fun toArray(): CharArray {
         var values = CharArray(length())
+        var i = 0
 
-        value.forEachIndexed { index, element ->
-            values[index] = element
+        for (c in value) {
+            values[i] = c
+            i++
         }
 
         return values
@@ -29,20 +31,24 @@ class MyString(private val value: String) {
         assert(index >= 0)
         assert(index < length())
 
-        value.forEachIndexed { i, element ->
-            if (i == index) {
-                return element
+        var i = 0
+        for (c in value) {
+            if (index == i) {
+                return c
             }
+            i++
         }
 
         throw RuntimeException("IndexOutOfBound")
     }
 
     fun indexOf(char: Char): Int {
-        value.forEachIndexed { i, element ->
-            if (element == char) {
-                return i
+        var index = 0
+        for (i in value) {
+            if (char == i) {
+                return index
             }
+            index++
         }
 
         throw RuntimeException("Char not found")
@@ -65,6 +71,42 @@ class MyString(private val value: String) {
 
     fun iterator(): MyStringIterator {
         return MyStringIterator(this)
+    }
+
+    fun foreach(action: (Char) -> Unit) {
+        for (i in value) {
+            action(i)
+        }
+    }
+
+    fun reverse(): String {
+        var reversed = ""
+
+        for (c in value) {
+            reversed = c + reversed
+        }
+
+        return reversed
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return this.hashCode() == other.hashCode()
+    }
+
+    override fun hashCode(): Int {
+        var h = 0
+        for (c in value) {
+            h = 31 * h + (c.toInt() and 0xff)
+        }
+        return h
+    }
+
+    fun replace(oldChar: Char, newChar: Char): MyString {
+        var result = ""
+        for (c in value) {
+            result += (if (c == oldChar) newChar else c)
+        }
+        return MyString(result)
     }
 }
 

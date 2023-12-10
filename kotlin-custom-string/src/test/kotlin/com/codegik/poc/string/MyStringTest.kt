@@ -48,4 +48,40 @@ class MyStringTest {
 		assertEquals(0, MyString("ae").indexOf('a'))
 		assertEquals(1, MyString("ae").indexOf('e'))
 	}
+
+	@Test
+	fun foreach() {
+		var result = ""
+		val expected = "test"
+
+		MyString(expected).foreach {
+			result += it
+		}
+
+		assertEquals(expected, result)
+	}
+
+	@Test
+	fun reverse() {
+		assertEquals("qwert", MyString("trewq").reverse())
+	}
+
+	@Test
+	fun hashCodeValidation() {
+		assertEquals(108003713, MyString("qwert").hashCode())
+		assertEquals(MyString("qwert").hashCode(), MyString("qwert").hashCode())
+	}
+
+	@Test
+	fun equals() {
+		assertEquals(MyString("qwert"), MyString("qwert"))
+		assertTrue(MyString("qwert") == MyString("qwert"))
+		assertTrue(MyString("qwert").equals(MyString("qwert")))
+	}
+
+	@Test
+	fun replace() {
+		assertEquals(MyString("wwert"), MyString("qwert").replace('q', 'w'))
+		assertEquals(MyString("wwwrt"), MyString("qwert").replace('q', 'w').replace('e', 'w'))
+	}
 }
