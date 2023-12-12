@@ -68,12 +68,15 @@
 
 ### Pros
 
-- Reduce the idle time of workers: each worker can steal subtask from others.
-- Reduce overload of workers: well adaptation to dynamic and irregular worloads.
+- Scalability
+  - Reduce the idle time of workers: each worker can steal subtask from others.
+- Performance
+    - Reduce overload of workers: well adaptation to dynamic and irregular worloads.
 
 ### Cons
 
-- Introducing non-determinism and Unpredictability: the task execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
+- Complexity
+  - Introducing non-determinism and Unpredictability: the task execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
 
 ## 8. Client Side
 
