@@ -78,72 +78,47 @@
 - Complexity
   - Introducing non-determinism and Unpredictability: the task execution depends of the availability. The algorithm can produce differente results for each run making harder to debugging and test.
 
-## 8. Client Side
 
-### Pro
-
-- Less latency: the client can directly invoke the backend servers removing an extra hop for the load balancer.
-- Reduce costs: no need server-side load balancer.
-
-### Cons
-
-- Server overload: the client is not aware of the server resources.
-
-
-## 9. Server Side
+## 8. Prefix Sum
 
 ### Pros
 
-- Server awareness: it could obtain server resource awareness to distribute the work properly.
-- no latency penalty to the client
-- unique destination for many clients
-
-### Cons
-
-## 10. Prefix Sum
-
-### Pros
-
-- By dividing the tasks in such a way as to give the same amount of computation to each processor
+- Performance: When have static distribution with full knowledge of the tasks.
 
 ### Cons
 
 - Only works for tasks can be subdivided
 - Most of the time, the execution time of a task is unknown and only rough approximations are available, so is not viable for these scenarios.
 
-## 11. Master-Worker
+
+## 9. IP Hash
 
 ### Pros
 
-- it distributes the burden very fairly.
+- Session persistence: Allows dropped connections be returned to the same server originally handling it.
 
 ### Cons
 
-- it has difficulty adapting to a large number of processors because of the high amount of necessary communications
-- lack of scalability makes it quickly inoperable in very large servers or very large parallel computers
+- Low Performance: distribution is not based in the server availability.
 
-## 12. IP Hash
+## 10. Consistent Hashing
 
 ### Pros
 
-- Allows dropped connections be returned to the same server originally handling it.
+- Scalability: proper distribution of workload when adding new servers.
 
 ### Cons
 
-- The re-hashing could unecessary move active connections to other server due weight change event cousing low performance.
+- Performance: server overload due uneven distribution of requests.
 
-## 13. Consistent Hashing
+## 11. Resource-based / Custom metrics
 
 ### Pros
 
-- The re-hashing doesn't move active connections to other server.
+- Performance: even distribution of requests based on server resource availability.
 
 ### Cons
 
-- Skewed Load when add/remove server.
+- Traffic overload: needs to request metrics very often to analise and take a decision.
 
-## 14. Resource-based / Custom metrics
 
-### Pros
-
-### Cons
