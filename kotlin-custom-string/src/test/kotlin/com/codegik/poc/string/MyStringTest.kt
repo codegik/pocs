@@ -8,7 +8,7 @@ class MyStringTest {
 
 	@Test
 	fun length() {
-		assertEquals(1, MyString("e").length())
+		assertEquals(1, MyString("e").size)
 	}
 
 	@Test
@@ -83,5 +83,15 @@ class MyStringTest {
 	fun replace() {
 		assertEquals(MyString("wwert"), MyString("qwert").replace('q', 'w'))
 		assertEquals(MyString("wwwrt"), MyString("qwert").replace('q', 'w').replace('e', 'w'))
+	}
+
+	@Test
+	fun trim() {
+		assertEquals(MyString("wwert"), MyString(" wwert ").trim())
+		assertEquals(MyString("wwert"), MyString(" wwert         ").trim())
+		assertEquals(MyString("wwert"), MyString("        wwert").trim())
+		assertEquals(MyString("ww  ert"), MyString("  ww  ert  ").trim())
+		assertEquals(MyString("ww e rt"), MyString("  ww e rt  ").trim())
+		assertEquals(MyString("wwert"), MyString("wwert").trim())
 	}
 }

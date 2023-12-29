@@ -3,20 +3,18 @@ package com.codegik.poc.string
 class MyString(private val value: String) {
     // substring,trim,toJson
 
-    private var length: Int = -1;
+    val size = length()
 
-    fun length(): Int {
-        if (length < 0) {
+    private fun length(): Int {
+        var length = 0
+        for (i in value) {
             length++
-            for (i in value) {
-                length++
-            }
         }
         return length;
     }
 
     fun toArray(): CharArray {
-        var values = CharArray(length())
+        var values = CharArray(size)
         var i = 0
 
         for (c in value) {
@@ -29,7 +27,7 @@ class MyString(private val value: String) {
 
     fun charAt(index: Int): Char {
         assert(index >= 0)
-        assert(index < length())
+        assert(index < size)
 
         var i = 0
         for (c in value) {
@@ -55,7 +53,7 @@ class MyString(private val value: String) {
     }
 
     fun isEmpty(): Boolean {
-        if (length() <= 0) {
+        if (size <= 0) {
             return true
         }
 
@@ -66,7 +64,7 @@ class MyString(private val value: String) {
             }
         }
 
-        return countSpaces == length()
+        return countSpaces == size
     }
 
     fun iterator(): MyStringIterator {
@@ -108,6 +106,51 @@ class MyString(private val value: String) {
         }
         return MyString(result)
     }
+
+    fun trim(): MyString {
+        if (size == 0) {
+            return this
+        }
+
+        var string = ""
+        var stringLeft = ""
+        var stringRight = ""
+        var startAt = 0
+        var endAt = size - 1
+
+        for (i in 0.until(size)) {
+            if (' ' != value[startAt]) {
+                stringLeft += value[startAt]
+            }
+            if (' ' != value[endAt]) {
+                stringRight = value[endAt] + stringRight
+            }
+            startAt++
+            endAt--
+        }
+
+        for (i in 0.until(size)) {
+            if (' ' == value[i]) {
+                continue;
+            }
+            startAt = i
+            break
+        }
+
+        for (i in (size-1).downTo(0)) {
+            if (' ' == value[i]) {
+                continue;
+            }
+            endAt = i
+            break
+        }
+
+        for (i in startAt..endAt) {
+            string += value[i]
+        }
+
+        return MyString(string)
+    }
 }
 
 
@@ -115,7 +158,7 @@ class MyStringIterator(private val string: MyString) {
     private var currentIndex = 0
 
     fun hasNext(): Boolean {
-        return currentIndex < string.length()
+        return currentIndex < string.size
     }
 
     fun next(): Char {
