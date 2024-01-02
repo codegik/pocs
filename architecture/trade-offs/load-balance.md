@@ -95,11 +95,11 @@
 
 ### Pros
 
-- Session persistence: Allows dropped connections be returned to the same server originally handling it.
+- Latency: Allows dropped connections be returned to the same server originally handling it.
 
 ### Cons
 
-- Low Performance: distribution is not based in the server availability.
+- Low Performance: uneven distribution in hotspot scenario.
 
 ## 10. Consistent Hashing
 
