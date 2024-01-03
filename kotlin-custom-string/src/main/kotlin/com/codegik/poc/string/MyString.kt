@@ -143,8 +143,12 @@ class MyString(private val value: String) {
         var currentIndex = 0
         var result = ""
 
+        if (startPosition == 0 && endPosition == 0) {
+            return MyString(result)
+        }
+
         for (c in value) {
-            if (currentIndex >= startPosition && currentIndex <= endPosition) {
+            if (currentIndex in startPosition..endPosition) {
                 result += c
             }
 
