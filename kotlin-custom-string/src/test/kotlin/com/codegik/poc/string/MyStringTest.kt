@@ -94,4 +94,11 @@ class MyStringTest {
 		assertEquals(MyString("ww e rt"), MyString("  ww e rt  ").trim())
 		assertEquals(MyString("wwert"), MyString("wwert").trim())
 	}
+	
+  @Test
+	fun substring() {
+		assertEquals(MyString("ert"), MyString("wwert").substring(2, 4))
+		assertEquals(MyString("t"), MyString("wwert").substring(4, 4))
+		assertEquals(MyString(""), MyString("wwert").substring(0, 0))
+	}
 }

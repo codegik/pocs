@@ -1,7 +1,7 @@
 package com.codegik.poc.string
 
+// TODO: substring
 class MyString(private val value: String) {
-    // substring,trim,toJson
 
     val size = length()
 
@@ -113,21 +113,8 @@ class MyString(private val value: String) {
         }
 
         var string = ""
-        var stringLeft = ""
-        var stringRight = ""
         var startAt = 0
         var endAt = size - 1
-
-        for (i in 0.until(size)) {
-            if (' ' != value[startAt]) {
-                stringLeft += value[startAt]
-            }
-            if (' ' != value[endAt]) {
-                stringRight = value[endAt] + stringRight
-            }
-            startAt++
-            endAt--
-        }
 
         for (i in 0.until(size)) {
             if (' ' == value[i]) {
@@ -150,6 +137,21 @@ class MyString(private val value: String) {
         }
 
         return MyString(string)
+    }
+
+    fun substring(startPosition: Int, endPosition: Int): MyString {
+        var currentIndex = 0
+        var result = ""
+
+        for (c in value) {
+            if (currentIndex >= startPosition && currentIndex <= endPosition) {
+                result += c
+            }
+
+            currentIndex++ 
+        }
+
+        return MyString(result)
     }
 }
 
