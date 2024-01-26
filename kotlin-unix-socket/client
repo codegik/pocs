@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+echo "[Client] initializing..."
+mvn -q clean compile exec:java -Dexec.mainClass=com.codegik.poc.us.ClientAppKt
+
+exit 0

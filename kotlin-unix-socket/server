@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+echo "[Server] initializing..."
+mvn -q clean compile exec:java -Dexec.mainClass=com.codegik.poc.us.ServerAppKt
+
+exit 0
