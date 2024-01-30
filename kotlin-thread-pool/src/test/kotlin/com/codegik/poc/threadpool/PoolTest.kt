@@ -3,6 +3,7 @@ package com.codegik.poc.threadpool
 import com.codegik.poc.threadpool.pool.ThreadPool
 import com.codegik.poc.threadpool.task.DelayTask
 import org.junit.jupiter.api.Test
+import kotlin.random.Random
 
 class PoolTest {
 
@@ -14,10 +15,10 @@ class PoolTest {
 
 	@Test
 	fun run60kTasks() {
-		val threadPool = ThreadPool(1000)
+		val threadPool = ThreadPool(10)
 		var taskCount = 0
 
-		for (i in 0..3000) {
+		for (i in 0..50000) {
 			for (j in 0 until timeOutList.size) {
 				threadPool.addTask(DelayTask("$taskCount", timeOutList[j]))
 				taskCount++
@@ -37,5 +38,20 @@ class PoolTest {
 		}
 
 		threadPool.waitToFinish()
+	}
+
+	@Test
+	fun run10KTasks() {
+		val threadPool = ThreadPool(100)
+		var taskCount = 0
+
+
+		for (i in 1..10000) {
+			threadPool.addTask(DelayTask("delay-task-$i", Random.nextLong(0L, 500L)))
+			taskCount++
+		}
+
+		val threadPoolTook = threadPool.waitToFinish()
+		println("ThreadPool took $threadPoolTook ms to execute $taskCount tasks")
 	}
 }
