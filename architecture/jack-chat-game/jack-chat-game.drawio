@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net" modified="2024-02-09T18:57:30.407Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:122.0) Gecko/20100101 Firefox/122.0" etag="EICSwVZoY03JWhFY9BT5" version="23.1.2" type="device">
+  <diagram name="Page-1" id="_0LuUkFGUE584ZhlPqDk">
+    <mxGraphModel dx="1274" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-18" value="AWS Cloud" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="310" width="740" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-2" target="3Rabenk_TvTgjoeYO5HY-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-2" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.mobile;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="239.99999999999997" y="200" width="35" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-3" target="3Rabenk_TvTgjoeYO5HY-22">
+          <mxGeometry x="-0.3953" y="1" relative="1" as="geometry">
+            <mxPoint x="443.9200000000001" y="340" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-35" value="&lt;div&gt;Websocket&lt;/div&gt;&lt;div&gt;&amp;amp;&lt;/div&gt;&lt;div&gt;https&lt;br&gt;&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-3" target="3Rabenk_TvTgjoeYO5HY-23">
+          <mxGeometry x="0.5332" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-3" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.computer;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="513.9200000000001" y="202.5" width="50" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="3Rabenk_TvTgjoeYO5HY-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="412.6100000000001" y="492" as="sourcePoint" />
+            <mxPoint x="260" y="492" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="3Rabenk_TvTgjoeYO5HY-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="443.9000000000001" y="522" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475.22" y="492" as="sourcePoint" />
+            <mxPoint x="580" y="492" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-4" value="ALB" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;outlineConnect=0;shape=mxgraph.aws3d.elasticLoadBalancing;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="412.61" y="460" width="62.61" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="605" y="513" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-6" value="EKS Cluster Multi-region" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="121.42" y="590" width="645" height="121" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-7" value="Accounts" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="213.92" y="617" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-8" value="Leader boards" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="356.53000000000003" y="617" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-9" value="Quizz" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="493.92" y="617" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-10" value="Trivia" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="623.92" y="617" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-11" value="Authorization&lt;br&gt;Authentication" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.cognito;fillColor=#AD688B;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="220" y="466" width="50" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-19" value="Cache" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/Cache_Redis_Product.svg;" vertex="1" parent="1">
+          <mxGeometry x="580" y="469" width="50" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-22" target="3Rabenk_TvTgjoeYO5HY-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-22" value="CloudFront" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.cloudfront;fillColor=#F58536;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="518.92" y="355" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-23" target="3Rabenk_TvTgjoeYO5HY-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-23" value="API Gateway" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.api_gateway;fillColor=#D9A741;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="314.03" y="350" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-26" value="RDS MySQL replica cross-region" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="121.42000000000002" y="749" width="645" height="121" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-27" value="Accounts" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" vertex="1" parent="1">
+          <mxGeometry x="218.92" y="786.98" width="40" height="45.05" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-28" value="Leader boards" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" vertex="1" parent="1">
+          <mxGeometry x="361.53" y="786.97" width="40" height="45.05" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-7" target="3Rabenk_TvTgjoeYO5HY-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-8" target="3Rabenk_TvTgjoeYO5HY-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-31" value="Quizz" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" vertex="1" parent="1">
+          <mxGeometry x="498.91999999999996" y="786.98" width="40" height="45.05" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-32" value="Trivia" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" vertex="1" parent="1">
+          <mxGeometry x="628.92" y="786.98" width="40" height="45.05" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-10" target="3Rabenk_TvTgjoeYO5HY-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3Rabenk_TvTgjoeYO5HY-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3Rabenk_TvTgjoeYO5HY-9" target="3Rabenk_TvTgjoeYO5HY-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

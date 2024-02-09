@@ -22,36 +22,21 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 1. Realtime message delivery.
 2. Monolithic solution.
-3. 
+3. Mobile-native technology is not allowed, we want one app for IOS and other app for Android.
+4. Lombok library is forbidden.
+5. Custom shared libraries are forbidden.
+6. Clean code principles are forbidden.
 
+### 📐 4. Principles
 
+0. Customer centric.
+1. Use composition over heritance. Try to decouple componentes as much as we can.
+2. Observability first, expose metrics and logs to enable tracking and monitor anything.
+3. Use idempotency to prevent duplications and improve distributed integrity.
+4. Think on async calls when design the features.
+5. Use smaller API contracts as much as we can, and versioning is a requirement.
 
-
-
-
-
-
-
-
-
-
-
-
-
-### 📐 3. Principles
-
-List in form of bullets what design principles you want to be followed, it's great to have 5-10 lines.
-Example:
-```
-1. Low Coupling: We need to watch for coupling all times.
-2. Flexibility: Users should be able to customize behavior without leaking the internals of the system. Leverage interfaces.
-3. Observability: we should expose all key metrics on main features. Sucess and errors counters need to be exposed.
-4. Testability: Chaos engineering is a must and property testing. Testing should be done by engineers all times.
-5. Cache efficiency: Should leverage SSD caches and all forms of caches as much as possible.
-```
-Recommended Reading: http://diego-pacheco.blogspot.com/2018/01/stability-principles.html
-
-### 🏗️ 4. Overall Diagrams
+### 🏗️ 5. Overall Diagrams
 
 Here there will be a bunch of diagrams, to understand the solution.
 ```
