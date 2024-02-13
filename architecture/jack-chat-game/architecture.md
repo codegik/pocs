@@ -38,9 +38,17 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ### 🏗️ 5. Overall Diagrams
 
-Here there will be a bunch of diagrams, to understand the solution.
-```
+
+
 🗂️ 4.1 Overall architecture: Show the big picture, relationship between macro components.
+
+
+![Overall architecture](jack-chat-hame.drawio.png "Overall Architecture")
+
+
+
+
+```
 🗂️ 4.2 Deployment: Show the infra in a big picture. 
 🗂️ 4.3 Use Cases: Make 1 macro use case diagram that list the main capability that needs to be covered. 
 ```
