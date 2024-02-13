@@ -43,7 +43,7 @@ People will be sending and reciving messages all the time from anyone to anyone,
 🗂️ 4.1 Overall architecture: Show the big picture, relationship between macro components.
 
 
-![Overall architecture](jack-chat-hame.drawio.png "Overall Architecture")
+![Overall architecture](jack-chat-game.drawio.png "Overall Architecture")
 
 
 
