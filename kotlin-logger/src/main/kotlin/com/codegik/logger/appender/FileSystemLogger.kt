@@ -2,13 +2,11 @@ package com.codegik.logger.appender
 
 import com.codegik.logger.api.Logger
 import com.codegik.logger.config.LoggerConfig
-import org.springframework.scheduling.annotation.Async
-import org.springframework.stereotype.Component
 import java.io.File
 import java.time.LocalDate
+import kotlin.concurrent.thread
 
-@Component
-class FileSystemLogger(val loggerConfig: LoggerConfig): Logger {
+class FileSystemLogger(private val klass: Class<*>): Logger {
 
     override fun info(message: String) {
         writeMessage(message, "INFO")
@@ -23,20 +21,21 @@ class FileSystemLogger(val loggerConfig: LoggerConfig): Logger {
     }
 
     private fun writeMessage(message: String, level: String) {
-        if (loggerConfig.isAsync.booleanValue()) {
+        if (LoggerConfig.isAsync()) {
             writeAsync(message, level)
         } else {
             write(message, level)
         }
     }
 
-    @Async
     private fun writeAsync(message: String, level: String) {
-        write(message, level)
+        thread {
+            write(message, level)
+        }
     }
 
     private fun write(message: String, level: String) {
-        val fullMessage = "[${LocalDate.now()}] [$level] $message"
-        File(loggerConfig.fileName).appendText(fullMessage, Charsets.UTF_8)
+        val fullMessage = "[${LocalDate.now()}] [$level] [${klass.name}] $message"
+        File(LoggerConfig.fileName()).appendText(fullMessage, Charsets.UTF_8)
     }
 }

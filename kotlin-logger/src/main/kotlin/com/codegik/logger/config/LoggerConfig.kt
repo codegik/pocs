@@ -1,15 +1,21 @@
 package com.codegik.logger.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Configuration
+import java.util.*
 
-@Configuration
-class LoggerConfig {
+object LoggerConfig {
+    private val properties = Properties()
 
-    @Value("{logger.fileName:application.log}")
-    lateinit var fileName: String;
+    init {
+        val file = this::class.java.classLoader.getResourceAsStream("application.properties")
+        properties.load(file)
+    }
 
-    @Value("{logger.isAsync:true}")
-    lateinit var isAsync: java.lang.Boolean;
+    fun fileName(): String = properties.getProperty("logger.fileName", "application.log")
 
+    fun isAsync(): Boolean = properties.getProperty("logger.isAsync", "true").toBoolean()
+
+    fun appenders(): Array<String> {
+        val appenders = properties.getProperty("logger.appenders", "")
+        return if (appenders.isEmpty()) arrayOf() else appenders.split(',').toTypedArray()
+    }
 }

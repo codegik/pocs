@@ -1,13 +1,19 @@
-package com.codegik.logger
+package com.codegik.logger.appender
 
+import com.codegik.logger.config.LoggerConfig
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import java.io.File
 
-@SpringBootTest
-class ApplicationTests {
+class FileSystemLoggerTest {
 
 	@Test
-	fun contextLoads() {
+	fun teste1() {
+		val fileName = LoggerConfig.fileName()
+		val logger = FileSystemLogger(FileSystemLoggerTest::class.java)
+
+		logger.info("first message")
+
+		File(fileName).delete()
 	}
 
 }
