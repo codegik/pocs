@@ -42,14 +42,13 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ### 🗂️ 5.1 Overall architecture
 
-
 ![Overall architecture](overall-architecture.drawio.png "Overall Architecture")
-
 
 
 ### 🗂️ 4.2 Deployment
 
 ![Deployment diagram](deploy-diagram.drawio.png "Deployment diagram")
+
 
 ### 🗂️ 4.3 Use Cases Adding account
 
@@ -61,25 +60,24 @@ People will be sending and reciving messages all the time from anyone to anyone,
 List the tradeoffs analysis, comparing pros and cons for each major decision.
 Before you need list all your major decisions, them run tradeoffs on than.
 example:
-Major Decisions: 
-```
-1. One mobile code base - should be (...)
-2. Reusable capability and low latency backends should be (...)
-3. Cache efficiency therefore should do (...)
-```
-Tradeoffs:
-```
-1. React Native vs (Flutter and Native)
-2. Serverless vs Microservices
-3. Redis vs Enbeded Caches
-```
-Each tradeoff line need to be:
-```
-PROS (+) 
-  * Benefit: Explanation that justify why the benefit is true.
-CONS (+)
-  * Problem: Explanation that justify why the problem is true.
-```
+
+### Major Decisions: 
+1. Build native mobile app for Android and IOs instead of using cross-platform app.
+2. We're using multi region EKS cluster in order to reduce latency all over the world.
+3. We're using RDS replica cross-region in order to reduce latency all over the world.
+4. Choose managed Elastik Cache instead of redis cluster.
+
+### Tradeoffs:
+1. Native mobile vs Cross-plaftorm
+    PROS (+) 
+        * Benefit: Explanation that justify why the benefit is true.
+    CONS (+)
+        * Problem: Explanation that justify why the problem is true.
+2. Multi region EKS vs Single region EKS
+3. Cross-region replica vs Single region
+4. Elastik Cache vs Redis
+
+
 PS: Be careful to not confuse problem with explanation. 
 <BR/>Recommended reading: http://diego-pacheco.blogspot.com/2023/07/tradeoffs.html
 
