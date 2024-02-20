@@ -36,27 +36,27 @@ People will be sending and reciving messages all the time from anyone to anyone,
 4. Think on async calls when design the features.
 5. Use smaller API contracts as much as we can, and versioning is a requirement.
 
-### 🏗️ 5. Overall Diagrams
+## 🏗️ 5. Overall Diagrams
 
 
 
-🗂️ 5.1 Overall architecture
+### 🗂️ 5.1 Overall architecture
 
 
 ![Overall architecture](overall-architecture.drawio.png "Overall Architecture")
 
 
 
-🗂️ 4.2 Deployment
+### 🗂️ 4.2 Deployment
 
 ![Deployment diagram](deploy-diagram.drawio.png "Deployment diagram")
 
-🗂️ 4.3 Use Cases: Make 1 macro use case diagram that list the main capability that needs to be covered. 
+### 🗂️ 4.3 Use Cases Adding account
 
 ![Adding Account Use Case](adding-account-usecase.drawio.png "Adding Account Use Case")
 
 
-### 🧭 5. Trade-offs
+## 🧭 5. Trade-offs
 
 List the tradeoffs analysis, comparing pros and cons for each major decision.
 Before you need list all your major decisions, them run tradeoffs on than.
