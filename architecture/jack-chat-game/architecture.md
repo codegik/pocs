@@ -62,7 +62,7 @@ Before you need list all your major decisions, them run tradeoffs on than.
 example:
 
 ### Major Decisions: 
-1. Build native mobile app for Android and IOs instead of using cross-platform app.
+1. Build native mobile app for Android and iOS instead of using cross-platform app.
 2. We're using multi region EKS cluster in order to reduce latency all over the world.
 3. We're using RDS replica cross-region in order to reduce latency all over the world.
 4. Choose managed Elastik Cache instead of redis cluster.
