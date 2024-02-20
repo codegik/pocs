@@ -40,18 +40,19 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 
 
-🗂️ 4.1 Overall architecture: Show the big picture, relationship between macro components.
+🗂️ 5.1 Overall architecture: Show the big picture, relationship between macro components.
 
 
-![Overall architecture](jack-chat-game.drawio.png "Overall Architecture")
+![Overall architecture](overall-architecture.drawio.png "Overall Architecture")
 
 
 
-
-```
 🗂️ 4.2 Deployment: Show the infra in a big picture. 
+
+![Deployment diagram](deploy-diagram.drawio.png "Deployment diagram")
+
 🗂️ 4.3 Use Cases: Make 1 macro use case diagram that list the main capability that needs to be covered. 
-```
+
 Recommended Reading: http://diego-pacheco.blogspot.com/2020/10/uml-hidden-gems.html
 
 ### 🧭 5. Trade-offs
