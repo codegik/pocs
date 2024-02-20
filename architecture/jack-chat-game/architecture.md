@@ -69,9 +69,9 @@ example:
 
 ### Tradeoffs:
 1. Native mobile vs Cross-plaftorm
-    PROS (+) 
+    - PROS (+) 
         * Benefit: Explanation that justify why the benefit is true.
-    CONS (+)
+    - CONS (+)
         * Problem: Explanation that justify why the problem is true.
 2. Multi region EKS vs Single region EKS
 3. Cross-region replica vs Single region
