@@ -38,24 +38,22 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ## 🏗️ 5. Overall Diagrams
 
-
-
 ### 🗂️ 5.1 Overall architecture
 
 ![Overall architecture](overall-architecture.drawio.png "Overall Architecture")
 
-
-### 🗂️ 4.2 Deployment
+### 🗂️ 5.2 Deployment
 
 ![Deployment diagram](deploy-diagram.drawio.png "Deployment diagram")
 
+### 🗂️ 5.3 Use Cases 
 
-### 🗂️ 4.3 Use Cases Adding account
+#### Sending message
 
-![Adding Account Use Case](adding-account-usecase.drawio.png "Adding Account Use Case")
+![Sending message](send-message-usecase.drawio.png "Sending Message Use Case")
 
 
-## 🧭 5. Trade-offs
+## 🧭 6. Trade-offs
 
 List the tradeoffs analysis, comparing pros and cons for each major decision.
 Before you need list all your major decisions, them run tradeoffs on than.
@@ -65,57 +63,79 @@ example:
 1. Build native mobile app for Android and iOS instead of using cross-platform app.
 2. We're using multi region EKS cluster in order to reduce latency all over the world.
 3. We're using RDS replica cross-region in order to reduce latency all over the world.
-4. Choose managed Elastik Cache instead of redis cluster.
+4. Choose managed Elastic Cache instead of redis cluster.
 
 ### Tradeoffs:
-1. Native mobile vs Cross-plaftorm
+1. Native mobile vs Cross-platform
     - PROS (+) 
-        * Benefit: Explanation that justify why the benefit is true.
-    - CONS (+)
-        * Problem: Explanation that justify why the problem is true.
-2. Multi region EKS vs Single region EKS
+      * Native Apps Have the Best Performance.
+      * Native Apps Have Lower Risks of Bugs.
+      * Native Apps Receive Fast Updates.
+    - CONS (-)
+        * Higher Costs Involved With Native Apps
+2. EKS vs ECS
+   - PROS (+)
+     * Reduce latency over the world due multiple availability zones.
+   - CONS (-)
+     * Operational overhead due responsible for maintaining and operating the worker nodes in your cluster.
 3. Cross-region replica vs Single region
-4. Elastik Cache vs Redis
+   - PROS (+)
+     * Minimize latency by maintaining object copies in AWS Regions that are geographically closer to the users.
+   - CONS (-)
+     * Could have replication lag.
+4. Elastic Cache vs Redis
+   - PROS (+)
+     * Minimize operational overhead due fully managed service for Redis.
+   - CONS (-)
+     * Higher costs involved with elastic cache
+
+### 🌏 7. For each key major component
+
+[//]: # (What is a majore component? A service, a lambda, a important ui, a generalized approach for all uis, a generazid approach for computing a workload, etc...)
+[//]: # (Exemplos of other components: Batch jobs, Events, 3rd Party Integrations, Streaming, ML Models, ChatBots, etc...)
+[//]: # (Recommended Reading: http://diego-pacheco.blogspot.com/2018/05/internal-system-design-forgotten.html)
 
 
-PS: Be careful to not confuse problem with explanation. 
-<BR/>Recommended reading: http://diego-pacheco.blogspot.com/2023/07/tradeoffs.html
+#### 7.1 Send message service
 
-### 🌏 6. For each key major component
+##### Class diagram
 
-What is a majore component? A service, a lambda, a important ui, a generalized approach for all uis, a generazid approach for computing a workload, etc...
-```
-6.1 - Class Diagram              : classic uml diagram with attributes and methods
-6.2 - Contract Documentation     : Operations, Inputs and Outputs
-6.3 - Persistence Model          : Diagrams, Table structure, partiotioning, main queries.
-6.4 - Algorithms/Data Structures : Spesific algos that need to be used, along size with spesific data structures.
-```
+[//]: # (classic uml diagram with attributes and methods)
 
-Exemplos of other components: Batch jobs, Events, 3rd Party Integrations, Streaming, ML Models, ChatBots, etc... 
+##### Contract documentation
 
-Recommended Reading: http://diego-pacheco.blogspot.com/2018/05/internal-system-design-forgotten.html
+[//]: # (Operations, Inputs and Outputs)
 
-### 🖹 7. Migrations
+##### Persistence model
+
+[//]: # (Diagrams, Table structure, partiotioning, main queries.)
+
+##### Algorithms/Data Structures
+
+[//]: # (Spesific algos that need to be used, along size with spesific data structures.)
+
+
+### 🖹 8. Migrations
 
 IF Migrations are required describe the migrations strategy with proper diagrams, text and tradeoffs.
 
-### 🖹 8. Testing strategy
+### 🖹 9. Testing strategy
 
 Explain the techniques, principles, types of tests and will be performaned, and spesific details how to mock data, stress test it, spesific chaos goals and assumptions.
 
-### 🖹 9. Observability strategy
+### 🖹 10. Observability strategy
 
 Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.
 
-### 🖹 10. Data Store Designs
+### 🖹 11. Data Store Designs
 
 For each different kind of data store i.e (Postgres, Memcached, Elasticache, S3, Neo4J etc...) describe the schemas, what would be stored there and why, main queries, expectations on performance. Diagrams are welcome but you really need some dictionaries.
 
-### 🖹 11. Technology Stack
+### 🖹 12. Technology Stack
 
 Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.
 
-### 🖹 12. References
+### 🖹 13. References
 
 * Architecture Anti-Patterns: https://architecture-antipatterns.tech/
 * EIP https://www.enterpriseintegrationpatterns.com/
