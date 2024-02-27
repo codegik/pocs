@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-02-27T19:21:41.037Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0" etag="7y2NJN_mMtgGpNBEPSWQ" version="23.1.5" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-02-27T19:24:22.168Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0" etag="PZtrJ-75CvTrXYdKALmm" version="23.1.5" type="github" pages="4">
   <diagram name="overall-architecture" id="_0LuUkFGUE584ZhlPqDk">
     <mxGraphModel dx="1274" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -301,12 +301,12 @@
     </mxGraphModel>
   </diagram>
   <diagram id="9gYx9qnNcNgPiOffMVBm" name="send-message-service-class-diagram">
-    <mxGraphModel dx="2101" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1274" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="xTYQACZsR914-nS0ampq-1" value="Message" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="580" y="460" width="160" height="134" as="geometry" />
+          <mxGeometry x="599" y="531" width="160" height="134" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-2" value="- content: String&lt;br&gt;- from: String&lt;br&gt;- to: String&lt;br&gt;- date: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-1">
           <mxGeometry y="26" width="160" height="74" as="geometry" />
@@ -317,8 +317,8 @@
         <mxCell id="xTYQACZsR914-nS0ampq-4" value="&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-1">
           <mxGeometry y="108" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="xTYQACZsR914-nS0ampq-5" value="WebSocketHandler" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-10" y="535" width="360" height="130" as="geometry" />
+        <mxCell id="xTYQACZsR914-nS0ampq-5" value="IncomingMessageHandler" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="39" y="535" width="360" height="130" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-6" value="- messageService: MessageService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-5">
           <mxGeometry y="26" width="360" height="26" as="geometry" />
@@ -330,7 +330,7 @@
           <mxGeometry y="60" width="360" height="70" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-9" value="MessageController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="50" y="210" width="240" height="86" as="geometry" />
+          <mxGeometry x="99" y="210" width="240" height="86" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-10" value="- messageService: MessageService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-9">
           <mxGeometry y="26" width="240" height="26" as="geometry" />
@@ -342,7 +342,7 @@
           <mxGeometry y="60" width="240" height="26" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-17" value="MessageRepository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="550" y="310" width="220" height="60" as="geometry" />
+          <mxGeometry x="569" y="395" width="220" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-19" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="xTYQACZsR914-nS0ampq-17">
           <mxGeometry y="26" width="220" height="8" as="geometry" />
@@ -352,30 +352,30 @@
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-21" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-17" target="xTYQACZsR914-nS0ampq-1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="330" y="860" as="sourcePoint" />
-            <mxPoint x="490" y="860" as="targetPoint" />
+            <mxPoint x="379" y="860" as="sourcePoint" />
+            <mxPoint x="539" y="860" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-22" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-5" target="xTYQACZsR914-nS0ampq-32">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="680" y="536" as="sourcePoint" />
-            <mxPoint x="680" y="429" as="targetPoint" />
+            <mxPoint x="729" y="536" as="sourcePoint" />
+            <mxPoint x="729" y="429" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-23" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-32" target="xTYQACZsR914-nS0ampq-17">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="690" y="546" as="sourcePoint" />
-            <mxPoint x="690" y="439" as="targetPoint" />
+            <mxPoint x="739" y="546" as="sourcePoint" />
+            <mxPoint x="739" y="439" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-26" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-32" target="xTYQACZsR914-nS0ampq-1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="720" y="576" as="sourcePoint" />
-            <mxPoint x="720" y="469" as="targetPoint" />
+            <mxPoint x="769" y="576" as="sourcePoint" />
+            <mxPoint x="769" y="469" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-27" value="MessageResponse" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="90" y="20" width="160" height="124" as="geometry" />
+          <mxGeometry x="599" y="191" width="160" height="124" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-28" value="- content: String&lt;br&gt;- to: String&lt;br&gt;- date: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-27">
           <mxGeometry y="26" width="160" height="64" as="geometry" />
@@ -388,12 +388,12 @@
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-31" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-9" target="xTYQACZsR914-nS0ampq-27">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="300" y="263" as="sourcePoint" />
-            <mxPoint x="380" y="263" as="targetPoint" />
+            <mxPoint x="349" y="263" as="sourcePoint" />
+            <mxPoint x="429" y="263" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-32" value="MessageService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="50" y="370" width="240" height="110" as="geometry" />
+          <mxGeometry x="99" y="370" width="240" height="110" as="geometry" />
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-33" value="- messageRepository: MessageRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="xTYQACZsR914-nS0ampq-32">
           <mxGeometry y="26" width="240" height="26" as="geometry" />
@@ -406,14 +406,14 @@
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-36" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-9" target="xTYQACZsR914-nS0ampq-32">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="250" y="410" as="sourcePoint" />
-            <mxPoint x="380" y="316" as="targetPoint" />
+            <mxPoint x="299" y="410" as="sourcePoint" />
+            <mxPoint x="429" y="316" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xTYQACZsR914-nS0ampq-37" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xTYQACZsR914-nS0ampq-5" target="xTYQACZsR914-nS0ampq-1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="300" y="417" as="sourcePoint" />
-            <mxPoint x="560" y="379" as="targetPoint" />
+            <mxPoint x="349" y="417" as="sourcePoint" />
+            <mxPoint x="609" y="379" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
