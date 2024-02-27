@@ -29,12 +29,12 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ### 📐 4. Principles
 
-0. Customer centric.
-1. Use composition over heritance. Try to decouple componentes as much as we can.
-2. Observability first, expose metrics and logs to enable tracking and monitor anything.
-3. Use idempotency to prevent duplications and improve distributed integrity.
-4. Think on async calls when design the features.
-5. Use smaller API contracts as much as we can, and versioning is a requirement.
+1. Customer centric.
+2. Use composition over heritance. Try to decouple componentes as much as we can.
+3. Observability first, expose metrics and logs to enable tracking and monitor anything.
+4. Use idempotency to prevent duplications and improve distributed integrity.
+5. Think on async calls when design the features.
+6. Use smaller API contracts as much as we can, and versioning is a requirement.
 
 ## 🏗️ 5. Overall Diagrams
 
@@ -97,6 +97,7 @@ example:
 
 
 #### 7.1 Send message service
+Service responsible to send messages from one user to another.
 
 ##### Class diagram
 
