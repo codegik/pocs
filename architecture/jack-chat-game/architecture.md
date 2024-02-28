@@ -55,10 +55,6 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ## 🧭 6. Trade-offs
 
-List the tradeoffs analysis, comparing pros and cons for each major decision.
-Before you need list all your major decisions, them run tradeoffs on than.
-example:
-
 ### Major Decisions: 
 1. Build native mobile app for Android and iOS instead of using cross-platform app.
 2. We're using multi region EKS cluster in order to reduce latency all over the world.
@@ -96,16 +92,38 @@ example:
 [//]: # (Recommended Reading: http://diego-pacheco.blogspot.com/2018/05/internal-system-design-forgotten.html)
 
 
-#### 7.1 Send message service
-Service responsible to send messages from one user to another.
+#### 7.1 Incoming message handler
+It's responsible to send messages from one user to another using WebSockets.
 
 ##### Class diagram
 
-[//]: # (classic uml diagram with attributes and methods)
+![Send message service](send-message-service-class-diagram.drawio.png "Send message service")
 
 ##### Contract documentation
 
-[//]: # (Operations, Inputs and Outputs)
+Send/receive message event subscription:
+```
+/v1/message-handler
+```
+
+Send message event payload:
+```json
+{
+  "content": "String",
+  "to": "String"
+}
+```
+Server receives the event and send the message to target user represented by field `to`.
+
+Receive message event payload:
+```json
+{
+  "content": "String",
+  "from": "String",
+  "date": "Date" // format (yyy-mm-dd hh:mm:ss)
+}
+```
+
 
 ##### Persistence model
 
