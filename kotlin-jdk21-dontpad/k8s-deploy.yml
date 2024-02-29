@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dontpad-svc
+  labels:
+    app: dontpad
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: dontpad
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dontpad
+  labels:
+    app: dontpad
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dontpad
+  template:
+    metadata:
+      labels:
+        app: dontpad
+    spec:
+      containers:
+        - name: dontpad
+          image: localhost/codegik/dontpad
+          imagePullPolicy: Never # k8s will never find the image without this policy config
+          ports:
+            - containerPort: 8080
