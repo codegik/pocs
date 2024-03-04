@@ -2,17 +2,15 @@ package com.codegik.dontpad.config
 
 import com.codegik.dontpad.service.DontpadService
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
-import org.springframework.web.socket.CloseStatus
-import org.springframework.web.socket.TextMessage
-import org.springframework.web.socket.WebSocketHandler
-import org.springframework.web.socket.WebSocketMessage
-import org.springframework.web.socket.WebSocketSession
+import org.springframework.web.socket.*
 import org.springframework.web.socket.config.annotation.EnableWebSocket
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
+import java.net.InetAddress
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -20,6 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 @Configuration
 @EnableWebSocket
 class WebSocketConfig(val dontpadService: DontpadService) : WebSocketConfigurer {
+
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
         registry.addHandler(myHandler(), "/my-websocket-endpoint")
     }
@@ -33,6 +32,7 @@ class WebSocketConfig(val dontpadService: DontpadService) : WebSocketConfigurer 
 
 @Component
 class SimpleWebSocketHandler(val dontpadService: DontpadService) : WebSocketHandler {
+    private val logger = LoggerFactory.getLogger(SimpleWebSocketHandler::class.java)
     private val activeSessions = CopyOnWriteArrayList<WebSocketSession>()
     private val activeEditors = ConcurrentHashMap<String, String>()
     private val objectMapper = ObjectMapper()
@@ -40,6 +40,8 @@ class SimpleWebSocketHandler(val dontpadService: DontpadService) : WebSocketHand
     @Throws(Exception::class)
     override fun afterConnectionEstablished(session: WebSocketSession) {
         activeSessions.add(session)
+        val ip = InetAddress.getLocalHost()
+        logger.info("Node ${ip.hostAddress} receive new client ${session.id}")
     }
 
     @Throws(Exception::class)
@@ -50,14 +52,14 @@ class SimpleWebSocketHandler(val dontpadService: DontpadService) : WebSocketHand
 
         dontpadService.update(dontpadName, dontpadValue)
         activeEditors.putIfAbsent(session.id, dontpadName)
+        val ip = InetAddress.getLocalHost()
+        logger.info("Node ${ip.hostAddress} receive message from client ${session.id} ${session.remoteAddress}")
 
-        for (session in activeSessions) {
-            if (session.isOpen) {
-                if (activeEditors[session.id] == dontpadName) {
-                    session.sendMessage(TextMessage(
-                        "<textarea cols=\"2\" rows=\"10\" id=\"dontpadValue\" name=\"dontpadValue\" hx-swap-oob=\"true\">$dontpadValue</textarea>"
-                    ))
-                }
+        for (activeSession in activeSessions) {
+            if (activeSession.isOpen && activeEditors[activeSession.id] == dontpadName) {
+                activeSession.sendMessage(TextMessage(
+                    "<textarea cols=\"2\" rows=\"10\" id=\"dontpadValue\" name=\"dontpadValue\" hx-swap-oob=\"true\">$dontpadValue</textarea>"
+                ))
             }
         }
     }
