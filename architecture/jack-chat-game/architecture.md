@@ -87,11 +87,6 @@ People will be sending and reciving messages all the time from anyone to anyone,
 
 ### 🌏 7. For each key major component
 
-[//]: # (What is a majore component? A service, a lambda, a important ui, a generalized approach for all uis, a generazid approach for computing a workload, etc...)
-[//]: # (Exemplos of other components: Batch jobs, Events, 3rd Party Integrations, Streaming, ML Models, ChatBots, etc...)
-[//]: # (Recommended Reading: http://diego-pacheco.blogspot.com/2018/05/internal-system-design-forgotten.html)
-
-
 #### 7.1 Incoming message handler
 It's responsible to send messages from one user to another using WebSockets.
 
@@ -126,6 +121,7 @@ Receive message event payload:
 
 
 ##### Persistence model
+
 
 [//]: # (Diagrams, Table structure, partiotioning, main queries.)
 
