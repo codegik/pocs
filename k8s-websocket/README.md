@@ -49,3 +49,23 @@ kubectl port-forward service/dontpad-svc 28015:8080
 ```bash
 kubectl logs dontpad-8484bffc68-snvq6 -f
 ```
+
+### Accessing the application
+You can access dontpad application in http://localhost:28015.
+
+Please open many tabs you can to see multiples connections using websocket.
+
+### Scaling down
+Now you can scale down the dontpad application, and will make few clients loose the connection.
+
+```bash
+kubectl scale deployment dontpad --replicas=1
+```
+
+### Reconnecting
+Some client is not able to send or receive messages anymore.
+So it's necessary to reload page to reconnect in the server.
+
+
+## Conclusion
+This experiment could help to understand how websockets work in distributed systems.
