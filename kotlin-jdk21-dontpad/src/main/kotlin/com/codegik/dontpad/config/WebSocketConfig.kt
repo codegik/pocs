@@ -66,7 +66,7 @@ class SimpleWebSocketHandler(val dontpadService: DontpadService) : WebSocketHand
 
     @Throws(Exception::class)
     override fun handleTransportError(session: WebSocketSession, exception: Throwable) {
-        println("Error: " + exception.message)
+        logger.info("Error: " + exception.message)
     }
 
     @Throws(Exception::class)

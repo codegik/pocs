@@ -20,6 +20,10 @@ kind create cluster
 I'm deploying an application that use websocket.
 Here is the link: https://github.com/codegik/pocs/tree/master/kotlin-jdk21-dontpad
 
+```
+NOTE: Please clone this repo to build and deploy the application.
+```
+
 ### First need to build and save the image
 ```bash
 podman build -t codegik/dontpad .
@@ -38,8 +42,6 @@ kubectl apply -f k8s-deploy.yml
 
 ### Expose port with port-forward
 ```bash
-kubectl port-forward deployment/dontpad 28015:8080
-or
 kubectl port-forward service/dontpad-svc 28015:8080
 ```
 

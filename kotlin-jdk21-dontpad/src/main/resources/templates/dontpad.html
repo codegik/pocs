@@ -29,7 +29,7 @@
 
     <div style="display: block;">
         <div class="boxsizingBorder">
-            <div hx-ext="ws" ws-connect="/my-websocket-endpoint">
+            <div hx-ext="ws" ws-connect="/my-websocket-endpoint" ws-reconnect-delay="full-jitter">
                 <p/><div id="notifications"></div></p>
                 <form ws-send hx-posted="javascript:this.reset();">
                     <textarea cols="2" rows="10" id="dontpadValue" name="dontpadValue" th:text="${dontpadValue}"></textarea>

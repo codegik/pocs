@@ -122,6 +122,7 @@ Receive message event payload:
 
 ##### Persistence model
 
+![jack-chat-game-db.drawio.png](jack-chat-game-db.drawio.png)
 
 [//]: # (Diagrams, Table structure, partiotioning, main queries.)
 
