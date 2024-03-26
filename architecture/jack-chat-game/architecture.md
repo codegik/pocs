@@ -124,23 +124,60 @@ Receive message event payload:
 
 ![jack-chat-game-db.drawio.png](jack-chat-game-db.drawio.png)
 
+##### Partitioning 
+- Data partition by list of months based on created date of record.
 
-[//]: # (Diagrams, Table structure, partiotioning, main queries.)
+##### Main queries
+
+- Looking for quiz answers.
+```sql
+select * from quiz_answer where quiz_id = ? 
+```
+
+- Getting all messages from chat
+```sql
+select * from message where from_account_id = ?
+```
+
+- Getting all matches from user
+```sql
+select * from match where account_id = ?
+```
 
 ##### Algorithms/Data Structures
 
 [//]: # (Spesific algos that need to be used, along size with spesific data structures.)
 
 
-### 🖹 8. Migrations
+### 💾 8. Migrations
 
-IF Migrations are required describe the migrations strategy with proper diagrams, text and tradeoffs.
+No DB Migration is needed here.
 
-### 🖹 9. Testing strategy
+### 🧪 9. Testing strategy
 
-Explain the techniques, principles, types of tests and will be performaned, and spesific details how to mock data, stress test it, spesific chaos goals and assumptions.
+- Unit tests 
+  - Will be implemented using JUnit and Mockito.
+  - Need to cover most important scenarios and edge cases.
+  - This is the first line of defense. It will be running in developer machine and CI/CD pipeline.
 
-### 🖹 10. Observability strategy
+- Contract tests
+  - It will reduce the chances of one contract change breaks any consumer.
+  - It will be running in developer machine and CI/CD pipeline.
+
+- Integration tests
+  - Not all scenarios should be covered, just most important ones.
+  - It will be running in developer machine and CI/CD pipeline right after the build.
+
+- Performance tests
+  - Will be implemented using Gatling.
+  - It will be running in CI/CD pipeline and pointing to production.
+
+- Chaos tests
+  - Test the system's ability to withstand turbulent and unexpected conditions like network latency, server failure, etc.
+  - It will be running in CI/CD pipeline and pointing to production.
+
+
+### 👀 10. Observability strategy
 
 Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.
 
