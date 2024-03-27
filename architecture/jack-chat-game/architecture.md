@@ -119,41 +119,81 @@ Receive message event payload:
 }
 ```
 
+#### 7.2 Submitting answer
 
-##### Persistence model
+Any request that requires data from current user, should be authenticated.
+API should identify the user by the token provided in the request header.
 
-![jack-chat-game-db.drawio.png](jack-chat-game-db.drawio.png)
+This API is to submit the answers for a quiz.
 
-##### Partitioning 
-- Data partition by list of months based on created date of record.
-
-##### Main queries
-
-- Looking for quiz answers.
-```sql
-select * from quiz_answer where quiz_id = ? 
+Request
+```json
+POST /v1/quiz/answer
+"user-token": "String"
+{
+  "quizId": "String",
+  "answers": ["String"]
+}
 ```
 
-- Getting all messages from chat
-```sql
-select * from message where from_account_id = ?
+    // websocket security
+    // no date in payload, it got by backend
+    // two mechanism of transport, should be clear ws vs http
+    // identify header in payloads
+    // explain what are those fields in payloads
+    // what is most important scenarios, give examples
+    // what breaks the consumer
+    // it tests more clear about scenarios
+    // change format of tables
+
+Response 
+```json
+HTTP 200
+{
+  "score": Integer
+}
 ```
 
-- Getting all matches from user
-```sql
-select * from match where account_id = ?
+#### 7.3 Listing all matches
+
+Any request that requires data from current user, should be authenticated.
+API should identify the user by the token provided in the request header.
+
+This API is to retrieve all matches from the user.
+
+Request
+```json
+GET /v1/match
+"user-token": "String"
 ```
 
-##### Algorithms/Data Structures
+Response
+```json
+HTTP 200
+{
+  "matches": [
+    {
+      "id": "String",
+      "score": Integer,
+      "date": "Date" // format (yyy-mm-dd hh:mm:ss)
+    }
+  ]
+}
+```
+
+
+### 🖹 8.0 Algorithms/Data Structures
 
 [//]: # (Spesific algos that need to be used, along size with spesific data structures.)
 
+TBD 
 
-### 💾 8. Migrations
+
+### 💾 9. Migrations
 
 No DB Migration is needed here.
 
-### 🧪 9. Testing strategy
+### 🧪 10. Testing strategy
 
 - Unit tests 
   - Will be implemented using JUnit and Mockito.
@@ -177,19 +217,44 @@ No DB Migration is needed here.
   - It will be running in CI/CD pipeline and pointing to production.
 
 
-### 👀 10. Observability strategy
+### 👀 11. Observability strategy
 
-Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.
+[//]: # (Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.)
 
-### 🖹 11. Data Store Designs
+TBD 
 
-For each different kind of data store i.e (Postgres, Memcached, Elasticache, S3, Neo4J etc...) describe the schemas, what would be stored there and why, main queries, expectations on performance. Diagrams are welcome but you really need some dictionaries.
+### 🖹 12. Data Store Designs
 
-### 🖹 12. Technology Stack
+![jack-chat-game-db.drawio.png](jack-chat-game-db.drawio.png)
 
-Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.
+#### Partitioning
+- Data partition by list of months based on created date of record.
 
-### 🖹 13. References
+#### Main queries
+
+- Looking for quiz answers.
+```sql
+select * from quiz_answer where quiz_id = ? 
+```
+
+- Getting all messages from chat
+```sql
+select * from message where from_account_id = ?
+```
+
+- Getting all matches from user
+```sql
+select * from match where account_id = ?
+```
+
+
+### 🖹 13. Technology Stack
+
+[//]: # (Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.)
+
+TBD
+
+### 🖹 14. References
 
 * Architecture Anti-Patterns: https://architecture-antipatterns.tech/
 * EIP https://www.enterpriseintegrationpatterns.com/
