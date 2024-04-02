@@ -85,10 +85,30 @@ People will be sending and reciving messages all the time from anyone to anyone,
    - CONS (-)
      * Higher costs involved with elastic cache
 
+### Websocket security
+
+The WebSocket protocol, RFC 6455, provides a standardized way to establish a full-duplex, two-way communication channel between client and server over a single TCP connection.
+It is a different TCP protocol from HTTP but is designed to work over HTTP, using ports 80 and 443 and allowing re-use of existing firewall rules.
+
+WebSockets reuse the same authentication information that is found in the HTTP request when the WebSocket connection is stablished.
+
+More concretely, to ensure a user has authenticated to WebSocket application, all that is necessary is to ensure that we setup a framework that supports authenticate HTTP based web application like Spring Security.
+
+### HTTP security
+
+We're going to use Cognito tool for authenticate and authorize the user.
+
+We should refresh the token every 2 hours o make sure older tokens to not have permission to execute any api.
+
+Any request that requires data from current user, should be authenticated.
+API should identify the user by the token provided in the request header.
+
 ### 🌏 7. For each key major component
 
 #### 7.1 Incoming message handler
-It's responsible to send messages from one user to another using WebSockets.
+
+This is an API to send messages from one user to another using WebSocket protocol.
+Dates will be collected in backend side, the client should not create dates, only ready dates.
 
 ##### Class diagram
 
@@ -104,8 +124,8 @@ Send/receive message event subscription:
 Send message event payload:
 ```json
 {
-  "content": "String",
-  "to": "String"
+  "content": "String", // message content
+  "to": "String"       // target user that will receive this message
 }
 ```
 Server receives the event and send the message to target user represented by field `to`.
@@ -113,44 +133,32 @@ Server receives the event and send the message to target user represented by fie
 Receive message event payload:
 ```json
 {
-  "content": "String",
-  "from": "String",
-  "date": "Date" // format (yyy-mm-dd hh:mm:ss)
+  "content": "String", // message content
+  "from": "String",    // user that sent this message
+  "date": "Date"       // message create date (yyy-mm-dd hh:mm:ss)
 }
 ```
 
 #### 7.2 Submitting answer
+This is and API to submit the answers for a quiz using HTTP protocol.
 
-Any request that requires data from current user, should be authenticated.
-API should identify the user by the token provided in the request header.
-
-This API is to submit the answers for a quiz.
+Dates will be collected in backend side, the client is should not create dates, only ready dates.
 
 Request
 ```json
 POST /v1/quiz/answer
-"user-token": "String"
+"user-token": "String"  // authenticated user token header
 {
-  "quizId": "String",
-  "answers": ["String"]
+  "quizId": "String",   // unique identification for Quiz
+  "answers": ["String"] // array containing all answer ids provided by user
 }
 ```
-
-    // websocket security
-    // no date in payload, it got by backend
-    // two mechanism of transport, should be clear ws vs http
-    // identify header in payloads
-    // explain what are those fields in payloads
-    // what is most important scenarios, give examples
-    // what breaks the consumer
-    // it tests more clear about scenarios
-    // change format of tables
 
 Response 
 ```json
 HTTP 200
 {
-  "score": Integer
+  "score": Integer // calculated score based on user answers
 }
 ```
 
@@ -164,25 +172,25 @@ This API is to retrieve all matches from the user.
 Request
 ```json
 GET /v1/match
-"user-token": "String"
+"user-token": "String"  // authenticated user token header
 ```
 
 Response
 ```json
 HTTP 200
 {
-  "matches": [
+  "matches": [          // array containing history of matches from the user
     {
-      "id": "String",
-      "score": Integer,
-      "date": "Date" // format (yyy-mm-dd hh:mm:ss)
+      "id": "String",   // unique match identifier
+      "score": Integer, // calculated score based on user answers 
+      "date": "Date"    // match create date (yyy-mm-dd hh:mm:ss)
     }
   ]
 }
 ```
 
 
-### 🖹 8.0 Algorithms/Data Structures
+### 🧬 8.0 Algorithms/Data Structures
 
 [//]: # (Spesific algos that need to be used, along size with spesific data structures.)
 
@@ -201,11 +209,11 @@ No DB Migration is needed here.
   - This is the first line of defense. It will be running in developer machine and CI/CD pipeline.
 
 - Contract tests
-  - It will reduce the chances of one contract change breaks any consumer.
+  - It will reduce the chances of one contract change breaks any consumer. The API must be versioned to avoid break backward compatibility and forward compatibility.
   - It will be running in developer machine and CI/CD pipeline.
 
 - Integration tests
-  - Not all scenarios should be covered, just most important ones.
+  - Not all scenarios should be covered, just most important ones e.g. Submitting quiz answers, Finding a quiz and Sending message to friend.  
   - It will be running in developer machine and CI/CD pipeline right after the build.
 
 - Performance tests
@@ -217,15 +225,69 @@ No DB Migration is needed here.
   - It will be running in CI/CD pipeline and pointing to production.
 
 
-### 👀 11. Observability strategy
+### 👀 11. Observability strategy (TBD)
 
 [//]: # (Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.)
 
-TBD 
 
-### 🖹 12. Data Store Designs
+### 💾 12. Data Store Designs
 
-![jack-chat-game-db.drawio.png](jack-chat-game-db.drawio.png)
+#### Table ACCOUNTS
+| Column    | Type         |    |
+|-----------|--------------|----|
+| id        | varchar(32)  | PK |
+| name      | varchar(100) |    |
+| email     | varchar(200) |    |
+| created_d | date         |    |
+
+
+#### Table USER_ANSWER
+| Column     | Type        |    |
+|------------|-------------|----|
+| id         | varchar(32) | PK |
+| account_id | varchar(32) |    |
+| quiz_id    | varchar(32) |    |
+| answer_id  | varchar(32) |    |
+| created_d  | date        |    |
+
+
+#### Table QUIZ
+| Column    | Type         |    |
+|-----------|--------------|----|
+| id        | varchar(32)  | PK |
+| name      | varchar(200) |    |
+| question  | blob         |    |
+
+
+#### Table QUIZ_ANSWER
+| Column     | Type         |    |
+|------------|--------------|----|
+| id         | varchar(32)  | PK |
+| quiz_id    | varchar(32)  |    |
+| answer     | varchar(500) |    |
+| is_correct | boolean      |    |
+
+
+#### Table MATCH
+| Column     | Type        |    |
+|------------|-------------|----|
+| id         | varchar(32) | PK |
+| account_id | varchar(32) |    |
+| quiz_id    | varchar(32) |    |
+| score      | int         |    |
+| created_d  | date        |    |
+
+
+
+#### Table MESSAGE
+| Column          | Type          |    |
+|-----------------|---------------|----|
+| id              | varchar(32)   | PK |
+| from_account_id | varchar(32)   |    |
+| to_account_id   | varchar(32)   |    |
+| content         | varchar(1000) |    |
+| created_d       | date          |    |
+
 
 #### Partitioning
 - Data partition by list of months based on created date of record.
@@ -234,25 +296,27 @@ TBD
 
 - Looking for quiz answers.
 ```sql
-select * from quiz_answer where quiz_id = ? 
+select * from quiz_answer where quiz_id = ? limit ? offset ?
 ```
 
 - Getting all messages from chat
 ```sql
-select * from message where from_account_id = ?
+select * from message where from_account_id = ? limit ? offset ?
 ```
 
 - Getting all matches from user
 ```sql
-select * from match where account_id = ?
+select * from match where account_id = ? limit ? offset ?
 ```
 
 
-### 🖹 13. Technology Stack
+### 👌 13. Technology Stack (WIP)
 
 [//]: # (Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.)
 
-TBD
+- Aurora DB
+- Kotlin
+- Ktor
 
 ### 🖹 14. References
 
@@ -270,3 +334,15 @@ TBD
 * Rendering Patterns https://www.patterns.dev/vanilla/rendering-patterns/
 * REST API Design https://blog.stoplight.io/api-design-patterns-for-rest-web-services
 
+
+
+# TODO
+- websocket security [DONE]
+- no date in payload, it got by backend [DONE]
+- two mechanism of transport, should be clear ws vs http  [DONE]
+- identify header in payloads  [DONE]
+- explain what are those fields in payloads  [DONE]
+- what is most important scenarios, give examples  [DONE]
+- what breaks the consumer  [DONE]
+- it tests more clear about scenarios  [DONE]
+- change format of tables  [DONE]
