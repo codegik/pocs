@@ -314,11 +314,11 @@ select * from match where account_id = ? limit ? offset ?
 
 [//]: # (Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.)
 
-- Aurora DB
+- Aurora DB as persistence layer for all services.
 - Kotlin
 - Ktor
 
-### 🖹 14. References
+### 👥 14. References
 
 * Architecture Anti-Patterns: https://architecture-antipatterns.tech/
 * EIP https://www.enterpriseintegrationpatterns.com/
@@ -342,7 +342,9 @@ select * from match where account_id = ? limit ? offset ?
 - two mechanism of transport, should be clear ws vs http  [DONE]
 - identify header in payloads  [DONE]
 - explain what are those fields in payloads  [DONE]
-- what is most important scenarios, give examples  [DONE]
+- what is the most important scenarios, give examples  [DONE]
 - what breaks the consumer  [DONE]
 - it tests more clear about scenarios  [DONE]
 - change format of tables  [DONE]
+- messages should not be in relational db
+- add more columns in tables like Rickson
