@@ -8,5 +8,4 @@ Draw an architecture solution with:
 - Think about the Data structures and Data modeling
 - Given a component: Package Diagram
 
-
 Don't Code. Just focus on the Diagrams and Trade-offs. Be ready to defended your ideas and approach.
