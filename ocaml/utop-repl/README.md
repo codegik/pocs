@@ -15,39 +15,42 @@ val u : int list = [1; 2; 3; 4]
 utop # ["this"; "is"; "string"; "list"];;
 - : string list = ["this"; "is"; "string"; "list"]
 
-utop # 10 :: u;; // cons operator, it will add new value in beginning of the list, but will keep original list
+(* cons operator, it will add new value in beginning of the list, but will keep original list *)
+utop # 10 :: u;; 
 - : int list = [10; 1; 2; 3; 4]
 
-utop # u;; // original list untouched
+(* original list untouched *)
+utop # u;; 
 - : int list = [1; 2; 3; 4]
 
-// if … then … else … is not a statement; it is an expression.
+(* if … then … else … is not a statement; it is an expression. *)
 utop # 2 * if "hello" = "hi" then 3 else 9;;
 - : int = 18
 
-// Names can be defined locally, within an expression, using the let … = … in … syntax:
+(* Names can be defined locally, within an expression, using the let … = … in … syntax: *)
 utop # let y = 50 in y * 2;;
 - : int = 100
 
-// Since let … = … in … is an expression, it can be used within another expression in order to have several values with their own names:
+(* Since let … = … in … is an expression, it can be used within another expression in order to have several values with their own names: *)
 utop # let a = 4 in
        let b = 9 in
        a + b;;
 - : int = 13
 
-// Creating/calling functions
+(* Creating/calling functions *)
 utop # let square x = x * x;;
 val square : int -> int = <fun>
 
 utop # square 3;;
 - : int = 9
 
-// call Option.value function and return default value
+(* call Option.value function and return default value *)
 utop # Option.value None ~default:32;;
 - : int = 32
 
-// call Option.value function and return optional value
+(* call Option.value function and return optional value *)
 utop # Option.value (Some 5) ~default:66;;
 - : int = 5
 
 ```
+
