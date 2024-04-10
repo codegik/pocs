@@ -162,16 +162,16 @@ HTTP 200
 }
 ```
 
-#### 7.3 Listing all matches
+#### 7.3 Listing all games
 
 Any request that requires data from current user, should be authenticated.
 API should identify the user by the token provided in the request header.
 
-This API is to retrieve all matches from the user.
+This API is to retrieve all games from the user.
 
 Request
 ```json
-GET /v1/match
+GET /v1/games
 "user-token": "String"  // authenticated user token header
 ```
 
@@ -179,11 +179,11 @@ Response
 ```json
 HTTP 200
 {
-  "matches": [          // array containing history of matches from the user
+  "games": [          // array containing history of games from the user
     {
-      "id": "String",   // unique match identifier
+      "id": "String",   // unique game identifier
       "score": Integer, // calculated score based on user answers 
-      "date": "Date"    // match create date (yyy-mm-dd hh:mm:ss)
+      "date": "Date"    // game create date (yyy-mm-dd hh:mm:ss)
     }
   ]
 }
@@ -233,80 +233,96 @@ No DB Migration is needed here.
 ### 💾 12. Data Store Designs
 
 #### Table ACCOUNTS
-| Column    | Type         |    |
-|-----------|--------------|----|
-| id        | varchar(32)  | PK |
-| name      | varchar(100) |    |
-| email     | varchar(200) |    |
-| created_d | date         |    |
+| Column    | Type         | Primary | Default             | Observation           |
+|-----------|--------------|---------|---------------------|-----------------------|
+| id        | varchar(32)  | PK      |                     | unique identification |
+| name      | varchar(100) |         |                     | user full name        |
+| email     | varchar(200) |         |                     | user email            |
+| created_d | date         |         | current_timestamp() |                       |
+
+**Partitioning strategy:** Data partition by list of months based on created date of record.
 
 
 #### Table USER_ANSWER
-| Column     | Type        |    |
-|------------|-------------|----|
-| id         | varchar(32) | PK |
-| account_id | varchar(32) |    |
-| quiz_id    | varchar(32) |    |
-| answer_id  | varchar(32) |    |
-| created_d  | date        |    |
+| Column     | Type        | Primary | Default             | Observation                      |
+|------------|-------------|---------|---------------------|----------------------------------|
+| id         | varchar(32) | PK      |                     |                                  |
+| account_id | varchar(32) |         |                     | reference id to the user account |
+| quiz_id    | varchar(32) |         |                     | reference id to the quiz         |
+| answer_id  | varchar(32) |         |                     | reference id to answer           |
+| created_d  | date        |         | current_timestamp() |                                  |
+
+**Partitioning strategy:** Data partition by list of months based on created date of record.
 
 
 #### Table QUIZ
-| Column    | Type         |    |
-|-----------|--------------|----|
-| id        | varchar(32)  | PK |
-| name      | varchar(200) |    |
-| question  | blob         |    |
+| Column    | Type         | Primary | Default             | Observation |
+|-----------|--------------|---------|---------------------|-------------|
+| id        | varchar(32)  | PK      |                     |             |
+| name      | varchar(200) |         |                     |             |
+| question  | blob         |         |                     |             |
+| created_d | date         |         | current_timestamp() |             |
+
+**Partitioning strategy:** Data partition by list of months based on created date of record.
 
 
 #### Table QUIZ_ANSWER
-| Column     | Type         |    |
-|------------|--------------|----|
-| id         | varchar(32)  | PK |
-| quiz_id    | varchar(32)  |    |
-| answer     | varchar(500) |    |
-| is_correct | boolean      |    |
+| Column     | Type         | Primary | Default             | Observation |
+|------------|--------------|---------|---------------------|-------------|
+| id         | varchar(32)  | PK      |                     |             |
+| quiz_id    | varchar(32)  |         |                     |             |
+| answer     | varchar(500) |         |                     |             |
+| is_correct | boolean      |         |                     |             |
+| created_d  | date         |         | current_timestamp() |             |
+
+**Partitioning strategy:** Data partition by list of months based on created date of record.
 
 
-#### Table MATCH
-| Column     | Type        |    |
-|------------|-------------|----|
-| id         | varchar(32) | PK |
-| account_id | varchar(32) |    |
-| quiz_id    | varchar(32) |    |
-| score      | int         |    |
-| created_d  | date        |    |
+#### Document GAME
+```json
+{
+  "id": "String",
+  "account_id": "String", // user account id
+  "quiz_id": "String",    // quiz id
+  "score": Integer,       // user score on this game
+  "created_d": "Date",    // format yyyy-mm-dd hh:mm:ss
+  "region": "String"      // user geolocation region
+}
+```
+
+**Partitioning strategy:** Data partition by list of months based on created date and region of record.
 
 
+#### Document MESSAGE
+```json
+{
+  "id": "String",
+  "from_account_id": "String",  // from user account id (sender)
+  "to_account_id": "String",    // to user account id (receiver)
+  "content": "String",          // message text
+  "created_d": "Date",          // format yyyy-mm-dd hh:mm:ss
+  "region": "String"            // user geolocation region
+}
+```
 
-#### Table MESSAGE
-| Column          | Type          |    |
-|-----------------|---------------|----|
-| id              | varchar(32)   | PK |
-| from_account_id | varchar(32)   |    |
-| to_account_id   | varchar(32)   |    |
-| content         | varchar(1000) |    |
-| created_d       | date          |    |
+**Partitioning strategy:** Data partition by list of months based on created date and region of record.
 
-
-#### Partitioning
-- Data partition by list of months based on created date of record.
 
 #### Main queries
 
-- Looking for quiz answers.
+- Looking for quiz answers (paginated).
 ```sql
-select * from quiz_answer where quiz_id = ? limit ? offset ?
+select * from quiz_answer where quiz_id = ?
 ```
 
-- Getting all messages from chat
+- Getting all messages from chat (paginated).
 ```sql
 select * from message where from_account_id = ? limit ? offset ?
 ```
 
-- Getting all matches from user
+- Getting all games from user (paginated).
 ```sql
-select * from match where account_id = ? limit ? offset ?
+select * from games where account_id = ? limit ? offset ?
 ```
 
 
@@ -315,6 +331,7 @@ select * from match where account_id = ? limit ? offset ?
 [//]: # (Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.)
 
 - Aurora DB as persistence layer for all services.
+- DynamoDB for Message and Game tables.
 - Kotlin
 - Ktor
 
@@ -346,5 +363,8 @@ select * from match where account_id = ? limit ? offset ?
 - what breaks the consumer  [DONE]
 - it tests more clear about scenarios  [DONE]
 - change format of tables  [DONE]
+- add more columns in tables like Rickson [DONE]
+- match is reserved word in sql, change to game [DONE]
+- write pagination in queries [DONE]
+- archive and partitioning below each table
 - messages should not be in relational db
-- add more columns in tables like Rickson
