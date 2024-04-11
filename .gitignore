@@ -6,6 +6,7 @@
 git.properties
 target/
 logs/
+bin/
 .settings/
 .metadata
 .DS_Store
