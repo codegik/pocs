@@ -51,22 +51,6 @@ utop # hobbit.sold;;
 
 
 
-(* 
-an array is a mutable, fixed-size data structure that can store 
-a sequence of elements of the same type 
-*)
-utop # let a = [| 2; 4; 6; 8 |];;
-val a : int array = [|2; 4; 6; 8|]
-
-utop # a.(0);; (* accessing array element *)
-- : int = 2
-
-utop # a.(0) <- 23;; (* updating array element *)
-- : unit = ()
-
-utop # a;;
-- : int array = [|23; 4; 6; 8|]
-
 
 (* function encapusulated mutability *)
 utop # let sum arr =
