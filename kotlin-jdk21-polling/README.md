@@ -2,6 +2,8 @@
 
 This POC is to demonstrate the difference between short polling, long polling and websockets.
 
+I'm using Springboot + Kotlin to create a simple server that can handle these 3 types of communication.
+
 There is no UI here, everything is running in the terminal, thanks to [Websocat](https://github.com/vi/websocat).
 
 ## Requirements

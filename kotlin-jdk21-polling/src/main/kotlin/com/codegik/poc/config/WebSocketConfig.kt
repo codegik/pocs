@@ -13,9 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 @Configuration
 @EnableWebSocket
-class WebSocketConfig(
-    private val webSocketHandler: WebSocketHandler
-) : WebSocketConfigurer {
+class WebSocketConfig(private val webSocketHandler: WebSocketHandler) : WebSocketConfigurer {
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
         registry.addHandler(webSocketHandler, "/real-time-message")
@@ -67,7 +65,7 @@ class WebSocketHandler : org.springframework.web.socket.WebSocketHandler {
         logger.info("Server broadcasting message")
         for (activeSession in activeSessions) {
             if (activeSession.isOpen) {
-                activeSession.sendMessage(TextMessage(message))
+                activeSession.sendMessage(TextMessage(message.removeSuffix("=")))
             }
         }
     }
