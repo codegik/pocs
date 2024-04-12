@@ -1,6 +1,5 @@
 package com.codegik.poc.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
@@ -14,38 +13,37 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 @Configuration
 @EnableWebSocket
-class WebSocketConfig(private val simpleWebSocketHandler: SimpleWebSocketHandler) : WebSocketConfigurer {
+class WebSocketConfig(
+    private val webSocketHandler: WebSocketHandler
+) : WebSocketConfigurer {
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(simpleWebSocketHandler, "/my-websocket-endpoint")
+        registry.addHandler(webSocketHandler, "/real-time-message")
     }
 
 }
 
 
 @Component
-class SimpleWebSocketHandler : WebSocketHandler {
-    private val logger = LoggerFactory.getLogger(SimpleWebSocketHandler::class.java)
+class WebSocketHandler : org.springframework.web.socket.WebSocketHandler {
+    private val logger = LoggerFactory.getLogger(WebSocketHandler::class.java)
     private val activeSessions = CopyOnWriteArrayList<WebSocketSession>()
-    private val objectMapper = ObjectMapper()
 
     @Throws(Exception::class)
     override fun afterConnectionEstablished(session: WebSocketSession) {
         activeSessions.add(session)
         val ip = InetAddress.getLocalHost()
-        logger.info("Node ${ip.hostAddress} receive new client ${session.id}")
+        logger.info("New client ${session.id} connected")
     }
 
     @Throws(Exception::class)
     override fun handleMessage(session: WebSocketSession, message: WebSocketMessage<*>) {
-        val rootNode = objectMapper.readTree(message.payload.toString())
-        val textMessage = rootNode.path("textMessage").asText()
-        val ip = InetAddress.getLocalHost()
+        val textMessage = message.payload.toString()
 
-        logger.info("Node ${ip.hostAddress} receive message from client ${session.id} ${session.remoteAddress}")
+        logger.info("Receive message from client ${session.remoteAddress}: $textMessage")
 
         for (activeSession in activeSessions) {
-            if (activeSession.isOpen) {
+            if (activeSession.isOpen && activeSession.id != session.id) {
                 activeSession.sendMessage(TextMessage(textMessage))
             }
         }
@@ -53,7 +51,7 @@ class SimpleWebSocketHandler : WebSocketHandler {
 
     @Throws(Exception::class)
     override fun handleTransportError(session: WebSocketSession, exception: Throwable) {
-        logger.info("Error: " + exception.message)
+        logger.info("Client ${session.id} disconnected")
     }
 
     @Throws(Exception::class)
@@ -63,5 +61,14 @@ class SimpleWebSocketHandler : WebSocketHandler {
 
     override fun supportsPartialMessages(): Boolean {
         return false
+    }
+
+    fun broadcastMessage(message: String) {
+        logger.info("Server broadcasting message")
+        for (activeSession in activeSessions) {
+            if (activeSession.isOpen) {
+                activeSession.sendMessage(TextMessage(message))
+            }
+        }
     }
 }
