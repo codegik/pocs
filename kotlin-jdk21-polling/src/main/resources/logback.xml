@@ -4,7 +4,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(:){faint} %m%n</Pattern>
+            <Pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %m%n</Pattern>
         </layout>
     </appender>
 
