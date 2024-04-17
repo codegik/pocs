@@ -328,11 +328,11 @@ select * from games where account_id = ? limit ? offset ?
 
 ### 👌 13. Technology Stack (WIP)
 
-[//]: # (Describe your stack, what databases would be used, what servers, what kind of components, mobile/ui approach, general architecture components, frameworks and libs to be used or not be used and why.)
-
 - Aurora DB as persistence layer for all services.
 - DynamoDB for Message and Game tables.
+- Java 21
 - Kotlin
+  - It’s very expressive. Writing code in Kotlin tends to have a high impact per line of code.
 - Ktor
 
 ### 👥 14. References
@@ -366,5 +366,5 @@ select * from games where account_id = ? limit ? offset ?
 - add more columns in tables like Rickson [DONE]
 - match is reserved word in sql, change to game [DONE]
 - write pagination in queries [DONE]
-- archive and partitioning below each table
-- messages should not be in relational db
+- archive and partitioning below each table [DONE]
+- messages should not be in relational db [DONE]

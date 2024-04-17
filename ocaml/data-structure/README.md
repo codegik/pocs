@@ -1,9 +1,9 @@
 
 # Array
 
-Arrays are mutable and we can replace their elements with other values of the same type, but cannot be resized. Also we can access elements at any position.
-
 ```ocaml
+(* Arrays are mutable and we can replace their elements with other values of the same type, but cannot be resized. Also we can access elements at any position. *)
+
 utop # [|1; 2; 3; 4|];;
 - : int array = [|1; 2; 3; 4|]
 
@@ -43,10 +43,12 @@ utop # a.(0) <- 23;; (* updating array element *)
 
 utop # a;;
 - : int array = [|23; 4; 6; 8|]
-
+```
 
 
 # List
+
+```ocaml
 
 (* Lists are ordered sequence of elements. All elements should be the same type. *)
 (* Lists are imutable by default *)
@@ -121,11 +123,15 @@ val size : 'a list -> int = <fun>
 utop # size [1; 4; 6];;
 - : int = 3
 
+```
 
 # Map
 
+```ocaml
 (* Maps are imutable key-value, they are never modified and every operation returns a new map instead. *)
 (* Maps are alse called dictionaries or associative tables. *)
+(* To use Map, we first have to use the Map.Make functor to create our custom map module. Refer to the Functors for more information on functors. This functor has a module parameter that defines the keys' type to be used in the maps, and a function for comparing them. *)
+
 utop # module StringMap = Map.Make(String);;
 module StringMap :
   sig
@@ -152,10 +158,44 @@ utop # StringMap.find_opt "two" map;;
 utop # let more_map = StringMap.add "three" 3 map;;
 val more_map : int StringMap.t = <abstr>
 
+```
 
 
+# Memorization technique
+
+```ocaml
+(* Memoization is a powerful technique for speeding up simple recursive algorithms, without having to change the way the algorithm works. This is done by "remembering" the results of a computation, so that previously computed results never have to be recomputed.  *)
 
 
+(* Let's again consider the problem of computing the nth Fibonacci number. The naive recursive implementation takes exponential time, because of the recomputation of the same Fibonacci numbers over and over again: *)
+utop # let rec fib n = if n < 2 then 1 else fib (n - 1) + fib (n - 2);;
+val fib : int -> int = <fun>
+
+
+(* If we record Fibonacci numbers as they are computed, we can avoid this redundant work. The idea is that whenever we compute f n, we store it in a table indexed by n. *)
+utop # let fibm n =
+  let memo : int option array = Array.make (n + 1) None in
+  let rec f_mem n =
+    match memo.(n) with
+    | Some result -> (* computed already *) result
+    | None ->
+        let result =
+          if n < 2 then 1 else f_mem (n - 1) + f_mem (n - 2)
+        in
+        (* record in table *)
+        memo.(n) <- Some result;
+        result
+  in
+  f_mem n;;
+val fibm : int -> int = <fun>
+
+(* The function f_mem defined inside fibm contains the original recursive algorithm, except before doing that calculation it first checks if the result has already been computed and stored in the table in which case it simply returns the result. *)
+
+
+utop # fib 500;; (* will be waiting a very long time to finish *)
+
+utop # fibm 1000;; (* return the result in miliseconds *)
+- : int = -143806971314347795
 
 
 ```
