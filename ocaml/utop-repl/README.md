@@ -1,3 +1,5 @@
+# Ocaml REPL is utop
+
 ```ocaml
 
 utop # 4 * 45;;
@@ -37,6 +39,7 @@ utop # Option.value None ~default:32;;
 (* call Option.value function and return optional value *)
 utop # Option.value (Some 5) ~default:66;;
 - : int = 5
+
 
 ```
 
