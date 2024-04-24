@@ -328,12 +328,23 @@ select * from games where account_id = ? limit ? offset ?
 
 ### 👌 13. Technology Stack (WIP)
 
-- Aurora DB as persistence layer for all services.
-- DynamoDB for Message and Game tables.
-- Java 21
+- Aurora DB as persistence layer for all services besides Message and Game.
+- DynamoDB as persistence layer for Message and Game services.
 - Kotlin
-  - It’s very expressive. Writing code in Kotlin tends to have a high impact per line of code.
+  -  Clarity:
+    - It’s very expressive. Writing code in Kotlin tends to have a high impact per line of code.
+    - Kotlin eliminates some of the redundancy in the basic syntax of popular languages like Java.
+  - Interoperability:
+    - Kotlin interoperates with Java because they compile to the same byte code. Kotlin can be compiled into JavaScript or an LLVM.
+    - It also shares tooling with Java. These features make it easy to migrate Java applications to Kotlin.
+  - Safety:
+    - Kotlin is designed to help avoid common coding errors that can break code or leave vulnerabilities in it. 
+    - The language features null safety and eliminating null pointer exception errors.
 - Ktor
+  - Ktor is designed with simplicity in mind, providing a lean and intuitive API surface.
+  - Ktor embraces Kotlin's coroutines, enabling you to write highly efficient and concurrent code effortlessly.
+  - Default embedded server application is Netty.
+
 
 ### 👥 14. References
 
