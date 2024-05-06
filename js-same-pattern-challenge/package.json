@@ -1,0 +1,11 @@
+{
+  "name": "js-same-pattern",
+  "version": "1.0.0",
+  "main": "same-pattern.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "29.7.0"
+  }
+}
