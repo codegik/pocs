@@ -16,8 +16,9 @@ let tests = "testing int list" >::: [
 
   "pop item from int list" >:: (fun _ -> 
     let queue = new int_queue in
-    (* queue#add 5 in *)
-    let result = queue#pop;
+    queue#add 5;
+    let result = queue#pop in
+    assert_equal result 5;
     assert_equal queue#size 0
   );
 ]
