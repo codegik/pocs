@@ -7,7 +7,7 @@ class CacheService {
         return cache[key]
     }
 
-    fun save(key: String, value: String): Boolean {
+    fun add(key: String, value: String): Boolean {
         if (cache.containsKey(key)) {
             return false
         }
@@ -16,7 +16,7 @@ class CacheService {
         return true
     }
 
-    fun upsert(key: String, value: String): Boolean {
+    fun update(key: String, value: String): Boolean {
         cache[key] = value
         return true
     }

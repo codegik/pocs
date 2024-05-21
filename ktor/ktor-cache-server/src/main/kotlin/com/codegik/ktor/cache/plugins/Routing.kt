@@ -28,7 +28,7 @@ fun Application.configureRouting() {
             val key = call.parameters["key"] ?: return@post call.respond(BadRequest)
             val value = call.parameters["value"] ?: return@post call.respond(BadRequest)
 
-            if (cache.save(key, value)) {
+            if (cache.add(key, value)) {
                 call.respond(OK)
             } else {
                 call.respond(UnprocessableEntity)
@@ -39,7 +39,7 @@ fun Application.configureRouting() {
             val key = call.parameters["key"] ?: return@put call.respond(BadRequest)
             val value = call.parameters["value"] ?: return@put call.respond(BadRequest)
 
-            if (cache.upsert(key, value)) {
+            if (cache.update(key, value)) {
                 call.respond(OK)
             } else {
                 call.respond(UnprocessableEntity)
