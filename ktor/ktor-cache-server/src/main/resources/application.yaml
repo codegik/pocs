@@ -1,0 +1,6 @@
+ktor:
+    application:
+        modules:
+            - com.codegik.ktor.cache.ApplicationKt.module
+    deployment:
+        port: 8080
