@@ -11,5 +11,5 @@ _build/
 .settings/
 .metadata
 .DS_Store
-
+node_modules
 !ocaml/oop/bin
