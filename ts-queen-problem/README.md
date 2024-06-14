@@ -41,3 +41,16 @@ When a dead end is reached, the algorithm backtracks to the previous decision po
 - **Search Space:** The search space includes all possible combinations of candidates and choices.
 - **Optimal Solution:** In optimization problems, the optimal solution is the best possible solution.
 
+
+## Requirements
+
+- NodeJS v20.10.0
+- Npm 10.2.3
+
+
+## Running
+
+```
+npm i
+npm test
+```
