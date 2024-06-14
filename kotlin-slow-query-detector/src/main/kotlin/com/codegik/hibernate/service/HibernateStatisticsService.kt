@@ -12,7 +12,7 @@ class HibernateStatisticsService(
 ) {
     private val queries = mutableMapOf<String, Long>()
 
-    fun publish(): String {
+    private fun collectStats(): Map<String, Long> {
         val statistics = entityManagerFactory.unwrap(SessionFactory::class.java).statistics
 
         statistics.queries.forEach { query ->
@@ -22,8 +22,20 @@ class HibernateStatisticsService(
         }
 
         return queries
+    }
+
+    fun publish(): String {
+        return collectStats()
             .toSortedMap(compareByDescending { it })
             .map { "${it.key} took ${it.value}ms" }
             .joinToString("\n")
+    }
+
+    fun top3SlowestQueries(): Map<String, Long> {
+        return collectStats()
+            .toList()
+            .sortedBy { (_, value) -> value}
+            .reversed()
+            .toMap()
     }
 }

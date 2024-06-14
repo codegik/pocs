@@ -5,6 +5,8 @@ import com.codegik.hibernate.repository.PersonRepository
 import com.codegik.hibernate.service.HibernateStatisticsService
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,21 +24,31 @@ class SlowQueryDetectorTest(
 
 	@BeforeEach
 	fun setup() {
-		val personCount = personRepository.findAll().count()
-		if (personCount == 0) {
-			val persons = List(100000) { Person(UUID.randomUUID(), UUID.randomUUID().toString(), Random.nextInt()) }
-			personRepository.saveAll(persons)
-		}
+		val persons = List(100000) { Person(UUID.randomUUID(), UUID.randomUUID().toString(), Random.nextInt()) }
+		personRepository.saveAll(persons)
 	}
 
     @Test
-	fun contextLoads() {
+	fun showAllQueriesSortedByTimeTaken() {
 		personRepository.findById(UUID.randomUUID())
 		logger.info("Showing queries by time taken:\n${hibernateStatisticsService.publish()}")
 		personRepository.findByAge(87654)
 		logger.info("Showing queries by time taken:\n${hibernateStatisticsService.publish()}")
 		personRepository.findByName("John")
 		logger.info("Showing queries by time taken:\n${hibernateStatisticsService.publish()}")
+	}
+
+    @Test
+	fun showTop3SlowestQueries() {
+		personRepository.findAll()
+		personRepository.findByAge(Random.nextInt())
+		personRepository.findByName("John")
+		personRepository.findByName("John")
+		personRepository.findByName(UUID.randomUUID().toString())
+
+		val queries = hibernateStatisticsService.top3SlowestQueries()
+
+		assertEquals(3, queries.size)
 	}
 
 }
