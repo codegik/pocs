@@ -9,6 +9,26 @@ They need to reduce the costs, but this must not impact the user experience.
 It should be a smooth migration.
 
 
+#### Problem space
+
+##### Option 1: Change S3 storage class
+- Use S3 if you need low latency or frequent access to your data. Use S3 Glacier for low storage cost, and you do not require millisecond access to your data.
+- Both S3 and Glacier are designed for durability of 99.999999999% of objects across multiple Availability Zones.
+- **S3 can be used to host static web content, while Glacier cannot.**
+- You can run analytics and querying on S3 and Glacier.
+- You can configure a life cycle policy for your S3 objects to automatically transfer them to Glacier. You can also upload objects directly to either S3 or Glacier.
+- Objects stored in S3 have a minimum storage duration of 30 days (except for S3 Standard). Objects that are archived to Glacier have a minimum 90 days of storage. Objects that are deleted, overwritten, or transitioned to a different storage class before the minimum duration will incur the normal usage charge plus a pro-rated request charge for the remainder of the minimum storage duration.
+- We don't need extra refactoring on existing services, we have full compatibility with S3 api.
+- We also should have better compressing strategy to reduce bandwidth and storage.
+
+| Storage class or tier                                                  | Expedited            | Standard            | Standard (without Batch) | Bulk            |
+|------------------------------------------------------------------------|----------------------|---------------------|--------------------------|-----------------|
+| S3 Glacier Flexible Retrieval or S3 Intelligent-Tiering Archive Access | 1–5 minutes          | Minutes–5 hours     | 3–5 hours                | 5–12 hours      |
+| S3 Glacier Deep Archive or S3 Intelligent-Tiering Deep Archive Access  | Not available        | 9-12 hours          | Within 12 hours          | Within 48 hours |
+|                                                                        |                      |                     |                          |                 |
+| Prices                                                                 | $10.00 - 1k requests | $0.05 - 1k requests | $0.05 - 1k requests      | N/A             |
+
+
 ### 2. 🎯 Goals
 
 - Reduce storage costs.
