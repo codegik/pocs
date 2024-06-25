@@ -29,6 +29,35 @@ It should be a smooth migration.
 | Prices                                                                 | $10.00 - 1k requests | $0.05 - 1k requests | $0.05 - 1k requests      | N/A             |
 
 
+##### Option 2: Use different provider
+- ✅ PROS:
+    - Low cost of storage.
+    - Lower bandwidth costs.
+    - Simpler pricing structure.
+    - Free egress to CDN. (most cases)
+    - S3 Compatible API.
+- 🚫 CONS:
+    - Lack of connectedness with native services.
+    - No event handler to trigger functions. (most cases)
+    - Limited number of regions. (some cases)
+
+
+##### Option 3: Create a custom proxy
+- Create a service in front of S3 and other providers. It should request data on a pool of storage providers, if the data doesn't exists on provider A, try get data on provider B, and so on.
+- Create a policy to move the data based on access frequent.
+    - Frequently accessed files should lives on S3.
+    - Files accessed from time to time should lives on secondary provider.
+    - Rarely accessed files should lives on cold storage data.
+
+
+##### Option 4: Use open source tool (Ceph)
+- ✅ PROS:
+    - Low cost of storage.
+    - Open-source: Ceph allows full access to its codebase, promoting maximum customization and adaptability to your specific needs.
+- 🚫 CONS:
+    - Supporting and maintaining in house.
+
+
 ### 2. 🎯 Goals
 
 - Reduce storage costs.
