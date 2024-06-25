@@ -57,6 +57,8 @@ It should be a smooth migration.
 - 🚫 CONS:
     - Supporting and maintaining in house.
 
+TODO: look the use cases to create more options.
+
 
 ### 2. 🎯 Goals
 
