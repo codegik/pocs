@@ -1,5 +1,5 @@
 export class QueenProblem {
-  boardSize = 8;
+  boardSize = 4;
 
   boardAsString(board: number[][]): String {
     let result = "";
@@ -55,14 +55,10 @@ export class QueenProblem {
 
   solve(): String {
     let board = [
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ];
 
     if (this.search(board, 0) == false) {
