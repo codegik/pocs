@@ -1,58 +1,48 @@
 package com.codegik.ktor.crud.plugins
 
+import com.codegik.ktor.crud.domain.Person
 import com.codegik.ktor.crud.service.PersonService
-import io.ktor.http.HttpStatusCode.Companion.BadRequest
-import io.ktor.http.HttpStatusCode.Companion.NotFound
-import io.ktor.http.HttpStatusCode.Companion.OK
-import io.ktor.http.HttpStatusCode.Companion.UnprocessableEntity
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.JsonConvertException
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import io.ktor.server.routing.delete
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 
-fun Application.configureRouting() {
-    val cache = PersonService()
+fun Application.configureRouting(personService: PersonService) {
 
     routing {
-        get("/{key?}") {
-            val key = call.parameters["key"] ?: return@get call.respond(BadRequest)
-
-            cache.get(key)?.let { call.respond(OK, it) } ?: call.respond(NotFound)
+        get {
+            call.respond(personService.getAll())
         }
 
-        post("/{key?}/{value?}") {
-            val key = call.parameters["key"] ?: return@post call.respond(BadRequest)
-            val value = call.parameters["value"] ?: return@post call.respond(BadRequest)
-
-            if (cache.add(key, value)) {
-                call.respond(OK)
-            } else {
-                call.respond(UnprocessableEntity)
+        post {
+            try {
+                val person = call.receive<Person>()
+                call.respond(personService.save(person))
+            } catch (ex: IllegalStateException) {
+                call.respond(HttpStatusCode.BadRequest)
+            } catch (ex: JsonConvertException) {
+                call.respond(HttpStatusCode.BadRequest)
             }
         }
 
-        put("/{key?}/{value?}") {
-            val key = call.parameters["key"] ?: return@put call.respond(BadRequest)
-            val value = call.parameters["value"] ?: return@put call.respond(BadRequest)
-
-            if (cache.update(key, value)) {
-                call.respond(OK)
-            } else {
-                call.respond(UnprocessableEntity)
-            }
-        }
-
-        delete("/{key?}") {
-            val key = call.parameters["key"] ?: return@delete call.respond(BadRequest)
-
-            if (cache.delete(key)) {
-                call.respond(OK)
-            } else {
-                call.respond(NotFound)
+        put {
+            try {
+                val person = call.receive<Person>()
+                call.respond(personService.update(person))
+            } catch (ex: IllegalStateException) {
+                call.respond(HttpStatusCode.BadRequest)
+            } catch (ex: IllegalArgumentException) {
+                call.respondText(ex.message.orEmpty(), ContentType.Text.Plain, HttpStatusCode.BadRequest)
+            } catch (ex: JsonConvertException) {
+                call.respond(HttpStatusCode.BadRequest)
             }
         }
     }

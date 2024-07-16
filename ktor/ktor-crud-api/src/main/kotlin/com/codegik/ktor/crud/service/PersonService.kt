@@ -1,31 +1,47 @@
 package com.codegik.ktor.crud.service
 
+import com.codegik.ktor.crud.domain.Person
+import com.codegik.ktor.crud.domain.Persons
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.update
+
 class PersonService {
-    private val cache = mutableMapOf<String, String>()
 
-    fun get(key: String): String? {
-        return cache[key]
+    suspend fun getAll(): List<Person> = newSuspendedTransaction {
+        Persons.selectAll().map { toPerson(it) }
     }
 
-    fun add(key: String, value: String): Boolean {
-        if (cache.containsKey(key)) {
-            return false
+    suspend fun save(person: Person): Person = newSuspendedTransaction {
+        val id = Persons.insert {
+            it[name] = person.name
+            it[age] = person.age
+        }[Persons.id]
+
+        person.copy(id = id)
+    }
+
+    suspend fun update(person: Person): Person = newSuspendedTransaction {
+        if (person.id != null) {
+            Persons.update {
+                it[id] = person.id
+                it[name] = person.name
+                it[age] = person.age
+            }
+
+            person.copy()
+        } else {
+            throw IllegalArgumentException("missing id field")
         }
-
-        cache[key] = value
-        return true
     }
 
-    fun update(key: String, value: String): Boolean {
-        cache[key] = value
-        return true
-    }
-
-    fun delete(key: String): Boolean {
-        if (!cache.containsKey(key)) {
-            return false
-        }
-        cache.remove(key)
-        return true
+    private fun toPerson(row: ResultRow): Person {
+        return Person(
+            id = row[Persons.id],
+            name = row[Persons.name],
+            age = row[Persons.age]
+        )
     }
 }
