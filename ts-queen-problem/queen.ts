@@ -1,11 +1,18 @@
 export class QueenProblem {
-    boardSize = 4;
+    board: number[][];
 
-    boardAsString(board: number[][]): String {
+    constructor(board: number[][]) {
+        this.board = board;
+    }
+
+    boardAsString(): String {
+        let columns = this.board.length;
+        let lines = this.board[0].length
         let result = "";
-        for (let i = 0; i < this.boardSize; i++) {
-            for (let j = 0; j < this.boardSize; j++) {
-                if (board[i][j] == 1) result += "Q ";
+
+        for (let i = 0; i < columns; i++) {
+            for (let j = 0; j < lines; j++) {
+                if (this.board[i][j] == 1) result += "Q ";
                 else result += ". ";
             }
             result += "\n";
@@ -13,21 +20,21 @@ export class QueenProblem {
         return result;
     }
 
-    isSafe(board: number[][], row: number, col: number): Boolean {
+    isSafe(row: number, col: number): Boolean {
         for (let i = 0; i < col; i++) {
-            if (board[row][i]) {
+            if (this.board[row][i]) {
                 return false;
             }
         }
 
         for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) {
-            if (board[i][j]) {
+            if (this.board[i][j]) {
                 return false;
             }
         }
 
-        for (let i = row, j = col; j >= 0 && i < this.boardSize; i++, j--) {
-            if (board[i][j]) {
+        for (let i = row, j = col; j >= 0 && i < this.board.length; i++, j--) {
+            if (this.board[i][j]) {
                 return false;
             }
         }
@@ -35,18 +42,18 @@ export class QueenProblem {
         return true;
     }
 
-    search(board: number[][], col: number): Boolean {
-        if (col >= this.boardSize) return true;
+    search(col: number): Boolean {
+        if (col >= this.board.length) return true;
 
-        for (let i = 0; i < this.boardSize; i++) {
-            if (this.isSafe(board, i, col)) {
-                board[i][col] = 1;
+        for (let i = 0; i < this.board.length; i++) {
+            if (this.isSafe(i, col)) {
+                this.board[i][col] = 1;
 
-                if (this.search(board, col + 1)) {
+                if (this.search(col + 1)) {
                     return true;
                 }
 
-                board[i][col] = 0;
+                this.board[i][col] = 0;
             }
         }
 
@@ -54,15 +61,8 @@ export class QueenProblem {
     }
 
     solve(): String {
-        let board = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-        ];
-
-        if (this.search(board, 0)) {
-            return this.boardAsString(board);
+        if (this.search(0)) {
+            return this.boardAsString();
         }
 
         return "Solution does not exist";
