@@ -5,7 +5,7 @@ export class QueenProblem {
         this.board = board;
     }
 
-    boardAsString(): String {
+    private boardAsString(): String {
         let columns = this.board.length;
         let lines = this.board[0].length
         let result = "";
@@ -20,7 +20,7 @@ export class QueenProblem {
         return result;
     }
 
-    isSafe(row: number, col: number): Boolean {
+    private isSafe(row: number, col: number): Boolean {
         for (let i = 0; i < col; i++) {
             if (this.board[row][i]) {
                 return false;
@@ -42,8 +42,8 @@ export class QueenProblem {
         return true;
     }
 
-    search(col: number): Boolean {
-        if (col >= this.board.length) return true;
+    private search(col: number): Boolean {
+        if (col == this.board.length) return true;
 
         for (let i = 0; i < this.board.length; i++) {
             if (this.isSafe(i, col)) {
