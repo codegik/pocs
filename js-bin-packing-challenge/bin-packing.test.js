@@ -7,7 +7,7 @@ test('test case 1', () => {
 
 test('test case 2', () => {
     const bin = new BinPacking()
-    expect(bin.calculate([4, 8l, 1, 4, 2, 1], 10)).toBe(2);
+    expect(bin.calculate([4, 8, 1, 4, 2, 1], 10)).toBe(2);
 })
 
 test('test case 3', () => {
