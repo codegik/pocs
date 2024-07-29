@@ -1,0 +1,11 @@
+{
+  "name": "js-bin-packing-challenge",
+  "version": "1.0.0",
+  "main": "bin-packing.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "29.7.0"
+  }
+}
