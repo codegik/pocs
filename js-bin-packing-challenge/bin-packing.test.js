@@ -2,7 +2,7 @@ const {BinPacking} = require('./bin-packing');
 
 test('test case 1', () => {
     const bin = new BinPacking()
-    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 10)).toBe(4);
+    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 10)).toBe(3);
 })
 
 test('test case 2', () => {
@@ -17,10 +17,10 @@ test('test case 3', () => {
 
 test('test case 4', () => {
     const bin = new BinPacking()
-    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 10)).toBe(4);
+    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 10)).toBe(3);
 })
 
 test('test case 5', () => {
     const bin = new BinPacking()
-    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 5)).toBe(5);
+    expect(bin.calculate([2, 5, 4, 7, 1, 3, 8], 5)).toBe(6);
 })
