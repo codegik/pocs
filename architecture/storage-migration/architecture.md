@@ -57,8 +57,24 @@ It should be a smooth migration.
 - 🚫 CONS:
     - Supporting and maintaining in house.
 
-TODO: look the use cases to create more options.
+##### Option 5: Mix of tools
 
+**For image store we can use CDN CloudFront.**
+- ✅ PROS:
+    - Server side Latency: We can reduce the latency of transferring files to CloudFront since the application is running on AWS.
+    - Client side Latency: Faster download speeds and lower latency for your files will result in a significant improvement in customer experience.
+- 🚫 CONS:
+    - Pricing: High cost at scale, CloudFront pricing is pay-per-use.
+
+**For metadata, we could use open source tool Gluster or Ceph.**
+- ✅ PROS:
+    - Low cost of storage.
+    - Open-source: Gluster/Ceph allows full access to its codebase, promoting maximum customization and adaptability to your specific needs.
+    - Latency: The file storage could be installed on an EC2 instance, witch will reduce the latenc£y if compared to using other file storage cloud provider.
+- 🚫 CONS:
+    - Supporting and maintaining in house.
+
+**For machine learning we could use XPTO.**
 
 ### 2. 🎯 Goals
 
