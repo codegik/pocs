@@ -6,9 +6,7 @@ class BinPacking {
         let remaining = capacity;
         let sortedWeight = weight.sort((a, b) => b - a);
 
-        // Place items one by one
         for (let i = 0; i < sortedWeight.length; i++) {
-            // If this item can't fit in current bin
             if (sortedWeight[i] > remaining) {
                 usedBins++;
                 remaining = capacity - sortedWeight[i];
