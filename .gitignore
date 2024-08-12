@@ -8,6 +8,7 @@ target/
 logs/
 bin/
 _build/
+__pycache__
 .settings/
 .metadata
 .DS_Store
