@@ -83,7 +83,7 @@ It should be a smooth migration.
 - Smooth migration.
 - Caching.
 - On demand migration and batch migration.
-- Refactor some services in order to consume data from different source.
+- Refactor some services in order to consume data from different source, but not changing the existing contracts.
 
 ### 3. 🎯 Non-Goals
 
@@ -94,10 +94,9 @@ It should be a smooth migration.
 ### 📐 4. Principles
 
 1. Customer centric.
-2. Use composition over heritance. Try to decouple componentes as much as we can.
 3. Observability first, expose metrics and logs to enable tracking and monitor anything.
 4. Use idempotency to prevent duplications and improve distributed integrity.
-5. Think on async calls when design the features.
+5. TBD.
 6. Use smaller API contracts as much as we can, and versioning is a requirement.
 
 ## 🏗️ 5. Overall Diagrams
