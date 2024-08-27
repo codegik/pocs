@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-08-27T17:00:31.928Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0" etag="NknU2W7KDImmz6egvUr1" version="23.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-08-27T17:01:36.172Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0" etag="5ffVFNsKKg9YYc03TGaZ" version="23.1.2" type="github">
   <diagram name="Page-1" id="pJeVdPgJP1tW0TAv4W88">
     <mxGraphModel dx="1274" dy="1681" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -28,16 +28,16 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="z-Z8ukwKKNmRs13d9scf-15" value="Application Layer" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="405.38" y="400" width="290" height="160" as="geometry" />
+          <mxGeometry x="350" y="400" width="400" height="160" as="geometry" />
         </mxCell>
         <mxCell id="z-Z8ukwKKNmRs13d9scf-9" value="App A" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
-          <mxGeometry x="430.38" y="433.5" width="76.5" height="93" as="geometry" />
+          <mxGeometry x="440" y="433.5" width="76.5" height="93" as="geometry" />
         </mxCell>
         <mxCell id="z-Z8ukwKKNmRs13d9scf-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="z-Z8ukwKKNmRs13d9scf-2" target="z-Z8ukwKKNmRs13d9scf-15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="z-Z8ukwKKNmRs13d9scf-16" value="App B" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
-          <mxGeometry x="575.38" y="433.5" width="76.5" height="93" as="geometry" />
+          <mxGeometry x="596.5" y="433.5" width="76.5" height="93" as="geometry" />
         </mxCell>
         <mxCell id="z-Z8ukwKKNmRs13d9scf-26" value="Gluster cluster" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry x="350.75" y="610" width="399.25" height="160" as="geometry" />
