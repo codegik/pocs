@@ -74,7 +74,27 @@ It should be a smooth migration.
 - 🚫 CONS:
     - Supporting and maintaining in house.
 
-**For machine learning we could use XPTO.**
+**For machine learning we could use XPTO TBD.**
+
+##### Use cases & Strategies
+
+We're going to migrate the files from S3 to Gluster by batch process. Once the files are copied, we can remove from S3.
+
+During the copy period, the files will coexist in both places (S3 and Gluster).
+
+After finish the migration, we can point the applications to the new Image Store server.
+
+| Use case                         | Strategy                                                                                                     |
+|:---------------------------------|:-------------------------------------------------------------------------------------------------------------|
+| Consuming files from Image Store | We're going to use open source tool as source (Gluster) of true for images and Nginx as image cache.         |
+|                                  | Accessed files will be cached on Nginx directory, and will create a policy to delete older files.            |
+|                                  | Users will download the images directly from Nginx.                                                          |
+|                                  | Existing applications will consume images from there also.                                                   |
+| Adding files to Image Store      | Gluster has API compatible with S3, so existing application would be uploading files to the server as usual. |
+|                                  | Once the file is accessed, it will be cached on Nginx.                                                       |
+| Food metadata persistence        |                                                                                                              |
+|                                  |                                                                                                              |
+
 
 ### 2. 🎯 Goals
 
