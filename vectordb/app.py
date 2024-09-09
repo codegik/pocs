@@ -1,9 +1,10 @@
 import chromadb
 from chromadb.config import Settings
+from chromadb.utils import embedding_functions
 
 client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory="db/"))
 
-collection = client.create_collection(name="Students")
+collection = client.get_or_create_collection(name="Students")
 
 student_info = """
 Alexandra Thompson, a 19-year-old computer science sophomore with a 3.7 GPA,
@@ -26,11 +27,19 @@ UW encompasses over 500 buildings and 20 million square feet of space,
 including one of the largest library systems in the world.
 """
 
-collection.add(
-    documents=[student_info, club_info, university_info],
-    metadatas=[{"source": "student info"}, {"source": "club info"}, {'source': 'university info'}],
-    ids=["id1", "id2", "id3"]
+results = collection.query(
+    query_texts=["Give me students id1, id2 and id3"],
+    n_results=3
 )
+
+print(results)
+
+if len(results.get("ids").pop()) < 3:
+    collection.add(
+        documents=[student_info, club_info, university_info],
+        metadatas=[{"source": "student info"}, {"source": "club info"}, {'source': 'university info'}],
+        ids=["id1", "id2", "id3"]
+    )
 
 results = collection.query(
     query_texts=["What is the student name?"],
@@ -38,3 +47,8 @@ results = collection.query(
 )
 
 print(results)
+
+openai_ef = embedding_functions.OpenAIEmbeddingFunction(model_name="text-embedding-ada-002")
+students_embeddings = openai_ef([student_info, club_info, university_info])
+
+print(students_embeddings)
