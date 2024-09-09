@@ -92,7 +92,7 @@ After finish the migration, we can point the applications to the new Image Store
 |                                  | Existing applications will consume images from there also.                                                   |
 | Adding files to Image Store      | Gluster has API compatible with S3, so existing application would be uploading files to the server as usual. |
 |                                  | Once the file is accessed, it will be cached on Nginx.                                                       |
-| Food metadata persistence        |                                                                                                              |
+| Food metadata persistence        | We can have a second Gluster custer to handle only metadata, but we don't need Nginx on front.               |
 |                                  |                                                                                                              |
 
 
