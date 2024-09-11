@@ -93,7 +93,19 @@ After finish the migration, we can point the applications to the new Image Store
 | Adding files to Image Store      | Gluster has API compatible with S3, so existing application would be uploading files to the server as usual. |
 |                                  | Once the file is accessed, it will be cached on Nginx.                                                       |
 | Food metadata persistence        | We can have a second Gluster custer to handle only metadata, but we don't need Nginx on front.               |
+|                                  | Users will be able to query or persist food metadata.                                                        |
+| Predict consumer order           | We're going to replicate necessary data to Aurora in order to exposes ML models as SQL functions.            |
+|                                  | Aurora can call SageMaker or Bedrock for a wide variety of ML algorithms including generative AI.            |
+|                                  | Company can predict user orders.                                                                             |
+| Tracking existing order          | We will persist order data into Aurora DB, so user could track and see all related data to its orders.       |
+| Payment                          | We will persist order data into Aurora DB, so user could see history of payments and payment configuration.  |
 |                                  |                                                                                                              |
+
+
+TODO
+Details how this will reduce the costs.
+Gluster how will reduce the costs.
+Talk about costs. We could be increasing the costs.
 
 
 ### 2. 🎯 Goals
