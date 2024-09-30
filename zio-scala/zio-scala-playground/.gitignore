@@ -1,0 +1,15 @@
+*.class
+*.log
+.DS_STORE
+target/
+project/project/
+project/target/
+project/metals.sbt
+logs/
+.bsp/
+.metals/
+.vscode/
+.bloop/
+postgres-data/
+sbt-launch.jar
+.env
