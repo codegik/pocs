@@ -18,3 +18,7 @@ Running
 python app.py
 ./stop.sh
 ```
+
+## References
+
+- https://www.datacamp.com/tutorial/chromadb-tutorial-step-by-step-guide
