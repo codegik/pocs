@@ -3,7 +3,7 @@
 set -e
 
 output_file="./src/main/resources/input-data.csv"
-num_lines=100000000
+num_lines=100000
 i=1
 
 truncate -s 0 $output_file

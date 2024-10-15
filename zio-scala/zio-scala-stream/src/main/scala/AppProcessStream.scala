@@ -1,10 +1,11 @@
+import com.codegik.batch.BatchProcessStream
 import zio.stream.{ZSink, ZStream}
 import zio.{Scope, ZIO, ZIOAppArgs, ZIOAppDefault}
 
-object App extends ZIOAppDefault {
+object AppProcessStream extends ZIOAppDefault {
 
   private val myApp: ZStream[Any, Throwable, Int] = for {
-    batch <- BatchProcess("input-data.csv").run
+    batch <- BatchProcessStream("input-data.csv").run
     _ <- ZStream.succeed(4)
   } yield 4
 

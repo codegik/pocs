@@ -1,9 +1,11 @@
+package com.codegik.batch
+
 import zio.ZIO
 import zio.stream.ZStream
 
 import scala.io.Source
 
-class BatchProcess(val fileName: String) {
+class BatchProcessStream(val fileName: String) {
 
   private val fileInputStream: ZStream[Any, Throwable, String] = {
     ZStream.fromIterator(Source.fromResource(fileName).getLines())
