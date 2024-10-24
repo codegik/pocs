@@ -3,7 +3,7 @@ import os
 
 from sentence_transformers import SentenceTransformer
 
-os.environ['CURL_CA_BUNDLE'] = '/Users/iklassman/Zscaler/ZscalerRootCertificate-2048-SHA256.pem'
+os.environ['CURL_CA_BUNDLE'] = '<add cert here>'
 
 student_info = """
 Alexandra Thompson, a 19-year-old computer science sophomore with a 3.7 GPA,
