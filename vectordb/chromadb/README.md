@@ -13,6 +13,7 @@ pip install chromadb chromadb-client sentence_transformers
 
 Running
 ```shell
+export CURL_CA_BUNDLE=<your cert goes here>
 ./start.sh
 python app.py
 ./stop.sh

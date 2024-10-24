@@ -1,9 +1,5 @@
 import chromadb
-import os
-
 from sentence_transformers import SentenceTransformer
-
-os.environ['CURL_CA_BUNDLE'] = '<add cert here>'
 
 student_info = """
 Alexandra Thompson, a 19-year-old computer science sophomore with a 3.7 GPA,
@@ -40,13 +36,13 @@ collection.add(
     ids=["id1", "id2", "id3"]
 )
 
-query_embedding = model.encode("Give me students id1, id2 and id3")
-results = collection.query(query_embeddings=query_embedding, n_results=3)
+query_embedding = model.encode("Give me student id1")
+results = collection.query(query_embeddings=query_embedding, n_results=1)
 
 print(results)
 
 query_embedding = model.encode("What is the student name?")
-results = collection.query(query_embeddings=query_embedding, n_results=2)
+results = collection.query(query_embeddings=query_embedding, n_results=1)
 
 print(results)
 
