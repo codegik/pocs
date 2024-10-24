@@ -8,8 +8,7 @@ I'm using python 3.9.10.
 
 Install
 ```shell
-pip install chromadb openai
-pip install --upgrade chromadb==0.3.29
+pip install chromadb chromadb-client sentence_transformers
 ```
 
 Running

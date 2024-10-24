@@ -1,16 +1,9 @@
 import chromadb
 import os
 
-os.environ['CURL_CA_BUNDLE'] = '<put local cert here>'
-chromadb.is_thin_client = False
+from sentence_transformers import SentenceTransformer
 
-from chromadb.config import Settings
-from chromadb.utils import embedding_functions
-
-embedder = embedding_functions.DefaultEmbeddingFunction()
-embedder_sentence = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
-
-client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory="db/"))
+os.environ['CURL_CA_BUNDLE'] = '/Users/iklassman/Zscaler/ZscalerRootCertificate-2048-SHA256.pem'
 
 student_info = """
 Alexandra Thompson, a 19-year-old computer science sophomore with a 3.7 GPA,
@@ -33,26 +26,27 @@ UW encompasses over 500 buildings and 20 million square feet of space,
 including one of the largest library systems in the world.
 """
 
+
+client = chromadb.HttpClient(host='localhost', port=8000)
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+embeddings = model.encode([student_info, club_info, university_info])
+
 collection = client.get_or_create_collection(name="Students")
 
 collection.add(
-    embeddings=[embedder_sentence],
+    embeddings=embeddings,
     documents=[student_info, club_info, university_info],
     metadatas=[{"source": "student info"}, {"source": "club info"}, {'source': 'university info'}],
     ids=["id1", "id2", "id3"]
 )
 
-results = collection.query(
-    query_texts=["Give me students id1, id2 and id3"],
-    n_results=3
-)
+query_embedding = model.encode("Give me students id1, id2 and id3")
+results = collection.query(query_embeddings=query_embedding, n_results=3)
 
 print(results)
 
-results = collection.query(
-    query_texts=["What is the student name?"],
-    n_results=2
-)
+query_embedding = model.encode("What is the student name?")
+results = collection.query(query_embeddings=query_embedding, n_results=2)
 
 print(results)
 
