@@ -1,0 +1,6 @@
+services:
+  java-opentelemetry:
+    container_name: java-opentelemetry
+    build: ./java-opentelemetry
+    ports:
+      - '8080:8080'
