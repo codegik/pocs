@@ -1,3 +1,0 @@
-server = "https://docker.io"
-[host."https://docker.io"]
-  skip_verify = true
