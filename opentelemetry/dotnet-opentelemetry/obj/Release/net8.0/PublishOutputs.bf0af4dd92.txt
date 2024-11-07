@@ -1,0 +1,7 @@
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/dotnet-opentelemetry
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/appsettings.Development.json
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/appsettings.json
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/dotnet-opentelemetry.dll
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/dotnet-opentelemetry.deps.json
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/dotnet-opentelemetry.runtimeconfig.json
+/Users/inacio/sources/codegik/pocs/opentelemetry/dotnet-opentelemetry/bin/Release/net8.0/publish/dotnet-opentelemetry.pdb

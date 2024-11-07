@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-api
+  namespace: poc-api
+spec:
+  revisionHistoryLimit: 2
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poc-api
+  template:
+    metadata:
+      labels:
+        app: poc-api
+    spec:
+      containers:
+        - name: poc-api
+          image: ghcr.io/ativoscapital/poc-api:latest
+          env:
+          - name: OTEL_SERVICE_NAME
+            value: "poc-api"      
+          - name: OTEL_TRACES_EXPORTER
+            value: "otlp"
+          - name: OTEL_EXPORTER_OTLP_PROTOCOL
+            value: "http/protobuf"
+          - name: OTEL_RESOURCE_ATTRIBUTES
+            value: "deployment.environment=dev,service.version=1.0.0"
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "http://172.27.41.41:4318"           
+          - name: OTEL_LOG_LEVEL
+            value: "error"
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      imagePullSecrets:
+        - name: ghcr-login-secret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
