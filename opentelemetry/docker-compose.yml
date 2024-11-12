@@ -4,3 +4,8 @@ services:
     image: java-opentelemetry
     ports:
       - '8080:8080'
+  dotnet-opentelemetry:
+    container_name: dotnet-opentelemetry
+    image: dotnet-opentelemetry
+    ports:
+      - '8181:8080'
