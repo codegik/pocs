@@ -23,16 +23,18 @@ class SellerConcurrentSpec extends AnyFlatSpec with should.Matchers {
     val tasks: util.List[Callable[Future[Ticket]]] = (1 to 10).map(_ =>
       new Callable[Future[Ticket]] {
         override def call(): Future[Ticket] =
-          Future(seller.sell(UUID.randomUUID().toString, random.nextInt(10), show))(executionContext)
+          Future(seller.sell(UUID.randomUUID().toString, 3, show))(executionContext)
       }
     ).asJava
 
     val futures = executionContext.invokeAll(tasks)
     futures.forEach(f => {
       Try(Await.result(f.get(), 10 second)) match {
-        case Success(ticket) => println(s"Success to get ticket seat: ${ticket.seat}")
+        case Success(ticket) => println(s"Success to get ticket seat: ${ticket.seat}, owner: ${ticket.owner}")
         case Failure(exception) => println(s"Failed to get ticket seat: ${exception.getMessage}")
       }
     })
+
+    seller.totalTickets should be (1)
   }
 }
