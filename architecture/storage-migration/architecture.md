@@ -129,10 +129,9 @@ After finish the migration, we can point the applications to the new Image Store
 ### 📐 4. Principles
 
 1. Customer centric.
-3. Observability first, expose metrics and logs to enable tracking and monitor anything.
-4. Use idempotency to prevent duplications and improve distributed integrity.
-5. TBD.
-6. Use smaller API contracts as much as we can, and versioning is a requirement.
+2. Data availability and integrity. Users should not notice the migration.
+3. Observability, expose metrics and logs to enable tracking and monitor anything.
+4. Cost-effective, reduce costs and keep the system available.
 
 ## 🏗️ 5. Overall Diagrams
 
@@ -146,7 +145,7 @@ After finish the migration, we can point the applications to the new Image Store
 
 ### 🗂️ 5.3 Use Cases 
 
-#### Sending message
+#### Image Store
 
 ![Sending message](send-message-usecase.drawio.png "Sending Message Use Case")
 
@@ -154,10 +153,9 @@ After finish the migration, we can point the applications to the new Image Store
 ## 🧭 6. Trade-offs
 
 ### Major Decisions: 
-1. Build native mobile app for Android and iOS instead of using cross-platform app.
-2. We're using multi region EKS cluster in order to reduce latency all over the world.
-3. We're using RDS replica cross-region in order to reduce latency all over the world.
-4. Choose managed Elastic Cache instead of redis cluster.
+1. Use Ceph for low storage cost instead of S3, and Ceph has a S3 compatible API.
+2. Use Nginx for caching files in front of Ceph.
+3. Use SageMaker or Bedrock for a wide variety of ML algorithms including generative AI.
 
 ### Tradeoffs:
 1. Native mobile vs Cross-platform
