@@ -14,7 +14,7 @@ import scala.util.{Random, Try, Success, Failure}
 
 class SellerConcurrentSpec extends AnyFlatSpec with should.Matchers {
 
-  "A Seller" should "allow the first owner get the ticket" in {
+  "A Seller" should "should handle two parallel acquire ticket on same seat" in {
     val executionContext = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(2))
     val random = Random()
     val seller = Seller()
@@ -36,5 +36,29 @@ class SellerConcurrentSpec extends AnyFlatSpec with should.Matchers {
     })
 
     seller.totalTickets should be (1)
+  }
+
+  "A Seller" should "should handle 10 parallel acquire ticket on same seat" in {
+    val executionContext = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(10))
+    val random = Random()
+    val seller = Seller()
+    val show = Show("The Phantom of the Opera", new Date())
+
+    val tasks: util.List[Callable[Future[Ticket]]] = (1 to 100).map(_ =>
+      new Callable[Future[Ticket]] {
+        override def call(): Future[Ticket] =
+          Future(seller.sell(UUID.randomUUID().toString, 3, show))(executionContext)
+      }
+    ).asJava
+
+    val futures = executionContext.invokeAll(tasks)
+    futures.forEach(f => {
+      Try(Await.result(f.get(), 10 second)) match {
+        case Success(ticket) => println(s"Success to get ticket seat: ${ticket.seat}, owner: ${ticket.owner}")
+        case Failure(exception) => println(s"Failed to get ticket seat: ${exception.getMessage}")
+      }
+    })
+
+    seller.totalTickets should be(1)
   }
 }
