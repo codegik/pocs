@@ -14,5 +14,13 @@ class UserDao @Autowired() (
   def findAll(): List[User] = {
     userRepository.findAll().asScala.toList
   }
+  
+  def save(user: User): User = {
+    userRepository.save(user)
+  }
+  
+  def findByName(name: String): List[User] = {
+    userRepository.findByName(name).asScala.toList
+  }
 
 }

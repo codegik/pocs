@@ -3,16 +3,17 @@ package com.codegik.domain.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.{Column, Table}
 
+import java.util.UUID
 import scala.annotation.meta.field
 
-@Table(name = "USER")
+@Table(name = "USERS")
 case class User(
   @(Id @field)
-  id: String,
-  
-  @(Column @field)
-  name: Option[String] = None,
+  id: UUID = null,
 
   @(Column @field)
-  email: Option[String] = None,
+  name: String = null,
+
+  @(Column @field)
+  email: String = null,
 )

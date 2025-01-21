@@ -1,7 +1,9 @@
 package com.codegik.domain.api
 
+import java.util.UUID
+
 case class UserResponse(
-  id: String, 
-  name: Option[String], 
-  email: Option[String],
+  id: UUID, 
+  name: String = null, 
+  email: String = null,
 )
