@@ -93,8 +93,7 @@ First issue is annotating the case class fields. If you try the conventional way
 
 ```scala 3
 case class User(
-  @Id
-  id: UUID = null
+  @Id id: UUID = null
 )
 ```
 
