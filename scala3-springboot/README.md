@@ -116,7 +116,7 @@ One of the main benefit is that you can use `copy` method from case classes.
 ## Challenge 3: Spring JDBC + ID Generation
 
 Here is a good reference to start: https://spring.io/blog/2021/09/09/spring-data-jdbc-how-to-use-custom-id-generation.
-There are some options to generate the ID, All of them lucks good. 
+There are some options to generate the ID, All of them looks good. 
 But for my case, I'd prefer explicit implementation to things running in an obscurity way like interceptor or event listeners.
 
 Nowadays, the most common way to generate ID is using UUID.
