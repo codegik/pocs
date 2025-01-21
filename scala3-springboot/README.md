@@ -108,8 +108,7 @@ So, the solution is combine Spring Data annotations with Scala annotation `@fiel
 
 ```scala 3
 case class User(
-  @(Id @field)
-  id: UUID = null
+  @(Id @field) id: UUID = null
 )
 ```
 
@@ -146,18 +145,15 @@ And then we could map the entity like this:
 ```scala 3
 @Table(name = "USERS")
 case class User(
-   @(Id @field)
-   id: UUID = null,
-   @(Column @field)
-   name: String = null,
-   @(Column @field)
-   email: String = null,
+   @(Id @field) id: UUID = null,
+   @(Column @field) name: String = null,
+   @(Column @field) email: String = null,
 )
 ```
 
 And that's it. The Database will generate the ID for you.
 
-## Conclusion
+# Conclusion
 
 Scala and Springboot can work together. But you need to be aware of some caveats.
 
