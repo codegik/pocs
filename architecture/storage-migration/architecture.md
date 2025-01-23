@@ -147,8 +147,17 @@ After finish the migration, we can point the applications to the new Image Store
 
 #### Image Store
 
-![Sending message](send-message-usecase.drawio.png "Sending Message Use Case")
+![Storing new images and thumbnails](uc-image-store.png "Storing new images and thumbnails")
 
+![Searching images](uc-search-images.png "Searching images")
+
+#### Creating/Reading Food Metadata
+
+![Creating food metadata](uc-create-food-metadata.png "Creating food metadata")
+
+![Reading food metadata](uc-reading-food-metadata.png "Reading food metadata")
+
+@TODO 
 
 ## 🧭 6. Trade-offs
 
