@@ -158,6 +158,8 @@ After finish the migration, we can point the applications to the new Image Store
 ![Reading food metadata](uc-reading-food-metadata.png "Reading food metadata")
 
 @TODO 
+- compare costs s3 vs ec2 ceph
+- 
 
 ## 🧭 6. Trade-offs
 
