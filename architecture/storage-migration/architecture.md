@@ -157,144 +157,175 @@ After finish the migration, we can point the applications to the new Image Store
 
 ![Reading food metadata](uc-reading-food-metadata.png "Reading food metadata")
 
-@TODO 
-- compare costs s3 vs ec2 ceph
-- 
+
 
 ## 🧭 6. Trade-offs
 
-### Major Decisions: 
+### Major Decisions
 1. Use Ceph for low storage cost instead of S3, and Ceph has a S3 compatible API.
 2. Use Nginx for caching files in front of Ceph.
 3. Use SageMaker or Bedrock for a wide variety of ML algorithms including generative AI.
 
-### Tradeoffs:
-1. Native mobile vs Cross-platform
-    - PROS (+) 
-      * Native Apps Have the Best Performance.
-      * Native Apps Have Lower Risks of Bugs.
-      * Native Apps Receive Fast Updates.
-    - CONS (-)
-        * Higher Costs Involved With Native Apps
-2. EKS vs ECS
-   - PROS (+)
-     * Reduce latency over the world due multiple availability zones.
-   - CONS (-)
-     * Operational overhead due responsible for maintaining and operating the worker nodes in your cluster.
-3. Cross-region replica vs Single region
-   - PROS (+)
-     * Minimize latency by maintaining object copies in AWS Regions that are geographically closer to the users.
-   - CONS (-)
-     * Could have replication lag.
-4. Elastic Cache vs Redis
-   - PROS (+)
-     * Minimize operational overhead due fully managed service for Redis.
-   - CONS (-)
-     * Higher costs involved with elastic cache
+### Tradeoffs
+1. Cost of storage.
+   - ✅ PROS:
+      * Comparing to S3, Ceph has a lower cost of storage.
+      * Calculating usage of 200TB of storage monthly, S3 would cost **$18,689.62**, while Ceph would cost **$14,200.46**.
+      * https://calculator.aws/#/estimate?id=2abf04a1b2dc2ced3c0ea2b95ed7365833f4f8b3
+      * https://calculator.aws/#/estimate?id=8faccdff7a53c79bac92ecaa1758f6a2f99218e4
+   - 🚫 CONS:
+      * Lack of connectedness with native services.
+  
+2. Open-source.
+  - ✅ PROS:
+    * Ceph allows full access to its codebase, promoting maximum customization and adaptability to your specific needs.
+  - 🚫 CONS:
+    * Supporting and maintaining in house.
 
-### Websocket security
 
-The WebSocket protocol, RFC 6455, provides a standardized way to establish a full-duplex, two-way communication channel between client and server over a single TCP connection.
-It is a different TCP protocol from HTTP but is designed to work over HTTP, using ports 80 and 443 and allowing re-use of existing firewall rules.
+## 🌏 7. For each key major component
 
-WebSockets reuse the same authentication information that is found in the HTTP request when the WebSocket connection is stablished.
+### 7.1 Image Store
 
-More concretely, to ensure a user has authenticated to WebSocket application, all that is necessary is to ensure that we setup a framework that supports authenticate HTTP based web application like Spring Security.
+This is an API to store images and thumbnails.
 
-### HTTP security
+It's going to automatically create a thumbnail for each image uploaded.
 
-We're going to use Cognito tool for authenticate and authorize the user.
+The upload process will use multipart/form-data and compression.
 
-We should refresh the token every 2 hours o make sure older tokens to not have permission to execute any api.
 
-Any request that requires data from current user, should be authenticated.
-API should identify the user by the token provided in the request header.
-
-### 🌏 7. For each key major component
-
-#### 7.1 Incoming message handler
-
-This is an API to send messages from one user to another using WebSocket protocol.
-Dates will be collected in backend side, the client should not create dates, only ready dates.
-
-##### Class diagram
-
-![Send message service](send-message-service-class-diagram.drawio.png "Send message service")
-
-##### Contract documentation
-
-Send/receive message event subscription:
+#### Request
 ```
-/v1/message-handler
+PUT https://{ceph-bucket-name}.{ceph-storage}/{object-key}?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential={access-key-id}%2F20231015%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231015T000000Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature={signature}" \
+  -H "Content-Type: multipart/form-data; boundary={boundary}" \
+  -F "file=@path/to/your/file"
 ```
 
-Send message event payload:
-```json
+| Field            | Description                                                            |
+|------------------|------------------------------------------------------------------------|
+| ceph-storage     | The hostname of the Storage                                            |
+| ceph-bucket-name | The name of the bucket where you want to store your object             |   
+| object-key       | The key of the object you want to store                                |
+| access-key-id    | The access key ID that you received when you created your AWS account  |
+| signature        | The signature you created                                              |
+| boundary         | The boundary string that you used to separate the parts of the request |
+
+#### Response
+```
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Content-Length: 12345
+Last-Modified: Sun, 15 Oct 2023 12:34:56 GMT
+ETag: "9b2cf535f27731c974343645a3985328"
+x-amz-request-id: 1234567890ABCDEF
+x-amz-id-2: 0987654321FEDCBA
+```
+
+| HTTP Status               | Description                                    |
+|---------------------------|------------------------------------------------|
+| 200 OK                    | The object was successfully created or updated |
+| 400 Bad Request           | The request was malformed or invalid           |   
+| 403 Forbidden             | The request was not authorized                 |
+| 404 Not Found             | The specified bucket does not exist            |
+| 500 Internal Server Error | An error occurred on the server side           |
+
+| HTTP Headers     | Description                                 |
+|------------------|---------------------------------------------|
+| ETag             | The entity tag for the uploaded object      |
+| x-amz-request-id | The request ID for tracking purposes        |
+| x-amz-id-2       | Additional request ID for tracking purposes |
+
+
+### 7.2 Search Images
+
+This is an API to search images on the storage.
+
+It's going to use a cache to store the most accessed images.
+
+#### Request
+```
+GET "https://{ceph-storage}/{bucket-name}?prefix={prefix}" \
+  -H "Authorization: AWS {access-key}:secret-key"
+```
+
+| Field            | Description                                                        |
+|------------------|--------------------------------------------------------------------|
+| ceph-storage     | The hostname of the Storage                                        |
+| ceph-bucket-name | The name of the bucket where you want to store your object         |   
+| prefix           | The text to search files                                           |
+| access-key       | The access key that you received when you created your AWS account |
+| secret-key       | The secret key that you received when you created your AWS account |
+
+#### Response
+```
 {
-  "content": "String", // message content
-  "to": "String"       // target user that will receive this message
+  "ListBucketResult": {
+    "Name": "bucket-name",
+    "Prefix": "photos/",
+    "Marker": "",
+    "MaxKeys": 1000,
+    "IsTruncated": false,
+    "Contents": [
+      {
+        "Key": "photos/photo1.jpg",
+        "LastModified": "2023-10-15T12:34:56.000Z",
+        "ETag": "9b2cf535f27731c974343645a3985328",
+        "Size": 12345,
+        "StorageClass": "STANDARD"
+      },
+      {
+        "Key": "photos/photo2.jpg",
+        "LastModified": "2023-10-14T11:22:33.000Z",
+        "ETag": "9b2cf535f27731c974343645a3985328",
+        "Size": 67890,
+        "StorageClass": "STANDARD"
+      }
+    ]
+  }
 }
 ```
-Server receives the event and send the message to target user represented by field `to`.
 
-Receive message event payload:
-```json
-{
-  "content": "String", // message content
-  "from": "String",    // user that sent this message
-  "date": "Date"       // message create date (yyy-mm-dd hh:mm:ss)
-}
+### 7.3 Download files
+
+#### Request
+```
+GET "https://{ceph-storage}/{ceph-bucket-name}/{object-key}" \
+  -H "Authorization: AWS {access-key}:{secret-key}"
 ```
 
-#### 7.2 Submitting answer
-This is and API to submit the answers for a quiz using HTTP protocol.
+| Field            | Description                                                        |
+|------------------|--------------------------------------------------------------------|
+| ceph-storage     | The hostname of the Storage                                        |
+| ceph-bucket-name | The name of the bucket where you want to store your object         |   
+| object-key       | The key of the object you want to download                         |
+| access-key       | The access key that you received when you created your AWS account |
+| secret-key       | The secret key that you received when you created your AWS account |
 
-Dates will be collected in backend side, the client is should not create dates, only ready dates.
-
-Request
-```json
-POST /v1/quiz/answer
-"user-token": "String"  // authenticated user token header
-{
-  "quizId": "String",   // unique identification for Quiz
-  "answers": ["String"] // array containing all answer ids provided by user
-}
+#### Response
+```
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Content-Length: 12345
+Last-Modified: Sun, 15 Oct 2023 12:34:56 GMT
+ETag: "9b2cf535f27731c974343645a3985328"
+x-amz-request-id: 1234567890ABCDEF
+x-amz-id-2: 0987654321FEDCBA
 ```
 
-Response 
-```json
-HTTP 200
-{
-  "score": Integer // calculated score based on user answers
-}
-```
+| HTTP Status               | Description                                    |
+|---------------------------|------------------------------------------------|
+| 200 OK                    | The object was successfully created or updated |
+| 400 Bad Request           | The request was malformed or invalid           |   
+| 403 Forbidden             | The request was not authorized                 |
+| 404 Not Found             | The specified bucket does not exist            |
+| 500 Internal Server Error | An error occurred on the server side           |
 
-#### 7.3 Listing all games
+| HTTP Headers     | Description                                 |
+|------------------|---------------------------------------------|
+| ETag             | The entity tag for the uploaded object      |
+| x-amz-request-id | The request ID for tracking purposes        |
+| x-amz-id-2       | Additional request ID for tracking purposes |
 
-Any request that requires data from current user, should be authenticated.
-API should identify the user by the token provided in the request header.
-
-This API is to retrieve all games from the user.
-
-Request
-```json
-GET /v1/games
-"user-token": "String"  // authenticated user token header
-```
-
-Response
-```json
-HTTP 200
-{
-  "games": [          // array containing history of games from the user
-    {
-      "id": "String",   // unique game identifier
-      "score": Integer, // calculated score based on user answers 
-      "date": "Date"    // game create date (yyy-mm-dd hh:mm:ss)
-    }
-  ]
-}
-```
 
 
 ### 🧬 8.0 Algorithms/Data Structures
@@ -472,17 +503,6 @@ select * from games where account_id = ? limit ? offset ?
 
 
 # TODO
-- websocket security [DONE]
-- no date in payload, it got by backend [DONE]
-- two mechanism of transport, should be clear ws vs http  [DONE]
-- identify header in payloads  [DONE]
-- explain what are those fields in payloads  [DONE]
-- what is the most important scenarios, give examples  [DONE]
-- what breaks the consumer  [DONE]
-- it tests more clear about scenarios  [DONE]
-- change format of tables  [DONE]
-- add more columns in tables like Rickson [DONE]
-- match is reserved word in sql, change to game [DONE]
-- write pagination in queries [DONE]
-- archive and partitioning below each table [DONE]
-- messages should not be in relational db [DONE]
+- Costs comparison between S3 and Ceph. [DONE]
+- Add more details about the tradeoffs. [DONE]
+- Add contract API. [DONE]
