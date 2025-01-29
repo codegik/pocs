@@ -8,7 +8,6 @@ package-lock.json
 # CDK asset staging directory
 .cdk.staging
 cdk.out
-.terraform.lock.hcl
+.terraform.lock*
 .terraform
-terraform.tfstate.backup
-terraform.tfstate
+terraform.tfstate*
