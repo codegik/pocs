@@ -10,3 +10,4 @@ package-lock.json
 cdk.out
 .terraform.lock.hcl
 .terraform
+terraform.tfstate.backup
