@@ -1,6 +1,6 @@
-# GCP + Terraform + Functions
+# GCP + Terraform + MySQL + Functions
 
-This POC is about creating GCP functions.
+This POC is about using functions to persist data into MySQL.
 
 ## Requirements
 - NodeJS 16 (nvm install 16)
