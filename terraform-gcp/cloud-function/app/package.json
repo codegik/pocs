@@ -1,11 +1,7 @@
 {
-  "name": "function",
+  "name": "app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "npm test"
-  },
   "author": "Codegik",
   "license": "ISC",
   "dependencies": {

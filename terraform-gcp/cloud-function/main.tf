@@ -22,6 +22,7 @@ data "archive_file" "app" {
   type        = "zip"
   output_path = "/tmp/app.zip"
   source_dir  = "./app"
+  excludes = ["node_modules", ".gcloudignore"]
 }
 resource "google_storage_bucket_object" "object" {
   name   = "app.zip"
@@ -61,5 +62,5 @@ resource "google_cloud_run_service_iam_member" "member" {
 }
 
 output "function_uri" {
-  value = google_cloudfunctions2_function.default.service_config[0].uri
+  value = google_cloudfunctions2_function.app.service_config[0].uri
 }
