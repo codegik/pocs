@@ -10,10 +10,17 @@ variable "database_password" {
   default     = "defaultpasswd"
 }
 
+variable "database_user" {
+  description = "MySQL Username"
+  type        = string
+  default     = "app_user"
+}
+
 variable "region" {
   description = "Cloud Region"
   type        = string
   default     = "us-central1"
 }
+
 
 

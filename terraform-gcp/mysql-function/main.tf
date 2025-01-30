@@ -48,10 +48,11 @@ resource "google_cloud_run_service_iam_member" "member" {
 }
 
 resource "google_sql_database_instance" "database" {
-  name             = "my-db-instance"
-  database_version = "MYSQL_8_0"
-  region           = var.region
-
+  name                = "app-db-instance"
+  database_version    = "MYSQL_8_0"
+  region              = var.region
+  deletion_protection = false
+  project             = var.google_project
   settings {
     tier = "db-f1-micro"
   }
@@ -59,28 +60,45 @@ resource "google_sql_database_instance" "database" {
 
 resource "google_sql_user" "database_user" {
   instance = google_sql_database_instance.database.name
-  name     = "app_user"
-  password = var.database_password
+  name     = var.database_user
+  password = google_secret_manager_secret_version.password.secret
 }
 
-resource "google_vpc_access_connector" "connector" {
-  name    = "serverless-vpc-connector"
-  region  = var.region
-  network = "default"
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_%@"
 }
 
-resource "google_secret_manager_secret" "ap_secret" {
-  secret_id = "app-secret"
+resource "google_secret_manager_secret" "password" {
+  project = var.google_project
+  secret_id = "DATABASE_PASSWORD"
   replication {
-    auto {
-      customer_managed_encryption {
-        kms_key_name = "app-secret"
+    user_managed {
+      replicas {
+        location = var.region
       }
     }
   }
 }
 
-resource "google_secret_manager_secret_version" "app_secret_version" {
-  secret = google_secret_manager_secret.ap_secret.id
-  secret_data = "super-secret-value"
+resource "google_secret_manager_secret_version" "password" {
+  secret      = google_secret_manager_secret.password.id
+  secret_data = random_password.password.result
+}
+
+resource "google_vpc_access_connector" "connector" {
+  subnet {
+    name = google_compute_subnetwork.subnetwork.name
+  }
+  name          = "vpc-connector"
+  min_instances = 2
+  max_instances = 3
+}
+
+resource "google_compute_subnetwork" "subnetwork" {
+  name          = "vpc-subnetwork"
+  ip_cidr_range = "10.2.0.0/28"
+  region        = var.region
+  network       = "default"
 }
