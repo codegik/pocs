@@ -8,7 +8,7 @@ echo "$log_prefix Creating resources"
 echo "$log_prefix ------------------"
 echo ""
 terraform plan
-terraform apply --auto-approve
+terraform apply --auto-approve -var google_project=$GCP_PROJECT_ID
 
 echo ""
 echo "$log_prefix --------------------"

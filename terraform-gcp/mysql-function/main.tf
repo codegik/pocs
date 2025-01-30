@@ -1,16 +1,3 @@
-#resource "google_compute_network" "vpc_network" {
-#  name                    = "my-custom-mode-network"
-#  auto_create_subnetworks = false
-#  mtu                     = 1460
-#}
-#
-#resource "google_compute_subnetwork" "default" {
-#  name          = "my-custom-subnet"
-#  ip_cidr_range = "10.0.1.0/24"
-#  region        = "us-west1"
-#  network       = google_compute_network.vpc_network.id
-#}
-#
 
 resource "google_storage_bucket" "bucket" {
   name                        = "codegik-bucket"
@@ -32,7 +19,7 @@ resource "google_storage_bucket_object" "object" {
 
 resource "google_cloudfunctions2_function" "app" {
   name        = "app-first-function"
-  location    = "us-central1"
+  location    = var.region
   description = "a new function"
 
   build_config {
@@ -53,7 +40,6 @@ resource "google_cloudfunctions2_function" "app" {
   }
 }
 
-
 resource "google_cloud_run_service_iam_member" "member" {
   location = google_cloudfunctions2_function.app.location
   service  = google_cloudfunctions2_function.app.name
@@ -61,6 +47,40 @@ resource "google_cloud_run_service_iam_member" "member" {
   member   = "allUsers"
 }
 
-output "function_uri" {
-  value = google_cloudfunctions2_function.app.service_config[0].uri
+resource "google_sql_database_instance" "database" {
+  name             = "my-db-instance"
+  database_version = "MYSQL_8_0"
+  region           = var.region
+
+  settings {
+    tier = "db-f1-micro"
+  }
+}
+
+resource "google_sql_user" "database_user" {
+  instance = google_sql_database_instance.database.name
+  name     = "app_user"
+  password = var.database_password
+}
+
+resource "google_vpc_access_connector" "connector" {
+  name    = "serverless-vpc-connector"
+  region  = var.region
+  network = "default"
+}
+
+resource "google_secret_manager_secret" "ap_secret" {
+  secret_id = "app-secret"
+  replication {
+    auto {
+      customer_managed_encryption {
+        kms_key_name = "app-secret"
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "app_secret_version" {
+  secret = google_secret_manager_secret.ap_secret.id
+  secret_data = "super-secret-value"
 }
