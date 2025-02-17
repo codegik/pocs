@@ -25,7 +25,7 @@
     .dependencies = .{
         .myzql = .{
             .url = "https://github.com/speed2exe/myzql/archive/refs/tags/0.13.2.tar.gz",
-            .hash = "1220582ea45580eec6b16aa93d2a9404467db8bc1d911806d367513aa40f3817f84c",
+            .hash = "1220fabc6675903f26431b0f9ca97f5d0f7ee69dea89586300d35a7ba370d4e0a356",
         }
     },
 
