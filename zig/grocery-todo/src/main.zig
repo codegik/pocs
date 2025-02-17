@@ -2,6 +2,7 @@ const std = @import("std");
 const storage = @import("grocery_storage.zig");
 
 pub fn main() !void {
+    _ = try storage.add("134");
     _ = try storage.list();
 }
 
