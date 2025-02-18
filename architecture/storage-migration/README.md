@@ -2,7 +2,9 @@
 
 Food and Co is a US based food chain, that has aliments all over the
 place from fruits, vegetables, beans, meat, fish, you name it, food-co
-got it. Food-Co is using AWS S3 right now, but the cost is too high.
+got it. 
+
+Food-Co is using AWS S3 right now, but the cost is too high.
 
 We need to migrate outside S3, your goal is to create a new
 architecture and also plan the migration in order to be smooth and

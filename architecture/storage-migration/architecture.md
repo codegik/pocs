@@ -170,7 +170,7 @@ After finish the migration, we can point the applications to the new Image Store
 1. Cost of storage.
    - ✅ PROS:
       * Comparing to S3, Ceph has a lower cost of storage.
-      * Calculating usage of 200TB of storage monthly, S3 would cost **$18,689.62**, while Ceph would cost **$14,200.46**.
+      * Calculating usage of 200TB of storage monthly, S3 would cost \$18,689.62, while Ceph would cost \$14,200.46.
       * https://calculator.aws/#/estimate?id=2abf04a1b2dc2ced3c0ea2b95ed7365833f4f8b3
       * https://calculator.aws/#/estimate?id=8faccdff7a53c79bac92ecaa1758f6a2f99218e4
    - 🚫 CONS:
@@ -327,35 +327,33 @@ x-amz-id-2: 0987654321FEDCBA
 | x-amz-id-2       | Additional request ID for tracking purposes |
 
 
+### 💾 8. Migrations
 
-### 🧬 8.0 Algorithms/Data Structures
+We can create a automation to migrate data from S3 to Ceph.
 
-[//]: # (Spesific algos that need to be used, along size with spesific data structures.)
+- Create event notification on S3 to trigger a lambda function that will log the operation.
+  - During the data sync, S3 will be the source of truth and the users will be able to access the data.
+  - The user can upload or delete files to s3, so the lamda will log the operation history.
+- Sync the data from S3 to Ceph.
+- Once sync has finished, the automation will read the log and apply the operations to Ceph.
+- Update the application to point to the new storage.
+- Update the cache to point to the new storage.
+- Keep the data in S3 for a period like 15 days, and then delete the data from S3.
 
-TBD 
 
 
-### 💾 9. Migrations
-
-No DB Migration is needed here.
-
-### 🧪 10. Testing strategy
-
-- Unit tests 
-  - Will be implemented using JUnit and Mockito.
-  - Need to cover most important scenarios and edge cases.
-  - This is the first line of defense. It will be running in developer machine and CI/CD pipeline.
+### 🧪 9. Testing strategy
 
 - Contract tests
-  - It will reduce the chances of one contract change breaks any consumer. The API must be versioned to avoid break backward compatibility and forward compatibility.
+  - It will reduce the chances of one contract change breaks any consumer.
   - It will be running in developer machine and CI/CD pipeline.
 
 - Integration tests
-  - Not all scenarios should be covered, just most important ones e.g. Submitting quiz answers, Finding a quiz and Sending message to friend.  
+  - Try to cover most of the scenarios, e.g. Uploading file, deleting file, searching file, updating metadata, etc.  
   - It will be running in developer machine and CI/CD pipeline right after the build.
 
 - Performance tests
-  - Will be implemented using Gatling.
+  - Use Gatling to simulate the user behavior and check the system's performance.
   - It will be running in CI/CD pipeline and pointing to production.
 
 - Chaos tests
@@ -363,128 +361,23 @@ No DB Migration is needed here.
   - It will be running in CI/CD pipeline and pointing to production.
 
 
-### 👀 11. Observability strategy (TBD)
+### 👀 10. Observability strategy (TBD)
 
 [//]: # (Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.)
 
-
-### 💾 12. Data Store Designs
-
-#### Table ACCOUNTS
-| Column    | Type         | Primary | Default             | Observation           |
-|-----------|--------------|---------|---------------------|-----------------------|
-| id        | varchar(32)  | PK      |                     | unique identification |
-| name      | varchar(100) |         |                     | user full name        |
-| email     | varchar(200) |         |                     | user email            |
-| created_d | date         |         | current_timestamp() |                       |
-
-**Partitioning strategy:** Data partition by list of months based on created date of record.
+- There will be an event notifier that is going to log all operations during the migration.
+- There will be a dashboard to expose the migration progress, metrics and performance.
+- There will be alerts to notify the team about any issue during the migration.
 
 
-#### Table USER_ANSWER
-| Column     | Type        | Primary | Default             | Observation                      |
-|------------|-------------|---------|---------------------|----------------------------------|
-| id         | varchar(32) | PK      |                     |                                  |
-| account_id | varchar(32) |         |                     | reference id to the user account |
-| quiz_id    | varchar(32) |         |                     | reference id to the quiz         |
-| answer_id  | varchar(32) |         |                     | reference id to answer           |
-| created_d  | date        |         | current_timestamp() |                                  |
+### 👌 11. Technology Stack
 
-**Partitioning strategy:** Data partition by list of months based on created date of record.
+- Ceph
+- Nginx
+- Cloudfront
+- G4 Instances
 
-
-#### Table QUIZ
-| Column    | Type         | Primary | Default             | Observation |
-|-----------|--------------|---------|---------------------|-------------|
-| id        | varchar(32)  | PK      |                     |             |
-| name      | varchar(200) |         |                     |             |
-| question  | blob         |         |                     |             |
-| created_d | date         |         | current_timestamp() |             |
-
-**Partitioning strategy:** Data partition by list of months based on created date of record.
-
-
-#### Table QUIZ_ANSWER
-| Column     | Type         | Primary | Default             | Observation |
-|------------|--------------|---------|---------------------|-------------|
-| id         | varchar(32)  | PK      |                     |             |
-| quiz_id    | varchar(32)  |         |                     |             |
-| answer     | varchar(500) |         |                     |             |
-| is_correct | boolean      |         |                     |             |
-| created_d  | date         |         | current_timestamp() |             |
-
-**Partitioning strategy:** Data partition by list of months based on created date of record.
-
-
-#### Document GAME
-```json
-{
-  "id": "String",
-  "account_id": "String", // user account id
-  "quiz_id": "String",    // quiz id
-  "score": Integer,       // user score on this game
-  "created_d": "Date",    // format yyyy-mm-dd hh:mm:ss
-  "region": "String"      // user geolocation region
-}
-```
-
-**Partitioning strategy:** Data partition by list of months based on created date and region of record.
-
-
-#### Document MESSAGE
-```json
-{
-  "id": "String",
-  "from_account_id": "String",  // from user account id (sender)
-  "to_account_id": "String",    // to user account id (receiver)
-  "content": "String",          // message text
-  "created_d": "Date",          // format yyyy-mm-dd hh:mm:ss
-  "region": "String"            // user geolocation region
-}
-```
-
-**Partitioning strategy:** Data partition by list of months based on created date and region of record.
-
-
-#### Main queries
-
-- Looking for quiz answers (paginated).
-```sql
-select * from quiz_answer where quiz_id = ?
-```
-
-- Getting all messages from chat (paginated).
-```sql
-select * from message where from_account_id = ? limit ? offset ?
-```
-
-- Getting all games from user (paginated).
-```sql
-select * from games where account_id = ? limit ? offset ?
-```
-
-
-### 👌 13. Technology Stack (WIP)
-
-- Aurora DB as persistence layer for all services besides Message and Game.
-- DynamoDB as persistence layer for Message and Game services.
-- Kotlin
-  -  Clarity:
-    - It’s very expressive. Writing code in Kotlin tends to have a high impact per line of code.
-    - Kotlin eliminates some of the redundancy in the basic syntax of popular languages like Java.
-  - Interoperability:
-    - Kotlin interoperates with Java because they compile to the same byte code. Kotlin can be compiled into JavaScript or an LLVM.
-    - It also shares tooling with Java. These features make it easy to migrate Java applications to Kotlin.
-  - Safety:
-    - Kotlin is designed to help avoid common coding errors that can break code or leave vulnerabilities in it. 
-    - The language features null safety and eliminating null pointer exception errors.
-- Ktor
-  - Ktor is designed with simplicity in mind, providing a lean and intuitive API surface.
-  - Ktor embraces Kotlin's coroutines, enabling you to write highly efficient and concurrent code effortlessly.
-  - Default embedded server application is Netty.
-
-
-### 👥 14. References
+### 👥 12. References
 
 * Architecture Anti-Patterns: https://architecture-antipatterns.tech/
 * EIP https://www.enterpriseintegrationpatterns.com/
@@ -500,9 +393,3 @@ select * from games where account_id = ? limit ? offset ?
 * Rendering Patterns https://www.patterns.dev/vanilla/rendering-patterns/
 * REST API Design https://blog.stoplight.io/api-design-patterns-for-rest-web-services
 
-
-
-# TODO
-- Costs comparison between S3 and Ceph. [DONE]
-- Add more details about the tradeoffs. [DONE]
-- Add contract API. [DONE]
