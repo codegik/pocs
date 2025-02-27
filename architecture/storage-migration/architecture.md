@@ -331,6 +331,8 @@ x-amz-id-2: 0987654321FEDCBA
 
 We can create a automation to migrate data from S3 to Ceph.
 
+![](storage-migration-plan.png)
+
 - Create event notification on S3 to trigger a lambda function that will log the operation.
   - During the data sync, S3 will be the source of truth and the users will be able to access the data.
   - The user can upload or delete files to s3, so the lamda will log the operation history.
@@ -361,7 +363,7 @@ We can create a automation to migrate data from S3 to Ceph.
   - It will be running in CI/CD pipeline and pointing to production.
 
 
-### 👀 10. Observability strategy (TBD)
+### 👀 10. Observability strategy
 
 [//]: # (Explain the techniques, principles,types of observability that will be used, key metrics, what would be logged and how to design proper dashboards and alerts.)
 
@@ -393,3 +395,5 @@ We can create a automation to migrate data from S3 to Ceph.
 * Rendering Patterns https://www.patterns.dev/vanilla/rendering-patterns/
 * REST API Design https://blog.stoplight.io/api-design-patterns-for-rest-web-services
 
+TODO
+diagram to  represent the migration in phases
