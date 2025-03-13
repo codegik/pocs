@@ -394,6 +394,3 @@ We can create a automation to migrate data from S3 to Ceph.
 * Relational DB Patterns https://www.geeksforgeeks.org/design-patterns-for-relational-databases/
 * Rendering Patterns https://www.patterns.dev/vanilla/rendering-patterns/
 * REST API Design https://blog.stoplight.io/api-design-patterns-for-rest-web-services
-
-TODO
-diagram to  represent the migration in phases
