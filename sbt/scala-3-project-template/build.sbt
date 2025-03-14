@@ -16,6 +16,7 @@ lazy val root = project
       println(s"Running sample string task -> ${Calendar.getInstance().getTime}")
       System.getProperty("user.home")
     },
+    
     sampleIntTask := {
       val sum = 1 + 2
       println(s"Running sample int task: $sum -> ${Calendar.getInstance().getTime}")
