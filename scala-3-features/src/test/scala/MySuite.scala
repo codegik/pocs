@@ -19,4 +19,30 @@ class MySuite extends FunSuite {
     assertEquals(result, 15)
   }
 
+  test("tail recursive") {
+    val size = 1000L
+    val list = List.fill(size.toInt)("a")
+    val result1 = time(tailRecursiveLength(list))
+    val result2 = time(recursiveLength(list))
+    assertEquals(result1, size)
+    assertEquals(result2, size)
+  }
+
+  test("tail recursive should fail due StackOverflowError") {
+    val size = 1000000L
+    val list = List.fill(size.toInt)("a")
+    val result1 = time(tailRecursiveLength(list))
+    val result2 = time(recursiveLength(list))
+    assertEquals(result1, size)
+    assertEquals(result2, size)
+  }
+}
+
+
+def time[T](block: => T): T = {
+  val before = System.nanoTime
+  val result = block
+  val after = System.nanoTime
+  println("Elapsed time: " + (after - before) / 1000000 + "ms")
+  result
 }
