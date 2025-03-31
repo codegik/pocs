@@ -1,4 +1,3 @@
-🏁 🍇
 
 🍉 minCrossingTime 🍇 times n 🍉 ➡️ 🍇
   ➡️ n 1 🍇
@@ -8,6 +7,7 @@
   ➡️ n 3 🍇
     ➡️ times ➡️ 0 ➕ times ➡️ 1 ➕ times ➡️ 2 🍉
 
+    
   ➡️ option1 ➡️ times ➡️ 1 ➕ times ➡️ 0 ➕ times ➡️ n 1 ➕ times ➡️ 1 🍉
   ➡️ option2 ➡️ times ➡️ n 1 ➕ times ➡️ 0 ➕ times ➡️ n 2 ➕ times ➡️ 0 🍉
 
@@ -22,11 +22,11 @@
   ➡️ minCrossingTime ➡️ times ➡️ times ➡️ 🍉
 🍉
 
-🍉 main 🍇 🍉 ➡️ 🍇
-  ➡️ times ➡️ 🍇 10 20 30 🍉
-  🖨 bridgeAndTorch ➡️ times ➡️ 🍉
-🍉
-
+🏁 🍇
+  🍉 main 🍇 🍉 ➡️ 🍇
+    ➡️ times ➡️ 🍇 10 20 30 🍉
+    🖨 bridgeAndTorch ➡️ times ➡️ 🍉
+  🍉
 🏁
 
 
