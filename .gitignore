@@ -14,3 +14,4 @@ __pycache__
 .DS_Store
 node_modules
 !ocaml/oop/bin
+.metals
