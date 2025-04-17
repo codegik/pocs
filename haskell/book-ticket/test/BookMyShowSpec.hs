@@ -6,7 +6,6 @@ import Data.IORef
 
 main :: IO ()
 main = do
-    -- Test for gather function
     let testGather = TestCase $ do
             bookShow <- newBookMyShow 2 5
             result1 <- gather bookShow 4 0
@@ -16,7 +15,6 @@ main = do
             result3 <- gather bookShow 6 0
             assertEqual "gather 6 0 should return Nothing" Nothing result3
 
-    -- Test for scatter function
     let testScatter = TestCase $ do
             bookShow <- newBookMyShow 2 5
             result1 <- scatter bookShow 5 1
