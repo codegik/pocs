@@ -49,8 +49,10 @@ The platform is capable of:
 <br/>
 
 #### 1.1.2 Second Problem
-<br/>The monolith is very old and needs to be migrated to Java 21.
+<br/>The monolith is very old and needs to be migrated to Java Latest Stable.
 <br/>The monolith should be decomposed into smaller, more manageable services to improve maintainability and performance.
-<br/>Could we rewrite the monolith in Java 21 and still meet the performance requirements?
+<br/>Could we rewrite the monolith in Java Latest Stable and still meet the performance requirements?
 
+
+# TODO
 
