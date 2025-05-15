@@ -54,5 +54,29 @@ The platform is capable of:
 <br/>Could we rewrite the monolith in Java Latest Stable and still meet the performance requirements?
 
 
-# TODO
+## 2. 🎯 Goals
+- Improve UI Performance
+- Migrate and Modernize the Backend
+- Enhance User Experience
+- Maintain Scalability and Observability
+
+## 3. 🎯 Non-Goals
+- Support for Legacy Browsers
+- Backward Compatibility with Java 1.4
+- Custom Hardware Optimization
+
+
+## 📐 4. Principles
+1. Performance-First Design: Prioritize low-latency and high-performance solutions in both frontend and backend systems.
+2. Incremental Migration: Ensure the migration from the monolith to microservices is gradual, minimizing disruption to users.
+3. Observability: Expose metrics and logs to enable tracking and monitor latency.
+4. User-Centric Optimization: Continuously optimize the system based on user behavior and feedback to enhance the overall experience.
+
+
+# 🏗️ 5. Overall Diagrams
+
+## 🗂️ 5.1 Overall architecture
+
+
+
 
