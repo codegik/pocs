@@ -77,6 +77,6 @@ The platform is capable of:
 
 ## 🗂️ 5.1 Overall architecture
 
-
+![img.overall.architecture.png](img.overall.architecture.png)
 
 
