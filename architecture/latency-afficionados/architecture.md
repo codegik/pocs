@@ -97,3 +97,37 @@ The platform is capable of:
 ![img.overall.architecture.png](img.overall.architecture.png)
 
 
+## 🗂️ 5.2 Deployment
+
+![img.deployment.png](img.deployment.png)
+
+## 🗂️ 5.3 Use Cases
+
+### Posting products
+
+The user is capable of post products into the platform to sell it.
+
+![img.uc.post.product.png](img.uc.post.product.png)
+
+### Searching products
+
+The user is capable of searching products in the platform to buy it.
+
+![img.uc.search.product.png](img.uc.search.product.png)
+
+### Viewing product descriptions
+
+The user is capable of viewing product descriptions to understand the product better.
+
+### Rating products with review
+
+The user is capable of rating products with review to help other users to understand the product better.
+
+### Comments
+
+The user is capable of commenting products to help other users to understand the product better.
+
+### Provide recommendation of products to users based on previews browsing
+
+The user is capable of providing recommendation of products to users based on previews browsing to help other users to understand the product better.
+
