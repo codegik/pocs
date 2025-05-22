@@ -48,10 +48,27 @@ The platform is capable of:
 <br/>making it ideal for complex, large-scale applications.
 <br/>
 
+**Websockets**
+<br/>Websockets are faster than traditional http protocol, here are the advantages:
+<br/>Persistent connection: Once established, the connection remains open, reducing overhead for subsequent messages.
+<br/>Full-duplex communication: Allows simultaneous two-way communication between client and server.
+<br/>Lower latency: After the initial handshake, data can be sent immediately without additional HTTP headers.
+<br/>Reduced server load: Fewer connections need to be opened and closed repeatedly.
+<br/>Real-time updates: Ideal for live data, chat applications, gaming, etc.
+<br/>Less data transfer: Smaller message sizes due to reduced header information.
+
 #### 1.1.2 Second Problem
 <br/>The monolith is very old and needs to be migrated to Java Latest Stable.
 <br/>The monolith should be decomposed into smaller, more manageable services to improve maintainability and performance.
-<br/>Could we rewrite the monolith in Java Latest Stable and still meet the performance requirements?
+<br/>Could use gradual migration strategy. First, could use tools to assist the migration like AI or OpenRewrite. Second, 
+<br/>start decomposing the monolith into microservices.
+<br/>Here is a decomposition propose:
+- Product Service: Handles product listing, details, and search
+- User Service: Manages user accounts and authentication
+- Review Service: Handles product ratings and reviews
+- Recommendation Service: Provides product recommendations
+- Order Service: Manages the buying and selling process
+- Comment Service: Handles user comments on products
 
 
 ## 2. 🎯 Goals
