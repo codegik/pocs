@@ -12,17 +12,8 @@ pub fn calculateMinimumHP(allocator: Allocator, dungeon: []const []const i32) !i
     const m = dungeon.len;
     const n = dungeon[0].len;
 
-    // Create a DP table with an extra row and column
-    var dp = try allocator.alloc([]i32, m + 1);
-    defer allocator.free(dp);
-
-    for (dp) |*row| {
-        row.* = try allocator.alloc(i32, n + 1);
-        defer allocator.free(row.*);
-        @memset(row.*, math.maxInt(i32));
-    }
-
-    // Set the "exit" point
+    var dp = try createZeroMatrix(allocator, m + 1, n + 1);
+    // dp[m - 1][n - 1] = 1;
     dp[m][n - 1] = 1;
     dp[m - 1][n] = 1;
 
@@ -41,25 +32,32 @@ pub fn calculateMinimumHP(allocator: Allocator, dungeon: []const []const i32) !i
     return dp[0][0];
 }
 
-pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+fn createZeroMatrix(allocator: Allocator, rows: usize, cols: usize) ![]([]i32) {
+    const matrix = try allocator.alloc([]i32, rows);
+    errdefer allocator.free(matrix);
+
+    for (matrix) |*row| {
+        row.* = try allocator.alloc(i32, cols);
+        @memset(row.*, 0);
+    }
+    return matrix;
+}
+
+
+test "test n = 4, k = 14" {
+    var gpa = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
     const dungeon = [_][]const i32{
-        &[_]i32{ -2, -3, 3 },
-        &[_]i32{ -5, -10, 1 },
-        &[_]i32{ 10, 30, -5 },
+        &[_]i32{ -2,  -3,  3 },
+        &[_]i32{ -5, -10,  1 },
+        &[_]i32{ 10,  30, -5 },
     };
 
     const result = try calculateMinimumHP(allocator, &dungeon);
-    print("Minimum initial health: {}\n", .{result});
+    const expected: i32 = 7;
+    const assertion = std.mem.eql(i32, result, &expected);
+    try testing.expect(assertion);
 }
-
-// test "test n = 4, k = 14" {
-//     const result = try getPermutation(4, 14);
-//     const expected = [_]usize{3, 1, 4, 2};
-//     const assertion = std.mem.eql(usize, result, &expected);
-//     try testing.expect(assertion);
-// }
 
