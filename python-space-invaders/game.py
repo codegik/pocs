@@ -1,10 +1,11 @@
 import pygame
 import random
 import sys
+import os
 
 pygame.init()
 
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1280, 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Invaders")
 
@@ -13,18 +14,30 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
-PLAYER_SIZE = (30, 30)
+SPACESHIP_IMG = pygame.transform.scale(pygame.image.load(os.path.join('spaceship.png')), (50, 50))
+
+ALIEN_IMGS = [pygame.transform.scale(img, (60, 60)) for img in [
+    pygame.image.load(os.path.join('alien_1.png')),
+    pygame.image.load(os.path.join('alien_2.png')),
+    pygame.image.load(os.path.join('alien_3.png'))
+]]
+
+PLAYER_BULLET_IMG = pygame.transform.scale(pygame.image.load(os.path.join('spaceship_bullet.png')), (14, 20))
+
+ALIEN_BULLET_IMG = pygame.transform.scale(pygame.image.load(os.path.join('aliens_bullet.png')), (14, 20))
+
+PLAYER_SIZE = (50, 50)
 PLAYER_SPEED = 5
-BULLET_SIZE = (7, 10)
+BULLET_SIZE = (14, 20)
 BULLET_SPEED = 7
-ALIEN_SIZE = (40, 30)
+ALIEN_SIZE = (60, 60)
 ALIEN_ROWS = 5
 ALIEN_COLS = 10
-ALIEN_PADDING = 10
+ALIEN_PADDING = 15
 ALIEN_SPEED = 1
 ALIEN_DROP_DISTANCE = 20
 ALIEN_BULLET_SPEED = 3
-ALIEN_FIRE_RATE = 0.01
+ALIEN_FIRE_RATE = 0.005
 ALIEN_POINTS = 10
 
 font = pygame.font.Font(None, 36)
@@ -65,7 +78,7 @@ class Game:
             for col in range(ALIEN_COLS):
                 x = start_x + col * (ALIEN_SIZE[0] + ALIEN_PADDING)
                 y = start_y + row * (ALIEN_SIZE[1] + ALIEN_PADDING)
-                self.aliens.append(Alien(x, y, RED))
+                self.aliens.append(Alien(x, y))
 
         self.alien_direction = 1
 
@@ -209,7 +222,7 @@ class Player:
         self.y = y
         self.width = PLAYER_SIZE[0]
         self.height = PLAYER_SIZE[1]
-        self.color = GREEN
+        self.image = SPACESHIP_IMG
         self.shoot_cooldown = 0
 
     def update(self):
@@ -228,7 +241,7 @@ class Player:
             self.shoot_cooldown = 12
 
     def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.image, (self.x, self.y))
 
 
 class PlayerBullet:
@@ -237,14 +250,14 @@ class PlayerBullet:
         self.y = y
         self.width = BULLET_SIZE[0]
         self.height = BULLET_SIZE[1]
-        self.color = WHITE
+        self.image = PLAYER_BULLET_IMG
 
     def move(self):
         self.y -= BULLET_SPEED
         return self.y
 
     def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.image, (self.x, self.y))
 
 
 class AlienBullet:
@@ -253,26 +266,26 @@ class AlienBullet:
         self.y = y
         self.width = BULLET_SIZE[0]
         self.height = BULLET_SIZE[1]
-        self.color = RED
+        self.image = ALIEN_BULLET_IMG
 
     def move(self):
         self.y += ALIEN_BULLET_SPEED
         return self.y
 
     def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.image, (self.x, self.y))
 
 
 class Alien:
-    def __init__(self, x, y, color):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.width = ALIEN_SIZE[0]
         self.height = ALIEN_SIZE[1]
-        self.color = color
+        self.image = ALIEN_IMGS[random.randint(0, 2)]
 
     def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.image, (self.x, self.y))
 
 
 if __name__ == "__main__":
