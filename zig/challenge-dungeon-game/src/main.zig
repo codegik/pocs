@@ -44,7 +44,7 @@ fn createZeroMatrix(allocator: Allocator, rows: usize, cols: usize) ![]([]i32) {
 }
 
 
-test "test n = 4, k = 14" {
+test "test output is 7" {
     var gpa = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
@@ -56,8 +56,17 @@ test "test n = 4, k = 14" {
     };
 
     const result = try calculateMinimumHP(allocator, &dungeon);
-    const expected: i32 = 7;
-    const assertion = std.mem.eql(i32, result, &expected);
-    try testing.expect(assertion);
+    try testing.expect(result == 7);
 }
+
+// test "test output is 0" {
+//     var gpa = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+//     defer _ = gpa.deinit();
+//     const allocator = gpa.allocator();
+//
+//     const dungeon = [_][]const i32{&[_]i32{ 0 }};
+//
+//     const result = try calculateMinimumHP(allocator, &dungeon);
+//     try testing.expect(result == 0);
+// }
 
