@@ -1,24 +1,19 @@
-
-🌍 🐇 🍎 🍇
-    🖍🆕 number 🔢 ⬅️ 0
-    🖍🆕 result 🔢 ⬅️ 1
-
-
-    🆕 🍼 number 🔢 🍇
-        🔂 i 🆕⏩ 2 number❗️ 🍇
-            1 ➕ i ➡️ index
-            4 ✖️ i ➕ 2 ➡️ c
-            result ✖️ c ➗ index ➡️ result
-        🍉
-        
-    🍉
-
-    ❗️ 🔖 ➡️ 🔢 🍇
-        ↩️ result
-    🍉
-🍉
-
-
 🏁 🍇
-    🆕👩‍💼6❗️ ➡️ catalan
+  🍇 findCatalan n 🔢 ➡️ 🔢
+    🆕🍨🐚🔢🍆 n ➕ 1 0❗️ ➡️ catalanArray
+
+    1 ➡️ 🐽catalanArray 0❗️
+
+    🔂 i 🆕⏩ 1 n ➕ 1❗️ 🍇
+      🔂 j 🆕⏩ 0 i❗️ 🍇
+        🐽catalanArray i❗️ ⬅️➕ 🍺🐽catalanArray j❗️ ✖️ 🍺🐽catalanArray 🤜i ➖ j ➖ 1🤛❗️
+      🍉
+    🍉
+
+    ↩️ 🍺🐽catalanArray n❗️
+  🍉 ➡️ calculateCatalan
+
+  6 ➡️ n
+  calculateCatalan n❗️ ➡️ result
+  😀 🔤The 🧲n🧲th Catalan number is: 🧲result🧲🔤❗️
 🍉
