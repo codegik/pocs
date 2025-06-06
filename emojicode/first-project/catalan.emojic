@@ -1,20 +1,27 @@
-🏁 🍇
-  🍉 findCatalan n 🔢 ➡️ 🔢
+🐇 👩‍💼 🍇
+
+  🆕 🍇
+    📟🔤A new instance of 👩‍💼 has been created!🔤❗️
+  🍉
+
+  ❗️💸 n 🔢 ➡️ 🔢 🍇
     🆕 🍨🐚🔢🍆 n ➕ 1 0❗️ ➡️ catalanArray
 
-    1 ➡️ 🐽 catalanArray 0❗️
+    🖍🆕 catalanArray 🍨🐚🔢🍆
+    catalanArray ⬅️ 🆕 🍨🐚🔢🍆 n ➕ 1 0❗️
 
-    🔁 i 🔢 1 n ➕ 1❗️ 🍇
-      🔁 j 🔢 0 i❗️ 🍇
-        🐽 catalanArray i❗️ ➕➖➕🐽 catalanArray j❗️ ✖️🐽 catalanArray i ➖ j ➖ 1❗️
+    🔂 i 🆕⏩ 1 n ➕ 1❗️ 🍇
+      🔂 j 🆕⏩ 0 i❗️ 🍇
+        🐽catalanArray i❗️➕ 🍺🐽catalanArray j❗️✖️ 🍺🐽catalanArray 🤜i ➖ j ➖ 1🤛❗️ ➡️ 🐽 catalanArray i❗️
       🍉
     🍉
 
-    🔙🐽 catalanArray n❗️
-  🍉 ➡️ calculateCatalan
+    ↩️ 🐽 catalanArray n❗️
+  🍉
+🍉
 
-  6 ➡️ n
-
-  calculateCatalan n❗️ ➡️ result
-  😀 🔤The 🧲n🧲th Catalan number is: 🧲result🧲🔤❗️
+🏁 🍇
+  🆕👩‍💼❗️ ➡️ catalan
+  💸 catalan 6❗➡️ result
+  😀 🔤The 🧲6🧲th Catalan number is: 🧲result🧲🔤❗️
 🍉

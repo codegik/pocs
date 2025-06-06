@@ -1,5 +1,5 @@
 🏁 🍇
-  🍇 findCatalan n 🔢 ➡️ 🔢
+  findCatalan n 🔢 ➡️ 🔢 🍇
     🆕🍨🐚🔢🍆 n ➕ 1 0❗️ ➡️ catalanArray
 
     1 ➡️ 🐽catalanArray 0❗️
@@ -17,3 +17,10 @@
   calculateCatalan n❗️ ➡️ result
   😀 🔤The 🧲n🧲th Catalan number is: 🧲result🧲🔤❗️
 🍉
+
+
+    🔁 i 🔢 1 n ➕ 1❗️ 🍇
+      🔁 j 🔢 0 i❗️ 🍇
+        🐽 catalanArray i❗️ ➕➖➕🐽 catalanArray j❗️ ✖️🐽 catalanArray i ➖ j ➖ 1❗️
+      🍉
+    🍉
