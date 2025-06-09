@@ -47,7 +47,7 @@ class GamePanel extends JPanel with ActionListener {
   private val timer = new Timer(16, this)
   timer.start()
 
-  override def actionPerformed(e: ActionEvent): Unit = {
+  override def actionPerformed(event: ActionEvent): Unit = {
     update()
     repaint()
   }
@@ -55,7 +55,7 @@ class GamePanel extends JPanel with ActionListener {
   def update(): Unit = {
     ballX += ballSpeedX
     ballY += ballSpeedY
-    
+
     if (ballY <= 0 || ballY >= getHeight - ballSize) {
       ballSpeedY = -ballSpeedY
     }
@@ -65,7 +65,7 @@ class GamePanel extends JPanel with ActionListener {
     if (ballX >= getWidth - paddleWidth - ballSize && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
       ballSpeedX = -ballSpeedX
     }
-    
+
     if (ballX <= 0) {
       rightScore += 1
       resetBall()
@@ -74,7 +74,7 @@ class GamePanel extends JPanel with ActionListener {
       leftScore += 1
       resetBall()
     }
-    
+
     leftPaddleY = leftPaddleY.max(0).min(getHeight - paddleHeight)
     rightPaddleY = rightPaddleY.max(0).min(getHeight - paddleHeight)
   }
@@ -94,7 +94,6 @@ class GamePanel extends JPanel with ActionListener {
     g2d.fillRect(0, leftPaddleY, paddleWidth, paddleHeight)
     g2d.fillRect(getWidth - paddleWidth, rightPaddleY, paddleWidth, paddleHeight)
     g2d.fillOval(ballX, ballY, ballSize, ballSize)
-
     g2d.setFont(new Font("Arial", Font.BOLD, 30))
     g2d.drawString(s"$leftScore - $rightScore", getWidth / 2 - 40, 50)
   }
