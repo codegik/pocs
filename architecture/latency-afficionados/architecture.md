@@ -118,16 +118,85 @@ The user is capable of searching products in the platform to buy it.
 ### Viewing product descriptions
 
 The user is capable of viewing product descriptions to understand the product better.
+![img.uc.view.product.png](img.uc.view.product.png)
 
 ### Rating products with review
 
 The user is capable of rating products with review to help other users to understand the product better.
+![img.uc.review.product.png](img.uc.review.product.png)
 
-### Comments
+### Comments and Recommend
 
 The user is capable of commenting products to help other users to understand the product better.
 
-### Provide recommendation of products to users based on previews browsing
-
 The user is capable of providing recommendation of products to users based on previews browsing to help other users to understand the product better.
+
+![img.uc.comment.recommend.png](img.uc.comment.recommend.png)
+
+
+## 🧭 6. Trade-offs
+
+### Major Decisions
+1. Use LLM for code generation in latest Java version in order to modernize the monolith.
+2. Use Svelte for frontend to improve UI performance and reduce latency.
+3. Use WebSockets for real-time updates and faster communication.
+
+### Tradeoffs
+
+1. Open-source.
+  * ✅ PROS:
+    * Benefits from community support and contributions.
+  * 🚫 CONS:
+    * Supporting and maintaining in house.
+2. Svelte vs React
+  * ✅ PROS:
+    * Svelte compiles to vanilla JavaScript, resulting in smaller bundle sizes and faster execution.
+    * No virtual DOM, leading to lower memory usage and CPU consumption.
+  * 🚫 CONS:
+    * Svelte has a smaller ecosystem compared to React, which may limit available libraries and tools.
+3. WebSockets vs HTTP
+  * ✅ PROS:
+    * WebSockets provide lower latency and faster communication due to persistent connections.
+    * Full-duplex communication allows for real-time updates.
+  * 🚫 CONS:
+    * Requires additional setup and management compared to traditional HTTP requests.
+4. CloudFront Functions vs Lambda@Edge
+  * ✅ PROS CloudFront Functions:
+    * Performance: Ultra-low latency (~1ms execution time)
+    * Deployment: Extremely simple with single-step process
+    * Cost: Significantly cheaper than Lambda@Edge (~1/6th the cost)
+    * Propagation: Changes take effect within seconds
+    * Management: No version management complexity
+  * 🚫 CONS CloudFront Functions:
+    * Runtime: JavaScript only, max 2ms execution time
+    * Functionality: Cannot access request bodies or make external API calls
+    * Resources: Limited to 2MB memory
+    * Triggers: Limited to viewer request and response events only
+  * ✅ PROS Lambda@Edge:
+    * Power: Up to 128MB memory and 5 seconds runtime
+    * Capabilities: Can access full request/response bodies and make external API calls
+    * Language: Supports Node.js and Python runtimes
+    * Integration: Can interact with other AWS services
+    * Flexibility: Supports complex business logic implementation
+    * Triggers: Works with all four CloudFront trigger points
+  * 🚫 CONS Lambda@Edge:
+    * Cold Starts: Slower initial execution (10-100ms)
+    * Cost: 6x more expensive than CloudFront Functions
+    * Deployment: Complex multi-step process requiring version publishing
+    * Propagation: Changes can take minutes to hours to deploy globally
+    * Region Restriction: Must be deployed in us-east-1
+    * Management: Requires version management and IAM role setup
+6. Non AWS alternative Cloudflare Workers
+   * ✅ PROS Cloudflare Workers:
+     * Extremely fast cold starts (<1ms)
+     * Supports both JavaScript and WebAssembly
+     * Larger memory limits (up to 128MB)
+     * Can make external API calls
+     * Extensive global network (275+ edge locations)
+     * Built-in security features like Web Application Firewall
+   * 🚫 CONS Cloudflare Workers:
+     * No native Java/Kotlin support
+     * Requires separate infrastructure if using AWS for other services
+     * Requires Cloudflare-specific APIs
+
 
