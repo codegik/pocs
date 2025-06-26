@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket vs HTTP Benchmark</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket vs HTTP REST Benchmark</h1>
+
+        <div class="control-panel">
+            <div class="form-group">
+                <label for="num-requests">Number of Requests:</label>
+                <input type="number" id="num-requests" min="1" max="10000" value="100">
+            </div>
+            <div class="form-group">
+                <label for="payload-size">Payload Size (bytes):</label>
+                <input type="number" id="payload-size" min="1" max="1000000" value="1000">
+            </div>
+            <div class="form-group">
+                <label for="concurrent-requests">Concurrent Requests:</label>
+                <input type="number" id="concurrent-requests" min="1" max="100" value="10">
+            </div>
+            <div class="button-group">
+                <button id="start-http-test" class="primary-btn">Start HTTP Test</button>
+                <button id="start-ws-test" class="primary-btn">Start WebSocket Test</button>
+                <button id="start-both-tests" class="primary-btn">Run Both Tests</button>
+                <button id="reset-metrics" class="secondary-btn">Reset Metrics</button>
+            </div>
+        </div>
+
+        <div class="results-panel">
+            <div class="results-tabs">
+                <button class="tab-btn active" data-tab="summary">Summary</button>
+                <button class="tab-btn" data-tab="http-details">HTTP Details</button>
+                <button class="tab-btn" data-tab="ws-details">WebSocket Details</button>
+                <button class="tab-btn" data-tab="charts">Charts</button>
+            </div>
+
+            <div class="tab-content">
+                <div id="summary" class="tab-pane active">
+                    <div class="summary-cards">
+                        <div class="card">
+                            <h3>HTTP REST</h3>
+                            <div class="metric">
+                                <span class="label">Total Requests:</span>
+                                <span id="http-total-requests" class="value">0</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Average Duration:</span>
+                                <span id="http-avg-duration" class="value">0 ms</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Min Duration:</span>
+                                <span id="http-min-duration" class="value">0 ms</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Max Duration:</span>
+                                <span id="http-max-duration" class="value">0 ms</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>WebSocket</h3>
+                            <div class="metric">
+                                <span class="label">Total Requests:</span>
+                                <span id="ws-total-requests" class="value">0</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Average Duration:</span>
+                                <span id="ws-avg-duration" class="value">0 ms</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Min Duration:</span>
+                                <span id="ws-min-duration" class="value">0 ms</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Max Duration:</span>
+                                <span id="ws-max-duration" class="value">0 ms</span>
+                            </div>
+                        </div>
+
+                        <div class="card comparison-card">
+                            <h3>Comparison</h3>
+                            <div class="metric">
+                                <span class="label">Performance Difference:</span>
+                                <span id="performance-diff" class="value">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Faster Protocol:</span>
+                                <span id="faster-protocol" class="value">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Speed Improvement:</span>
+                                <span id="speed-improvement" class="value">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="http-details" class="tab-pane">
+                    <h3>HTTP Request Details</h3>
+                    <div class="progress-container">
+                        <div id="http-progress-bar" class="progress-bar"></div>
+                        <div id="http-progress-text" class="progress-text">0%</div>
+                    </div>
+                    <div class="table-container">
+                        <table id="http-details-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Timestamp</th>
+                                    <th>Duration (ms)</th>
+                                    <th>Payload Size</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="ws-details" class="tab-pane">
+                    <h3>WebSocket Request Details</h3>
+                    <div class="progress-container">
+                        <div id="ws-progress-bar" class="progress-bar"></div>
+                        <div id="ws-progress-text" class="progress-text">0%</div>
+                    </div>
+                    <div class="table-container">
+                        <table id="ws-details-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Timestamp</th>
+                                    <th>Duration (ms)</th>
+                                    <th>Payload Size</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="charts" class="tab-pane">
+                    <div class="chart-container">
+                        <canvas id="duration-comparison-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="request-distribution-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="status-bar">
+            <div id="status-message">Ready to run benchmark tests</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
