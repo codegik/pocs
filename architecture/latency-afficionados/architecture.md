@@ -140,6 +140,11 @@ The user is capable of providing recommendation of products to users based on pr
 1. Use LLM for code generation in latest Java version in order to modernize the monolith.
 2. Use Svelte for frontend to improve UI performance and reduce latency.
 3. Use WebSockets for real-time updates and faster communication.
+4. CloudFront Functions for scenarios requiring ultra-low latency and simple JavaScript logic at the edge.
+5. Global Accelerator It is commonly used for web applications, APIs, gaming platforms, and any latency-sensitive or highly available global service.
+6. OpenSearch It would significantly improve the search experience in the marketplace while maintaining the performance standards.
+7. Aurora Postgres works best as the primary transactional database.
+8. The application uses Outbox Pattern to synchronize data from Aurora PostgreSQL to OpenSearch.
 
 ### Tradeoffs
 
@@ -198,5 +203,37 @@ The user is capable of providing recommendation of products to users based on pr
      * No native Java/Kotlin support
      * Requires separate infrastructure if using AWS for other services
      * Requires Cloudflare-specific APIs
+7. Global Accelerator
+   * ✅ PROS:
+     * Improves global application performance by routing users to the nearest healthy AWS endpoint.
+     * Increases availability with automatic failover and health checks.
+     * Supports multi-region architecture for resilience.
+     * Provides built-in DDoS protection via AWS Shield.
+     * Simplifies global traffic management with a single static IP.
+   * 🚫 CONS:
+     * Additional cost compared to standard AWS networking.
+     * Adds another layer of infrastructure to manage.
+     * Limited to AWS endpoints (not suitable for non-AWS resources).
+     * May require changes to DNS and application architecture.
+     * Some advanced routing features may not be as flexible as custom CDN or DNS solutions.
 
+[//]: # (CloudFront Functions Use Cases:)
+[//]: # (URL rewrites and redirects: Modify request URLs for routing, vanity URLs, or A/B testing.)
+[//]: # (Header manipulation: Add, remove, or modify HTTP headers for security, CORS, or custom logic.)
+[//]: # (Access control: Implement simple authentication, block/allow lists, or geo-restriction based on IP or headers.)
+[//]: # (Cache key customization: Adjust cache keys by normalizing query strings or headers.)
+[//]: # (Bot mitigation: Block or challenge known bots using user-agent or IP checks.)
+[//]: # (Basic request validation: Quickly reject malformed or unauthorized requests before reaching the origin.)
 
+[//]: # (Global Accelerator Use Cases:)
+[//]: # (Low-latency global access: Directs users to the nearest healthy AWS region or endpoint, reducing latency for global users.)
+[//]: # (High availability: Automatically reroutes traffic away from unhealthy endpoints to healthy ones, improving application uptime.)
+[//]: # (Disaster recovery: Supports failover between AWS Regions for business continuity.)
+[//]: # (Multi-region active-active architectures: Balances traffic across multiple AWS Regions for better performance and resilience.)
+[//]: # (DDoS protection: Leverages AWS Shield for built-in DDoS mitigation.)
+
+[//]: # (OpenSearch Use Cases:)
+[//]: # (Product Search: Lightning-fast full-text search across game titles, descriptions, filters, price, recomendations.)
+[//]: # (Recomendations: recommendations based on attributes and user behavior, Identify trending games through search behavior analysis.)
+[//]: # (Review and Rating Analysis: Search within reviews and comments.)
+[//]: # (Performance Benefits: Sub-10ms query performance even with complex filtering.)
