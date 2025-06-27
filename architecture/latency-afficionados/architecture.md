@@ -237,3 +237,12 @@ The user is capable of providing recommendation of products to users based on pr
 [//]: # (Recomendations: recommendations based on attributes and user behavior, Identify trending games through search behavior analysis.)
 [//]: # (Review and Rating Analysis: Search within reviews and comments.)
 [//]: # (Performance Benefits: Sub-10ms query performance even with complex filtering.)
+
+# TODO
+Docker registry - ECR
+Define LLM
+Uses cases for websocket
+Benchmark for websocket
+https://medium.com/design-microservices-architecture-with-patterns/outbox-pattern-for-microservices-architectures-1b8648dfaa27
+PGsync option
+Use case cloud front function
