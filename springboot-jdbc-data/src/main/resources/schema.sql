@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS person (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
