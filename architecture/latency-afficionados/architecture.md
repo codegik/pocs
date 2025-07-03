@@ -137,14 +137,19 @@ The user is capable of providing recommendation of products to users based on pr
 ## 🧭 6. Trade-offs
 
 ### Major Decisions
-1. Use LLM for code generation in latest Java version in order to modernize the monolith.
+1. Use Copilot Agent for code generation in latest Java version in order to modernize the monolith.
 2. Use Svelte for frontend to improve UI performance and reduce latency.
 3. Use WebSockets for real-time updates and faster communication.
-4. CloudFront Functions for scenarios requiring ultra-low latency and simple JavaScript logic at the edge.
+   * Price drop alerts for wish listed games
+   * Order status updates ("Seller has shipped your game")
+   * Instantly update when rare retro games become available or sell out
+   * Show "X people are viewing this item" counters in real-time
+   * Display "Just sold!" notifications without page refresh
+4. CloudFront for serving the static files.
 5. Global Accelerator It is commonly used for web applications, APIs, gaming platforms, and any latency-sensitive or highly available global service.
 6. OpenSearch It would significantly improve the search experience in the marketplace while maintaining the performance standards.
 7. Aurora Postgres works best as the primary transactional database.
-8. The application uses Outbox Pattern to synchronize data from Aurora PostgreSQL to OpenSearch.
+8. PGsync to synchronize data from Aurora PostgreSQL to OpenSearch.
 
 ### Tradeoffs
 
@@ -153,45 +158,30 @@ The user is capable of providing recommendation of products to users based on pr
     * Benefits from community support and contributions.
   * 🚫 CONS:
     * Supporting and maintaining in house.
+
 2. Svelte vs React
   * ✅ PROS:
     * Svelte compiles to vanilla JavaScript, resulting in smaller bundle sizes and faster execution.
     * No virtual DOM, leading to lower memory usage and CPU consumption.
   * 🚫 CONS:
     * Svelte has a smaller ecosystem compared to React, which may limit available libraries and tools.
+
 3. WebSockets vs HTTP
   * ✅ PROS:
     * WebSockets provide lower latency and faster communication due to persistent connections.
     * Full-duplex communication allows for real-time updates.
   * 🚫 CONS:
     * Requires additional setup and management compared to traditional HTTP requests.
-4. CloudFront Functions vs Lambda@Edge
-  * ✅ PROS CloudFront Functions:
-    * Performance: Ultra-low latency (~1ms execution time)
-    * Deployment: Extremely simple with single-step process
-    * Cost: Significantly cheaper than Lambda@Edge (~1/6th the cost)
-    * Propagation: Changes take effect within seconds
-    * Management: No version management complexity
-  * 🚫 CONS CloudFront Functions:
-    * Runtime: JavaScript only, max 2ms execution time
-    * Functionality: Cannot access request bodies or make external API calls
-    * Resources: Limited to 2MB memory
-    * Triggers: Limited to viewer request and response events only
-  * ✅ PROS Lambda@Edge:
-    * Power: Up to 128MB memory and 5 seconds runtime
-    * Capabilities: Can access full request/response bodies and make external API calls
-    * Language: Supports Node.js and Python runtimes
-    * Integration: Can interact with other AWS services
-    * Flexibility: Supports complex business logic implementation
-    * Triggers: Works with all four CloudFront trigger points
-  * 🚫 CONS Lambda@Edge:
-    * Cold Starts: Slower initial execution (10-100ms)
-    * Cost: 6x more expensive than CloudFront Functions
-    * Deployment: Complex multi-step process requiring version publishing
-    * Propagation: Changes can take minutes to hours to deploy globally
-    * Region Restriction: Must be deployed in us-east-1
-    * Management: Requires version management and IAM role setup
-6. Non AWS alternative Cloudflare Workers
+  * Benchmark comparison
+    
+    | Requests | Websocket total duration | HTTP total duration | Winner                |
+    |----------|--------------------------|---------------------|-----------------------|
+    | 1K       | 110 ms                   | 204 ms              | Websocket ~92% faster |
+    | 10K      | 12123 ms                 | 19757 ms            | Websocket ~93% faster |
+    | 100K     | 120914 ms                | 219011 ms           | Websocket ~94% faster |
+    Source: https://github.com/codegik/websocket-benchmark
+
+4. Non AWS alternative Cloudflare Workers
    * ✅ PROS Cloudflare Workers:
      * Extremely fast cold starts (<1ms)
      * Supports both JavaScript and WebAssembly
@@ -203,7 +193,7 @@ The user is capable of providing recommendation of products to users based on pr
      * No native Java/Kotlin support
      * Requires separate infrastructure if using AWS for other services
      * Requires Cloudflare-specific APIs
-7. Global Accelerator
+5. Global Accelerator
    * ✅ PROS:
      * Improves global application performance by routing users to the nearest healthy AWS endpoint.
      * Increases availability with automatic failover and health checks.
@@ -239,10 +229,9 @@ The user is capable of providing recommendation of products to users based on pr
 [//]: # (Performance Benefits: Sub-10ms query performance even with complex filtering.)
 
 # TODO
-Docker registry - ECR
-Define LLM
-Uses cases for websocket
-Benchmark for websocket
-https://medium.com/design-microservices-architecture-with-patterns/outbox-pattern-for-microservices-architectures-1b8648dfaa27
-PGsync option
-Use case cloud front function
+~~Docker registry - ECR~~
+~~Define LLM~~
+~~Uses cases for websocket~~
+~~Benchmark for websocket~~
+~~PGsync option~~
+~~Use case cloud front function~~
