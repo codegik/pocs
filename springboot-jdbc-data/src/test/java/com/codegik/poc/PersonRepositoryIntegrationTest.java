@@ -1,10 +1,10 @@
-package com.codegik.poc.springbootjdbcdata;
+package com.codegik.poc;
 
+import com.codegik.poc.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.BadSqlGrammarException;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Sql({"/schema.sql", "/data.sql"})
 class PersonRepositoryIntegrationTest {
 
     @Autowired
@@ -65,7 +64,32 @@ class PersonRepositoryIntegrationTest {
 
     @Test
     void option7ShouldFail() {
-        repository.findByIdInOption7(List.of());
+        Exception exception = assertThrows(BadSqlGrammarException.class, () -> {
+            repository.findByIdInOption7(List.of());
+        });
+        assertThat(exception).hasMessageContaining("[SELECT * FROM person WHERE (? = true) OR (? = true) OR id IN ()]");
     }
+
+    @Test
+    void option8ShouldSucceed() {
+        assertThat(repository.findByIdInOption8(null)).isNotEmpty();
+    }
+
+    @Test
+    void option9ShouldFail() {
+        Exception exception = assertThrows(BadSqlGrammarException.class, () -> {
+            repository.findByIdInOption9(List.of());
+        });
+        assertThat(exception).hasMessageContaining("[SELECT * FROM person WHERE id IN ()]");
+    }
+
+    @Test
+    void option10ShouldFail() {
+        Exception exception = assertThrows(BadSqlGrammarException.class, () -> {
+            repository.findByIdInOption10(List.of());
+        });
+        assertThat(exception).hasMessageContaining("[SELECT * FROM person WHERE array_length(::bigint[], 1) IS NULL OR id IN ()]");
+    }
+
 
 }

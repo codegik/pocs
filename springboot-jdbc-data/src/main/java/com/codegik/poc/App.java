@@ -1,4 +1,4 @@
-package com.codegik.poc.springbootjdbcdata;
+package com.codegik.poc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

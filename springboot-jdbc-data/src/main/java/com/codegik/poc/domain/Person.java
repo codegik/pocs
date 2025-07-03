@@ -1,4 +1,4 @@
-package com.codegik.poc.springbootjdbcdata;
+package com.codegik.poc.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
