@@ -101,8 +101,7 @@ Each approach is implemented with its own repository interface and corresponding
 ## Getting Started
 
 1. Clone this repository
-2. Run `./mvnw spring-boot:run` to start the application
-3. Run `./mvnw test` to execute the tests that demonstrate each approach
+2. Run `./mvnw test` to execute the tests that demonstrate each approach
 
 ## Conclusion
 
