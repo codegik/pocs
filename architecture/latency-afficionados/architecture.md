@@ -147,6 +147,11 @@ The user is capable of providing recommendation of products to users based on pr
    * Display "Just sold!" notifications without page refresh
 4. CloudFront for serving the static files.
 5. Global Accelerator It is commonly used for web applications, APIs, gaming platforms, and any latency-sensitive or highly available global service.
+   * Low-latency global access: Directs users to the nearest healthy AWS region or endpoint, reducing latency for global users.
+   * High availability: Automatically reroutes traffic away from unhealthy endpoints to healthy ones, improving application uptime.
+   * Disaster recovery: Supports failover between AWS Regions for business continuity.
+   * Multi-region active-active architectures: Balances traffic across multiple AWS Regions for better performance and resilience.
+   * DDoS protection: Leverages AWS Shield for built-in DDoS mitigation.
 6. OpenSearch It would significantly improve the search experience in the marketplace while maintaining the performance standards.
 7. Aurora Postgres works best as the primary transactional database.
 8. PGsync to synchronize data from Aurora PostgreSQL to OpenSearch.
@@ -207,27 +212,86 @@ The user is capable of providing recommendation of products to users based on pr
      * May require changes to DNS and application architecture.
      * Some advanced routing features may not be as flexible as custom CDN or DNS solutions.
 
-[//]: # (CloudFront Functions Use Cases:)
-[//]: # (URL rewrites and redirects: Modify request URLs for routing, vanity URLs, or A/B testing.)
-[//]: # (Header manipulation: Add, remove, or modify HTTP headers for security, CORS, or custom logic.)
-[//]: # (Access control: Implement simple authentication, block/allow lists, or geo-restriction based on IP or headers.)
-[//]: # (Cache key customization: Adjust cache keys by normalizing query strings or headers.)
-[//]: # (Bot mitigation: Block or challenge known bots using user-agent or IP checks.)
-[//]: # (Basic request validation: Quickly reject malformed or unauthorized requests before reaching the origin.)
+## 🌏 7. For each key major component
 
-[//]: # (Global Accelerator Use Cases:)
-[//]: # (Low-latency global access: Directs users to the nearest healthy AWS region or endpoint, reducing latency for global users.)
-[//]: # (High availability: Automatically reroutes traffic away from unhealthy endpoints to healthy ones, improving application uptime.)
-[//]: # (Disaster recovery: Supports failover between AWS Regions for business continuity.)
-[//]: # (Multi-region active-active architectures: Balances traffic across multiple AWS Regions for better performance and resilience.)
-[//]: # (DDoS protection: Leverages AWS Shield for built-in DDoS mitigation.)
+TBD
 
-[//]: # (OpenSearch Use Cases:)
-[//]: # (Product Search: Lightning-fast full-text search across game titles, descriptions, filters, price, recomendations.)
-[//]: # (Recomendations: recommendations based on attributes and user behavior, Identify trending games through search behavior analysis.)
-[//]: # (Review and Rating Analysis: Search within reviews and comments.)
-[//]: # (Performance Benefits: Sub-10ms query performance even with complex filtering.)
+## 💾 8. Migrations
 
+### ReactJS to Svelte Migration Strategy
+For a smooth, incremental migration from React to Svelte while maintaining site functionality, we can use the "strangler fig pattern" approach.
+
+The Strangler Fig Pattern is an incremental approach to system modernization where you gradually replace components of a legacy system with new implementations while maintaining functionality.
+
+The pattern gets its name from the strangler fig vine that initially grows around a host tree, then gradually takes over until the original tree dies, leaving the vine in the same shape.
+
+For this project, in summary involves:
+- Create a facade - Build a layer of abstraction around the legacy system
+- Replace incrementally - Gradually migrate functionality piece by piece behind the facade
+- Redirect traffic - Route requests to new components as they're ready
+- Decommission - Eventually remove the old system when all functionality has been replaced
+
+#### Steps to Migrate from React to Svelte
+1. Setup a Micro-Frontend Architecture using module federation.
+2. Create a Component Bridge, this adapter lets React render Svelte components and vice versa.
+3. Migration Path
+   - Start with Leaf Components: Begin with simple, isolated components that have minimal dependencies
+   - Create Component Parity: Build Svelte versions alongside React versions
+   - Route-Based Migration: Migrate entire pages/routes together
+4. Shared State Management creating adapter for state management.
+5. Deployment Strategy
+   - Feature Toggles: Use feature flags to control which version (React/Svelte) is served
+   - Shadowed Testing: Deploy Svelte components to production but only activate for test users
+   - Gradual Rollout: Increase percentage of users seeing Svelte components based on metrics
+   - Performance Monitoring: Compare metrics between React and Svelte implementations
+
+This strategy allows to migrate your RETRO game marketplace incrementally while maintaining site functionality and gradually benefiting from Svelte's performance advantages.
+
+
+## 🧪 9. Testing strategy
+
+- Before creating new tests, we should first ensure that the existing tests are running and passing.
+  - Increase the coverage of existing integration/contract tests to 80% or more.
+  - We should not start the migration without having a good coverage of the existing contracts.
+  - It will reduce the chances of breaking existing functionality during the migration.
+  - The testes must run in developer environments and CI/CD pipeline.
+
+- Frontend Tests
+  - Svelte component rendering tests with focus on performance metrics.
+  - Client-side state management tests.
+  - WebSocket client implementation tests.
+
+- Contract tests
+  - Test API contracts between decomposed microservices (Product, User, Review, Order, etc.).
+  - Verify WebSocket message formats and protocols.
+  - Validate data synchronization contracts between PostgreSQL and OpenSearch.
+
+- Integration tests
+  - Try to cover most of the scenarios, e.g. Uploading file, deleting file, searching file, updating metadata, etc.
+  - Test WebSocket real-time communication flows.
+  - Run in isolated environments before production deployment.
+
+- Infra tests 
+  - Verify PGsync data synchronization between Aurora and OpenSearch.
+  - Test CloudFront edge caching effectiveness.
+  - Validate Global Accelerator routing behavior.
+  
+- Performance tests
+  - Use Gatling to simulate the user behavior and check the system's performance.
+  - Test search latency using OpenSearch under various query patterns.
+  - Measure database query performance under load
+  - Measure UI rendering time across device types
+  - Benchmark WebSocket vs HTTP performance in real usage scenarios
+  - Track CDN cache hit/miss ratios  
+  - Execute in staging environment with production-like conditions
+
+- Chaos tests
+  - Simulate AWS region failures to test Global Accelerator failover
+  - Test WebSocket reconnection strategies during network disruptions
+  - Inject latency between services to identify performance bottlenecks
+  - Verify system behavior during PGsync failures
+  - Execute in isolated production environment during low-traffic periods
+  
 # TODO
 ~~Docker registry - ECR~~
 ~~Define LLM~~
