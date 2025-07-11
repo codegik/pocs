@@ -36,6 +36,15 @@ This approach uses a database view that filters out soft-deleted records at the 
 
 **Use case:** When you want to delegate the filtering responsibility to the database and ensure consistent filtering across all queries.
 
+**Additional Implementation**: `AddressActive.java` + `AddressActiveRepository.java`
+
+An alternative implementation of the Database View approach is provided using a dedicated entity:
+- `AddressActive` entity that maps directly to the `active_address` view
+- `AddressActiveRepository` that works exclusively with non-deleted records
+- Integration tests demonstrating that soft-deleted records are automatically filtered out
+
+This implementation provides a cleaner separation between the full dataset and the active-only dataset by using distinct entity classes.
+
 ### 3. Query Concatenation Approach
 
 **Implementation**: `AddressRepositoryConcatFilter.java`
@@ -111,4 +120,3 @@ Choosing the right soft delete approach depends on your specific requirements:
 - For application-level control without database-specific features, use the query concatenation approach
 
 This project serves as a proof of concept to help you decide which approach best fits your application's needs.
-
