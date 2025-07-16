@@ -8,7 +8,7 @@ Soft delete is a data retention pattern where records are marked as "deleted" bu
 
 ## Approaches Implemented
 
-This project demonstrates three different approaches to implementing soft delete:
+This project demonstrates four different approaches to implementing soft delete:
 
 ### 1. Standard Repository (No Filtering)
 
@@ -36,7 +36,7 @@ This approach uses a database view that filters out soft-deleted records at the 
 
 **Use case:** When you want to delegate the filtering responsibility to the database and ensure consistent filtering across all queries.
 
-**Additional Implementation**: `AddressActive.java` + `AddressActiveRepository.java`
+.**Additional Implementation**: `AddressActive.java` + `AddressActiveRepository.java`
 
 An alternative implementation of the Database View approach is provided using a dedicated entity:
 - `AddressActive` entity that maps directly to the `active_address` view
@@ -57,6 +57,24 @@ This approach adds filtering conditions directly in the repository queries.
 - Explicitly overrides CRUD methods to include the filter
 
 **Use case:** When you want control at the application level without database-specific features like views.
+
+### 4. Record Migration Approach
+
+**Implementation**: `Person.java` + `PersonRepository.java` + `PersonInactive.java` + `PersonInactiveRepository.java`
+
+This approach physically moves deleted records to a separate "inactive" table rather than using a flag.
+
+**How it works:**
+- Maintains two separate tables: `person` (active records) and `person_inactive` (deleted records)
+- Custom delete operations in the repository move records from the active to inactive table
+- Uses transactions to ensure data integrity during the move operation
+- Provides a separate repository for accessing inactive records when needed
+
+**Use case:** When you need:
+- Clear separation between active and inactive data
+- Better performance for active data queries (no filtering needed)
+- Ability to manage active and inactive records differently (e.g., different backup schedules)
+- Clean data recovery mechanism by moving records back to the active table
 
 ## Trade-offs
 
@@ -97,6 +115,19 @@ This approach adds filtering conditions directly in the repository queries.
 - String concatenation risks - potential for SQL injection (though minimal with constants)
 - Verbosity - repository code includes repetitive filter conditions
 
+### Record Migration Approach
+**Pros:**
+- Clean separation - active and inactive records are in completely separate tables
+- Performance - no filtering needed for active record queries
+- Explicit recovery path - moving records back is straightforward
+- Schema flexibility - inactive table can have additional audit fields
+- Table-level permissions - can restrict access to inactive data at the database level
+
+**Cons:**
+- Complexity - requires managing two tables and custom delete operations for each entity
+- Migration challenges - if the active table schema changes, handling existing inactive records requires care
+- Foreign key constraints - more complex to maintain relationships with migrated records
+
 ## Implementation Details
 
 The project uses:
@@ -118,5 +149,6 @@ Choosing the right soft delete approach depends on your specific requirements:
 - For maximum flexibility and simplicity, use the standard repository approach
 - For database-level enforcement and clean repository code, use the view approach
 - For application-level control without database-specific features, use the query concatenation approach
+- For clear separation of active/inactive data and potential performance benefits, use the record migration approach
 
 This project serves as a proof of concept to help you decide which approach best fits your application's needs.
