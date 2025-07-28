@@ -2,6 +2,7 @@ package com.codegik.service
 
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.logging.Logger
 
@@ -26,6 +27,13 @@ class TimeService {
     fun processSyncWithError(currentTime: LocalDateTime) {
         logger.info("processSyncWithError completed for time: $currentTime")
         throw RuntimeException("Simulated sync error")
+    }
+
+
+    @Async("taskExecutor")
+    fun processAsyncWithErrorBigDecimal(currentTime: LocalDateTime) {
+        logger.info("processAsyncWithErrorBigDecimal completed for time: $currentTime")
+        BigDecimal("")
     }
 
 

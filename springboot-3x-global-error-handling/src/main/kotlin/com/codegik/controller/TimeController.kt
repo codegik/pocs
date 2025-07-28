@@ -38,6 +38,18 @@ class TimeController {
         )
     }
 
+    @GetMapping("/async-current-time-error-big-decimal")
+    fun processAsyncWithErrorBigDecimal(): Map<String, Any> {
+        val currentTime = LocalDateTime.now()
+
+        timeService.processAsyncWithErrorBigDecimal(currentTime)
+
+        // Should not reach here due to the async error
+        return mapOf(
+            "currentTime" to currentTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        )
+    }
+
     @GetMapping("/sync-current-time-error")
     fun processSyncWithError(): Map<String, Any> {
         val currentTime = LocalDateTime.now()

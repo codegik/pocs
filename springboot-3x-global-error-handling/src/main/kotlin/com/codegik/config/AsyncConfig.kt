@@ -10,7 +10,7 @@ import java.util.concurrent.Executor
 
 @Configuration
 @EnableAsync
-class AsyncConfig {
+class AsyncConfig : AsyncConfigurer {
 
     @Bean(name = ["taskExecutor"])
     fun taskExecutor(): Executor {
@@ -22,24 +22,9 @@ class AsyncConfig {
         executor.initialize()
         return executor
     }
-}
-
-@Configuration
-@EnableAsync
-class AsyncConfigExceptionHandler : AsyncConfigurer {
-
-    @Bean(name = ["taskExecutorExceptionHandler"])
-    fun taskExecutor(): Executor {
-        val executor = ThreadPoolTaskExecutor()
-        executor.corePoolSize = 2
-        executor.maxPoolSize = 5
-        executor.queueCapacity = 100
-        executor.setThreadNamePrefix("async-exp-handler-")
-        executor.initialize()
-        return executor
-    }
 
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
         return AsyncExceptionHandler()
     }
 }
+

@@ -13,25 +13,6 @@ class AsyncExceptionHandler : AsyncUncaughtExceptionHandler {
         logger.severe("Exception: ${ex.message}")
         logger.severe("Method params: ${params.contentToString()}")
 
-        // Here you can:
-        // 1. Send alerts/notifications
-        // 2. Store error in database
-        // 3. Publish to message queue
-        // 4. Update metrics/monitoring
-
-        when (ex) {
-            is IllegalArgumentException -> {
-                logger.warning("Invalid argument in async method: ${ex.message}")
-                // Handle specific exception type
-            }
-            is RuntimeException -> {
-                logger.severe("Runtime exception in async method: ${ex.message}")
-                // Handle runtime exceptions
-            }
-            else -> {
-                logger.severe("Unexpected exception in async method: ${ex.message}")
-                // Handle other exceptions
-            }
-        }
+        throw ex // Re-throwing the exception to ensure it is logged and handled properly
     }
 }

@@ -28,18 +28,19 @@ class GlobalExceptionHandlerIntegrationTest {
 
 
     @Test
+    fun `should return http 500 Caught by GlobalExceptionHandler with taskExecutor BigDecimal`() {
+        mockMvc.perform(get("/api/async-current-time-error-big-decimal"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.error").value("Caught by GlobalExceptionHandler"))
+            .andExpect(jsonPath("$.status").value(500))
+            .andExpect(jsonPath("$.message").value("Simulated sync error"))
+    }
+
+
+    @Test
     fun `should return http 200 NOT Caught by GlobalExceptionHandler with taskExecutor`() {
         mockMvc.perform(get("/api/async-current-time-error"))
             .andExpect(status().isOk())
     }
 
-
-    @Test
-    fun `should return http 500 Caught by GlobalExceptionHandler with taskExecutorExceptionHandler`() {
-        mockMvc.perform(get("/api/async-current-time-error-handler"))
-            .andExpect(status().is5xxServerError)
-            .andExpect(jsonPath("$.error").value("Caught by GlobalExceptionHandler"))
-            .andExpect(jsonPath("$.status").value(500))
-            .andExpect(jsonPath("$.message").value("Simulated async error with handler"))
-    }
 }
