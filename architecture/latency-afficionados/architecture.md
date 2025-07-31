@@ -303,3 +303,6 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
 4. [X] Benchmark for websocket
 5. [X] PGsync option
 6. [X] Use case cloud front function
+7. [ ] Store concept 
+8. [ ] Bundler module federation
+9. [ ] Observability tests pos prod
