@@ -118,11 +118,13 @@ The user is capable of searching products in the platform to buy it.
 ### Viewing product descriptions
 
 The user is capable of viewing product descriptions to understand the product better.
+
 ![img.uc.view.product.png](img.uc.view.product.png)
 
 ### Rating products with review
 
 The user is capable of rating products with review to help other users to understand the product better.
+
 ![img.uc.review.product.png](img.uc.review.product.png)
 
 ### Comments and Recommend
@@ -247,6 +249,8 @@ For this project, in summary involves:
 
 This strategy allows to migrate your RETRO game marketplace incrementally while maintaining site functionality and gradually benefiting from Svelte's performance advantages.
 
+![img.ui.migration.png](img.ui.migration.png)
+
 
 ## 🧪 9. Testing strategy
 
@@ -293,9 +297,9 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
   - Execute in isolated production environment during low-traffic periods
   
 # TODO
-~~Docker registry - ECR~~
-~~Define LLM~~
-~~Uses cases for websocket~~
-~~Benchmark for websocket~~
-~~PGsync option~~
-~~Use case cloud front function~~
+1. [X] Docker registry - ECR
+2. [X] Define LLM
+3. [X] Uses cases for websocket
+4. [X] Benchmark for websocket
+5. [X] PGsync option
+6. [X] Use case cloud front function
