@@ -1,0 +1,37 @@
+🐇 🧮 🍇                                           💭 Defines a class named 🧮 (calculator symbol)
+
+  🆕 🍇                                            💭 Constructor that prints a ready message when an instance is created
+    😀 🔤Catalan Formula Calculator Ready🔤❗️
+  🍉
+
+  ❗️ 🧪 n 🔢 ➡️ 🔢 🍇                             💭 Method 🧪 (test tube) that takes parameter n (number) and returns a number
+    ↪️ n ◀ 0 🍇                                    💭 Method check if n is less than 0 (◀ black left)
+      😀 🔤Error: n must be non-negative🔤❗️
+      ↩️ 0
+    🍉
+
+    1 ➡️ 🖍🆕catalan                              💭 Initializes a mutable variable result with value 1 (🖍 crayon)
+
+    🔂 i 🆕⏩ 2 n ➕ 1❗️ 🍇                      💭 For loop from 2 to n inclusive (🔂 repeat single)
+      4 ✖️ i ➖ 2 ➡️ numerator
+      i ➕ 1 ➡️ denominator
+      catalan ✖️ numerator ➗ denominator ➡️ 🖍catalan   💭 formula: C(i) = C(i-1) * (4*i - 2) / (i + 1)
+    🍉
+
+    ↩️ catalan
+  🍉
+🍉
+
+🏁 🍇                                             💭 Main function that creates a calculator instance, calculates the 6th Catalan number, and displays the result
+  🆕🧮❗️ ➡️ calculator
+  🧪 calculator 6❗️ ➡️ result
+  😀 🔤The Catalan number is: 🧲result🧲🔤❗️     💭 Interpolation (🧲 magnet)
+🍉
+
+
+
+💭 ❗️ (Exclamation Mark) - This has multiple purposes:
+💭 When used after a method name (like ❗️ 🧪), it defines/declares a method
+💭 When used after a method call (like 😀 🔤text🔤❗️), it invokes/calls that method
+💭 It essentially marks method definition and invocation points
+💭 (thought balloon)
