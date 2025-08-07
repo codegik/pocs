@@ -240,7 +240,8 @@ For this project, in summary involves:
    - Start with Leaf Components: Begin with simple, isolated components that have minimal dependencies
    - Create Component Parity: Build Svelte versions alongside React versions
    - Route-Based Migration: Migrate entire pages/routes together
-4. Shared State Management creating adapter for state management.
+4. Shared State Management by creating universal store and configure React and Svelt to use same universal store.
+   - Here is a POC proving that works: https://github.com/codegik/frontend/tree/master/share-universal-store
 5. Deployment Strategy
    - Feature Toggles: Use feature flags to control which version (React/Svelte) is served
    - Shadowed Testing: Deploy Svelte components to production but only activate for test users
