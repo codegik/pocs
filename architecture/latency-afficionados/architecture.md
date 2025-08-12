@@ -306,4 +306,5 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
 6. [X] Use case cloud front function
 7. [ ] Store concept 
 8. [ ] Bundler module federation
-9. [ ] Observability tests pos prod
+9. [ ] Module federation within store concept
+10. [ ] Observability tests pos prod
