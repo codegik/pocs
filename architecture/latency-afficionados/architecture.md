@@ -307,8 +307,17 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
   - Verify system behavior during PGsync failures
   - Execute in isolated production environment during low-traffic periods
 
-### Testing in production
-Observability-based testing in production (also called "testing in production" or "production testing") uses monitoring, logging, and tracing data to validate system behavior after deployment. Here are the key approaches:
+## 👀 10. Observability strategy
+
+Observability-based testing in production (also called "testing in production" or "production testing") uses monitoring, logging, and tracing data to validate system behavior after deployment. 
+
+There will be an event notifier that is going to log all operations during the migration.
+
+There will be a dashboard to expose the migration progress, metrics and performance.
+
+There will be alerts to notify the team about any issue during the migration.
+ 
+Here are the key approaches:
 
 - **Synthetic Monitoring**: Collect features metrics (latency, counters, etc) continuously to validate critical user journeys.
 
@@ -329,6 +338,47 @@ Observability-based testing in production (also called "testing in production" o
   - Search-to-purchase conversion
   - User session duration
   - Revenue per visitor
+
+## 👌 11. Technology Stack
+
+### Frontend
+- **Framework**: Svelte (migrating from React 16)
+- **Build Tool**: Vite
+- **State Management**: Universal Store (compatible with both React and Svelte)
+- **Real-time Communication**: WebSocket API
+
+### Backend
+- **Primary Language**: Java (Latest Stable Version)
+- **Framework**: Spring Boot
+- **Build Tool**: Maven
+- **Migration Assistant**: GitHub Copilot
+
+### Database & Search
+- **Primary Database**: Aurora PostgreSQL
+- **Search Engine**: OpenSearch
+- **Data Synchronization**: PGsync
+
+### Observability & Monitoring
+- **Metrics Collection**: CloudWatch
+- **Logging**: CloudWatch Logs
+- **Synthetic Monitoring**: Custom Kotlin/Java components
+- **Real User Monitoring**: Custom implementation
+
+## 👥 12. References
+
+* Architecture Anti-Patterns: https://architecture-antipatterns.tech/
+* EIP https://www.enterpriseintegrationpatterns.com/
+* SOA Patterns https://patterns.arcitura.com/soa-patterns
+* API Patterns https://microservice-api-patterns.org/
+* Anti-Patterns https://sourcemaking.com/antipatterns/software-development-antipatterns
+* Refactoring Patterns https://sourcemaking.com/refactoring/refactorings
+* Database Refactoring Patterns https://databaserefactoring.com/
+* Data Modelling Redis https://redis.com/blog/nosql-data-modeling/
+* Cloud Patterns https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/introduction.html
+* 12 Factors App https://12factor.net/
+* Relational DB Patterns https://www.geeksforgeeks.org/design-patterns-for-relational-databases/
+* Rendering Patterns https://www.patterns.dev/vanilla/rendering-patterns/
+* REST API Design https://blog.stoplight.io/api-design-patterns-for-rest-web-services
 
 
 # TODO
