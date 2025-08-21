@@ -234,14 +234,24 @@ For this project, in summary involves:
 - Decommission - Eventually remove the old system when all functionality has been replaced
 
 #### Steps to Migrate from React to Svelte
-1. Setup a Micro-Frontend Architecture using module federation.
+1. Setup Frontend Architecture preparing current frontend ReactJS to Introduce Svelte
+   - Update build configuration (Webpack/Vite) to support multiple frameworks.
+   - Configure module resolution to handle both `.jsx` and `.svelte` files.
+   - Set up shared dependencies and ensure no conflicts between React and Svelte ecosystems.
+   - Establish routing strategy that can handle both React and Svelte components
+
 2. Create a Component Bridge, this adapter lets React render Svelte components and vice versa.
+
 3. Migration Path
    - Start with Leaf Components: Begin with simple, isolated components that have minimal dependencies
    - Create Component Parity: Build Svelte versions alongside React versions
    - Route-Based Migration: Migrate entire pages/routes together
-4. Shared State Management by creating universal store and configure React and Svelt to use same universal store.
-   - Here is a POC proving that works: https://github.com/codegik/frontend/tree/master/share-universal-store
+
+4. Shared State Management: 
+    - Create universal store compatible with both frameworks
+    - Configure React and Svelte to use same universal store
+    - Here is a POC proving that works: https://github.com/codegik/frontend/tree/master/share-universal-store
+
 5. Deployment Strategy
    - Feature Toggles: Use feature flags to control which version (React/Svelte) is served
    - Shadowed Testing: Deploy Svelte components to production but only activate for test users
@@ -296,7 +306,31 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
   - Inject latency between services to identify performance bottlenecks
   - Verify system behavior during PGsync failures
   - Execute in isolated production environment during low-traffic periods
-  
+
+### Testing in production
+Observability-based testing in production (also called "testing in production" or "production testing") uses monitoring, logging, and tracing data to validate system behavior after deployment. Here are the key approaches:
+
+- **Synthetic Monitoring**: Collect features metrics (latency, counters, etc) continuously to validate critical user journeys.
+
+- **Real User Monitoring**: Track actual user interactions and performance metrics.
+  - Svelte component render times
+  - WebSocket connection success rates
+  - Search result relevance and speed
+  - Page load times across different regions
+- 
+- **Error Rate Monitoring**: Set up alerts for anomalies in.
+  - WebSocket connection failures
+  - OpenSearch query timeouts
+  - Aurora PostgreSQL connection pool exhaustion
+  - CloudFront 5xx errors
+
+- **Business Metrics Validation**: Monitor business KPIs to detect regressions.
+  - Product listing success rate
+  - Search-to-purchase conversion
+  - User session duration
+  - Revenue per visitor
+
+
 # TODO
 1. [X] Docker registry - ECR
 2. [X] Define LLM
@@ -304,7 +338,6 @@ This strategy allows to migrate your RETRO game marketplace incrementally while 
 4. [X] Benchmark for websocket
 5. [X] PGsync option
 6. [X] Use case cloud front function
-7. [ ] Store concept 
-8. [ ] Bundler module federation
-9. [ ] Module federation within store concept
-10. [ ] Observability tests pos prod
+7. [X] Store concept 
+8. [X] Bundler module federation (don't need to use module federation)
+9. [X] Observability tests pos prod
