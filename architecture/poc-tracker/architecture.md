@@ -58,8 +58,12 @@ This leads to lost knowledge, duplicated efforts, and missed opportunities for l
 - Building monolithic applications
 - Using serverless Lambda functions
 - Implementing single-language mobile solutions
-- Using MongoDB as primary database
 - Relying on single relational database
+- Support for Legacy Browsers
+- Will not build a Git replacement, will integrate with existing version control systems instead.
+- Will not use AWS Lambda or other serverless functions.
+- Will not build general chat or video conferencing; real-time features are limited to dojo collaboration.
+- Will not include POC trading, selling, or commercial marketplace functionality.
 
 # 4. 📐 Principles
 
@@ -69,13 +73,12 @@ This leads to lost knowledge, duplicated efforts, and missed opportunities for l
 - **Cloud-Native**: Services designed for AWS cloud infrastructure
 - **Real-time**: WebSocket-based communication for live features
 - **Security First**: Zero-trust architecture with proper authentication
-- **High Availability**: Multi-AZ deployment with fault tolerance
 
 # 5. 🏗️ Overall Diagrams
 
 ## 5.1 🗂️ Overall architecture
 
-Here should have a diagram
+TBD 
 
 ## 5.2 🗂️ Deployment
 
