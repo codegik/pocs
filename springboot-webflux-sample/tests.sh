@@ -34,3 +34,11 @@ curl -X GET http://localhost:8080/actuator/metrics/reactor.netty.bytebuf.allocat
 echo ""
 echo "Getting Prometheus metrics (includes all Netty metrics)"
 curl -X GET http://localhost:8080/actuator/prometheus | grep reactor_netty
+
+echo ""
+echo "Testing blocking endpoint to create pending tasks on event loop"
+curl -X GET http://localhost:8080/api/block &
+sleep 1
+echo ""
+echo "Getting event loop pending tasks while blocked"
+curl -X GET http://localhost:8080/actuator/metrics/reactor.netty.eventloop.pending.tasks
