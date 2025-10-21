@@ -9,7 +9,7 @@ echo "Concurrent requests: $CONCURRENT"
 echo "Total requests: $REQUESTS"
 echo ""
 
-seq 1 $REQUESTS | xargs -P $CONCURRENT -I {} curl -s -o /dev/null -w "%{http_code}\n" $ENDPOINT | sort | uniq -c
+seq 1 $REQUESTS | xargs -P $CONCURRENT -I {} curl -k -s -o /dev/null -w "%{http_code}\n" $ENDPOINT | sort | uniq -c
 
 echo ""
 echo "Stress test completed"

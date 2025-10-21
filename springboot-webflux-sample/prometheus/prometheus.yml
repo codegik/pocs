@@ -1,9 +1,10 @@
 global:
-  scrape_interval: 5s
-  evaluation_interval: 5s
+  scrape_interval: 30s
+  evaluation_interval: 30s
 
 scrape_configs:
   - job_name: 'spring-boot-webflux'
     metrics_path: '/actuator/prometheus'
+    scrape_timeout: 29s
     static_configs:
       - targets: ['host.docker.internal:8080']
