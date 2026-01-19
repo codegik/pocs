@@ -12,8 +12,11 @@ import java.util.Optional;
 @GrpcService
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserGrpcService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void createUser(CreateUserRequest request, StreamObserver<UserResponse> responseObserver) {
