@@ -40,13 +40,27 @@
                     <groupId>io.grpc</groupId>
                     <artifactId>grpc-netty-shaded</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-services</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-api</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
-        <!-- Use the same gRPC version for netty-shaded -->
+        <!-- Use the same gRPC version for all dependencies -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-services</artifactId>
             <version>${grpc.version}</version>
         </dependency>
 
