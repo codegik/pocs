@@ -1,0 +1,71 @@
+ vsyntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.codegik.grpc.proto";
+option java_outer_classname = "UserServiceProto";
+
+package user;
+
+// User Service Definition
+service UserService {
+  // Create a new user
+  rpc CreateUser(CreateUserRequest) returns (UserResponse);
+
+  // Get a user by ID
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+
+  // Update an existing user
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
+
+  // Delete a user by ID
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+  // List all users
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+}
+
+// User message
+message User {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// Request messages
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message GetUserRequest {
+  int64 id = 1;
+}
+
+message UpdateUserRequest {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message DeleteUserRequest {
+  int64 id = 1;
+}
+
+message ListUsersRequest {
+  // Empty for now, could add pagination later
+}
+
+// Response messages
+message UserResponse {
+  User user = 1;
+  string message = 2;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
