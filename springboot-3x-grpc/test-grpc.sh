@@ -3,6 +3,8 @@
 # Spring Boot gRPC CRUD Test Script
 # This script demonstrates how to test the gRPC CRUD operations using grpcurl
 
+set -e  # Exit on error
+
 echo "=== Spring Boot gRPC CRUD API Test ==="
 echo ""
 
@@ -16,6 +18,49 @@ if ! command -v grpcurl &> /dev/null; then
     exit 1
 fi
 
+# Function to cleanup on exit
+cleanup() {
+    if [ ! -z "$APP_PID" ]; then
+        echo ""
+        echo "Stopping Spring Boot application (PID: $APP_PID)..."
+        kill $APP_PID 2>/dev/null || true
+        wait $APP_PID 2>/dev/null || true
+        echo "Application stopped."
+    fi
+}
+
+# Register cleanup function to run on exit
+trap cleanup EXIT INT TERM
+
+# Start the Spring Boot application
+echo "Starting Spring Boot application..."
+cd "$(dirname "$0")"
+source ~/.sdkman/bin/sdkman-init.sh
+sdk use java 25.0.1-amzn
+mvn spring-boot:run > /tmp/grpc-app.log 2>&1 &
+APP_PID=$!
+
+echo "Application started with PID: $APP_PID"
+echo "Waiting for application to be ready..."
+
+# Wait for the application to start (check port 9090)
+MAX_WAIT=60
+WAIT_COUNT=0
+while ! nc -z localhost 9090 2>/dev/null; do
+    if [ $WAIT_COUNT -ge $MAX_WAIT ]; then
+        echo "ERROR: Application failed to start within ${MAX_WAIT} seconds"
+        echo "Check logs at /tmp/grpc-app.log"
+        tail -50 /tmp/grpc-app.log
+        exit 1
+    fi
+    sleep 1
+    WAIT_COUNT=$((WAIT_COUNT + 1))
+    echo -n "."
+done
+
+echo ""
+echo "Application is ready!"
+echo ""
 echo "Testing gRPC server on localhost:9090"
 echo ""
 
