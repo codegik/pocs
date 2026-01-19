@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
         GrpcServerAutoConfiguration.class,
         GrpcServerFactoryAutoConfiguration.class
 })
+@Import(GrpcTestConfiguration.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext
 class UserGrpcServiceIntegrationTest {

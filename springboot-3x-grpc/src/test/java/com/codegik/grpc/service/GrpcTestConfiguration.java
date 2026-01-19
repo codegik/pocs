@@ -1,6 +1,7 @@
 package com.codegik.grpc.service;
 
 import com.codegik.grpc.repository.UserRepository;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -11,6 +12,12 @@ import org.springframework.context.annotation.Primary;
  */
 @TestConfiguration
 public class GrpcTestConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public UserRepository userRepository() {
+        return new UserRepository();
+    }
 
     @Bean
     @Primary
