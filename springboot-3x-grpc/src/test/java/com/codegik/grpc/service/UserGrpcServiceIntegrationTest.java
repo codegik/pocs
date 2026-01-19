@@ -5,8 +5,11 @@ import io.grpc.ManagedChannel;
 import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
+import net.devh.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -15,14 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Integration tests for UserService gRPC API
  * Tests all CRUD operations using Spring Boot Test context with in-process gRPC server
+ * The gRPC server auto-configuration is excluded to avoid version compatibility issues
  */
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = {
-                "grpc.server.port=-1",  // Disable the actual gRPC server
-                "grpc.server.in-process-name=test"  // Use in-process server for tests
-        }
+        webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
+@EnableAutoConfiguration(exclude = {
+        GrpcServerAutoConfiguration.class,
+        GrpcServerFactoryAutoConfiguration.class
+})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext
 class UserGrpcServiceIntegrationTest {
