@@ -2,6 +2,7 @@ package com.codegik.grpc.service;
 
 import com.codegik.grpc.proto.*;
 import io.grpc.ManagedChannel;
+import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import org.junit.jupiter.api.*;
@@ -13,9 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Integration tests for UserService gRPC API
- * Tests all CRUD operations using Spring Boot Test context
+ * Tests all CRUD operations using Spring Boot Test context with in-process gRPC server
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.NONE,
+        properties = {
+                "grpc.server.port=-1",  // Disable the actual gRPC server
+                "grpc.server.in-process-name=test"  // Use in-process server for tests
+        }
+)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext
 class UserGrpcServiceIntegrationTest {
@@ -25,6 +32,7 @@ class UserGrpcServiceIntegrationTest {
 
     private UserServiceGrpc.UserServiceBlockingStub userServiceStub;
     private ManagedChannel channel;
+    private Server inProcessServer;
 
     private static Long createdUserId;
 
@@ -32,8 +40,8 @@ class UserGrpcServiceIntegrationTest {
     void setUp() throws Exception {
         String serverName = InProcessServerBuilder.generateName();
 
-        // Create in-process server
-        InProcessServerBuilder.forName(serverName)
+        // Create in-process server with the actual service
+        inProcessServer = InProcessServerBuilder.forName(serverName)
                 .directExecutor()
                 .addService(userGrpcService)
                 .build()
@@ -51,6 +59,9 @@ class UserGrpcServiceIntegrationTest {
     void tearDown() {
         if (channel != null && !channel.isShutdown()) {
             channel.shutdown();
+        }
+        if (inProcessServer != null && !inProcessServer.isShutdown()) {
+            inProcessServer.shutdown();
         }
     }
 
