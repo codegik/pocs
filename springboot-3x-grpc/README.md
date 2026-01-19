@@ -99,44 +99,6 @@ Run all tests:
 mvn test
 ```
 
-Run only integration tests:
-```bash
-mvn test -Dtest=UserGrpcServiceIntegrationTest
-```
-
-Run a specific test:
-```bash
-mvn test -Dtest=UserGrpcServiceIntegrationTest#testCreateUser
-```
-
-### Test Coverage
-
-The integration test suite includes 11 test cases covering:
-
-- ✅ Create user operations
-- ✅ Read/Get user operations (including non-existent users)
-- ✅ Update user operations (including non-existent users)
-- ✅ Delete user operations (including non-existent users)
-- ✅ List all users
-- ✅ Create multiple users and list them
-- ✅ Edge cases (empty email, full CRUD lifecycle)
-
-### Test Implementation
-
-The tests use:
-- **In-Process gRPC Server** - Fast, isolated testing without network overhead
-- **Spring Boot Test Context** - Full application context for realistic integration testing
-- **Ordered Execution** - Tests run in a specific order to validate user workflow
-- **Proper Cleanup** - Each test properly cleans up resources
-
-Example test output:
-```
-[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
-[INFO] BUILD SUCCESS
-```
-
-For more details, see [INTEGRATION_TESTS.md](INTEGRATION_TESTS.md)
-
 ## Technologies Used
 
 - Spring Boot 4.0.1
