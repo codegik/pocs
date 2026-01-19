@@ -35,19 +35,40 @@ trap cleanup EXIT INT TERM
 # Start the Spring Boot application
 echo "Starting Spring Boot application..."
 cd "$(dirname "$0")"
-source ~/.sdkman/bin/sdkman-init.sh
-sdk use java 25.0.1-amzn
-mvn spring-boot:run > /tmp/grpc-app.log 2>&1 &
+
+# Source SDKMAN
+if [ -f ~/.sdkman/bin/sdkman-init.sh ]; then
+    source ~/.sdkman/bin/sdkman-init.sh
+    sdk use java 25.0.1-amzn
+fi
+
+# Start Maven in background
+nohup mvn spring-boot:run > /tmp/grpc-app.log 2>&1 &
 APP_PID=$!
 
 echo "Application started with PID: $APP_PID"
 echo "Waiting for application to be ready..."
 
+# Function to check if port is open
+check_port() {
+    timeout 1 bash -c "echo > /dev/tcp/localhost/9090" 2>/dev/null
+    return $?
+}
+
 # Wait for the application to start (check port 9090)
 MAX_WAIT=60
 WAIT_COUNT=0
-while ! nc -z localhost 9090 2>/dev/null; do
+until check_port; do
+    # Check if the process is still running
+    if ! kill -0 $APP_PID 2>/dev/null; then
+        echo ""
+        echo "ERROR: Application process died. Check logs at /tmp/grpc-app.log"
+        tail -50 /tmp/grpc-app.log
+        exit 1
+    fi
+
     if [ $WAIT_COUNT -ge $MAX_WAIT ]; then
+        echo ""
         echo "ERROR: Application failed to start within ${MAX_WAIT} seconds"
         echo "Check logs at /tmp/grpc-app.log"
         tail -50 /tmp/grpc-app.log
