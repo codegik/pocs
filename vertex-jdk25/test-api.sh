@@ -1,4 +1,4 @@
-se#!/bin/bash
+#!/bin/bash
 
 echo "=== Testing Vert.x User CRUD API ==="
 echo ""
