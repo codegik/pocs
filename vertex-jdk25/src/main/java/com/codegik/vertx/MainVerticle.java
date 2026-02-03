@@ -8,11 +8,10 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 
 public class MainVerticle extends AbstractVerticle {
-    private UserRepository userRepository;
 
     @Override
     public void start(Promise<Void> startPromise) {
-        userRepository = new UserRepository();
+        UserRepository userRepository = new UserRepository();
         UserHandler userHandler = new UserHandler(userRepository);
 
         Router router = Router.router(vertx);
@@ -38,14 +37,10 @@ public class MainVerticle extends AbstractVerticle {
         vertx.createHttpServer()
             .requestHandler(router)
             .listen(port)
-            .onSuccess(server -> {
+            .onSuccess(ignored -> {
                 System.out.println("HTTP server started on port " + port);
                 startPromise.complete();
             })
             .onFailure(startPromise::fail);
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
     }
 }
