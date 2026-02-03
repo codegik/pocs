@@ -7,26 +7,6 @@ A simple in-memory CRUD system for managing users using Vert.x framework and JDK
 - JDK 25
 - Maven 3.6+
 
-## Project Structure
-
-```
-src/
-├── main/
-│   └── java/
-│       └── com/codegik/vertx/
-│           ├── Main.java                    # Application entry point
-│           ├── MainVerticle.java            # Main Vert.x verticle
-│           ├── handler/
-│           │   └── UserHandler.java         # HTTP request handlers
-│           ├── model/
-│           │   └── User.java                # User model
-│           └── repository/
-│               └── UserRepository.java      # In-memory user repository
-└── test/
-    └── java/
-        └── com/codegik/vertx/
-            └── UserCrudIntegrationTest.java # Integration tests
-```
 
 ## Technologies
 
@@ -58,19 +38,11 @@ src/
 
 ## Running the Application
 
-### Build the project
-
-```bash
-mvn clean compile
-```
-
-### Run the application
+The server will start on port 8080.
 
 ```bash
 mvn exec:java
 ```
-
-The server will start on port 8080.
 
 ## Running Tests
 
@@ -80,40 +52,12 @@ Run the integration tests:
 mvn test
 ```
 
-## Example API Usage
+## Running API Tests
 
-### Create a user
-
-```bash
-curl -X POST http://localhost:8080/api/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"john.doe@example.com"}'
-```
-
-### Get all users
+This will start the application, run API tests against it, and then stop the application.
 
 ```bash
-curl http://localhost:8080/api/users
-```
-
-### Get user by ID
-
-```bash
-curl http://localhost:8080/api/users/{id}
-```
-
-### Update user
-
-```bash
-curl -X PUT http://localhost:8080/api/users/{id} \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Jane Doe","email":"jane.doe@example.com"}'
-```
-
-### Delete user
-
-```bash
-curl -X DELETE http://localhost:8080/api/users/{id}
+./test-api.sh
 ```
 
 ## Features
@@ -121,7 +65,7 @@ curl -X DELETE http://localhost:8080/api/users/{id}
 - ✅ Simple and clean architecture
 - ✅ In-memory storage using ConcurrentHashMap
 - ✅ RESTful API design
-- ✅ Comprehensive integration tests
+- ✅ Integration tests
 - ✅ No mocks in tests
 - ✅ Latest versions of libraries
 - ✅ JDK 25 compatible
