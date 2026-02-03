@@ -36,8 +36,4 @@ public class UserRepository {
     public boolean delete(String id) {
         return users.remove(id) != null;
     }
-
-    public void clear() {
-        users.clear();
-    }
 }
