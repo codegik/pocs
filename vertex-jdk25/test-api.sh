@@ -1,5 +1,61 @@
 #!/bin/bash
 
+# Cleanup function to kill the app on exit
+cleanup() {
+    if [ ! -z "$APP_PID" ]; then
+        echo ""
+        echo "=== Stopping Application (PID: $APP_PID) ==="
+        kill $APP_PID 2>/dev/null
+        wait $APP_PID 2>/dev/null
+        echo "Application stopped."
+    fi
+}
+
+# Set trap to ensure cleanup happens on script exit
+trap cleanup EXIT INT TERM
+
+# Kill any existing application on port 8080
+echo "=== Checking for existing application ==="
+EXISTING_PID=$(lsof -ti:8080 2>/dev/null)
+if [ ! -z "$EXISTING_PID" ]; then
+    echo "Found existing application on port 8080 (PID: $EXISTING_PID)"
+    echo "Killing existing application..."
+    kill $EXISTING_PID 2>/dev/null
+    sleep 2
+    # Force kill if still running
+    if kill -0 $EXISTING_PID 2>/dev/null; then
+        echo "Force killing..."
+        kill -9 $EXISTING_PID 2>/dev/null
+    fi
+    echo "Existing application stopped."
+fi
+
+echo "=== Starting Vert.x Application ==="
+mvn exec:java > /tmp/vertx-app.log 2>&1 &
+APP_PID=$!
+echo "Application started with PID: $APP_PID"
+
+# Wait for application to be ready
+echo "Waiting for application to start..."
+MAX_RETRIES=30
+RETRY_COUNT=0
+while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+    if curl -s http://localhost:8080/health > /dev/null 2>&1; then
+        echo "Application is ready!"
+        break
+    fi
+    RETRY_COUNT=$((RETRY_COUNT + 1))
+    if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+        echo "ERROR: Application failed to start within 30 seconds"
+        echo "Log output:"
+        cat /tmp/vertx-app.log
+        exit 1
+    fi
+    sleep 1
+    echo -n "."
+done
+echo ""
+
 echo "=== Testing Vert.x User CRUD API ==="
 echo ""
 
