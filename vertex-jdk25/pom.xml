@@ -76,7 +76,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.codegik.vertx.MainVerticle</mainClass>
+                    <mainClass>com.codegik.vertx.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
