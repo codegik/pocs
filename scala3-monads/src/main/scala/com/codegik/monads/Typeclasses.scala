@@ -7,6 +7,11 @@ trait Functor[F[_]] {
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
+/** Apply: a Functor that can apply a wrapped function to a wrapped value. */
+trait Apply[F[_]] extends Functor[F] {
+  def ap[A, B](ff: F[A => B])(fa: F[A]): F[B]
+}
+
 /** Monad: a Functor that also supports sequencing with flatMap and lifting
   * pure values. Defines the fundamental unit of effectful computation.
   */
