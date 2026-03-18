@@ -1,23 +1,8 @@
 package com.codegik.monads
 
-// ---------------------------------------------------------------------------
-// State Monad
-// ---------------------------------------------------------------------------
 // State[S, A] wraps a function  S => (S, A)  — given an initial state,
 // produce a (possibly modified) state and a result value.
-//
-// This lets you thread mutable state through a series of pure functions
-// without any actual mutation or passing state manually.
-//
-//   val counter: State[Int, String] = for
-//     n <- State.get
-//     _ <- State.modify(_ + 1)
-//   yield s"was $n"
-//
-//   counter.run(0)   // => (1, "was 0")
-// ---------------------------------------------------------------------------
-
-final case class State[S, A](run: S => (S, A)):
+final case class State[S, A](run: S => (S, A)) {
 
   def map[B](f: A => B): State[S, B] =
     State { s =>
@@ -36,8 +21,9 @@ final case class State[S, A](run: S => (S, A)):
 
   /** Run and return only the final state. */
   def exec(initial: S): S = run(initial)._1
+}
 
-object State:
+object State {
   /** Lift a pure value; state passes through unchanged. */
   def pure[S, A](a: A): State[S, A] = State(s => (s, a))
 
@@ -54,16 +40,15 @@ object State:
   def gets[S, A](f: S => A): State[S, A] = State(s => (s, f(s)))
 
   /** Monad instance for a fixed state type S. */
-  given stateMonad[S]: Monad[[X] =>> State[S, X]] with
-    def pure[A](a: A): State[S, A]                                    = State.pure(a)
+  given stateMonad[S]: Monad[[X] =>> State[S, X]] with {
+    def pure[A](a: A): State[S, A]                                        = State.pure(a)
     def flatMap[A, B](fa: State[S, A])(f: A => State[S, B]): State[S, B] = fa.flatMap(f)
+  }
+}
 
-// ---------------------------------------------------------------------------
 // Demo
-// ---------------------------------------------------------------------------
-object StateDemo:
+object StateDemo {
 
-  // ---- Example 1: integer counter ----------------------------------------
   type Counter = State[Int, Unit]
 
   val increment: Counter = State.modify(_ + 1)
@@ -71,7 +56,7 @@ object StateDemo:
   val reset: Counter     = State.set(0)
 
   val counterProgram: State[Int, String] =
-    for
+    for {
       _   <- increment
       _   <- increment
       _   <- increment
@@ -80,9 +65,8 @@ object StateDemo:
       n2  <- State.get
       _   <- reset
       n3  <- State.get
-    yield s"after +3=$n1  after -1=$n2  after reset=$n3"
+    } yield s"after +3=$n1  after -1=$n2  after reset=$n3"
 
-  // ---- Example 2: pure stack -----------------------------------------------
   type Stack[A] = List[A]
 
   def push[A](a: A): State[Stack[A], Unit] = State.modify(a :: _)
@@ -93,16 +77,16 @@ object StateDemo:
   }
 
   val stackProgram: State[Stack[Int], String] =
-    for
+    for {
       _   <- push(10)
       _   <- push(20)
       _   <- push(30)
       top <- pop
       _   <- pop
       s   <- State.get
-    yield s"popped=$top  remaining=$s"
+    } yield s"popped=$top  remaining=$s"
 
-  def run(): Unit =
+  def run(): Unit = {
     println("\n=== State Monad ===")
 
     val (finalState, msg) = counterProgram.run(0)
@@ -110,3 +94,5 @@ object StateDemo:
 
     val (finalStack, stackMsg) = stackProgram.run(List.empty)
     println(s"  [State] stack: $stackMsg, finalStack=$finalStack")
+  }
+}
