@@ -1,22 +1,6 @@
 package com.codegik.monads
 
-// ---------------------------------------------------------------------------
-// Reader Monad
-// ---------------------------------------------------------------------------
-// Reader[R, A] wraps a function  R => A  — given a shared environment R,
-// produce a value A.
-//
-// Canonical use-case: dependency injection.  Instead of passing a config or
-// service object through every function signature, you build computations
-// that *implicitly* depend on R, and provide R only once at the call site.
-//
-//   val greeting: Reader[Config, String] = for
-//     name <- Reader.asks(_.appName)
-//     env  <- Reader.asks(_.env)
-//   yield s"Hello from $name ($env)"
-//
-//   greeting.run(Config("MyApp", "prod"))   // => "Hello from MyApp (prod)"
-// ---------------------------------------------------------------------------
+// Reader[R, A] wraps a function  R => A  — given a shared environment R, produce a value A.
 
 final case class Reader[R, A](run: R => A):
 
@@ -44,9 +28,7 @@ object Reader:
   /** Access a projection of the environment. */
   def asks[R, A](f: R => A): Reader[R, A] = Reader(f)
 
-// ---------------------------------------------------------------------------
 // Demo
-// ---------------------------------------------------------------------------
 object ReaderDemo:
 
   // Shared environment / config
@@ -61,8 +43,6 @@ object ReaderDemo:
   // Reads just the DB portion — demonstrates `local`
   case class DbConfig(host: String, port: Int, maxConnections: Int)
 
-  // ---- Individual readers ---------------------------------------------------
-
   val appName: Reader[AppConfig, String] = Reader.asks(_.appName)
   val envName:  Reader[AppConfig, String] = Reader.asks(_.env)
 
@@ -72,15 +52,12 @@ object ReaderDemo:
   val connectionString: Reader[DbConfig, String] =
     Reader.asks(buildConnectionString)
 
-  // ---- Composed readers ----------------------------------------------------
-
   val greeting: Reader[AppConfig, String] =
     for
       name <- appName
       env  <- envName
     yield s"[$name] running in $env"
 
-  // `local` lets us use a Reader[DbConfig, *] inside a Reader[AppConfig, *]
   val fullReport: Reader[AppConfig, String] =
     for
       header <- greeting
