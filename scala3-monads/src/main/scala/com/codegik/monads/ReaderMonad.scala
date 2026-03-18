@@ -2,7 +2,7 @@ package com.codegik.monads
 
 // Reader[R, A] wraps a function  R => A  — given a shared environment R, produce a value A.
 
-final case class Reader[R, A](run: R => A):
+final case class Reader[R, A](run: R => A) {
 
   def map[B](f: A => B): Reader[R, B] =
     Reader(r => f(run(r)))
@@ -18,8 +18,9 @@ final case class Reader[R, A](run: R => A):
     */
   def local[R2](f: R2 => R): Reader[R2, A] =
     Reader(r2 => run(f(r2)))
+}
 
-object Reader:
+object Reader {
   def pure[R, A](a: A): Reader[R, A] = Reader(_ => a)
 
   /** Access the whole environment. */
@@ -27,9 +28,10 @@ object Reader:
 
   /** Access a projection of the environment. */
   def asks[R, A](f: R => A): Reader[R, A] = Reader(f)
+}
 
 // Demo
-object ReaderDemo:
+object ReaderDemo {
 
   // Shared environment / config
   case class AppConfig(
@@ -53,24 +55,23 @@ object ReaderDemo:
     Reader.asks(buildConnectionString)
 
   val greeting: Reader[AppConfig, String] =
-    for
+    for {
       name <- appName
       env  <- envName
-    yield s"[$name] running in $env"
+    } yield s"[$name] running in $env"
 
   val fullReport: Reader[AppConfig, String] =
-    for
-      header <- greeting
+    for {
+      header  <- greeting
       connStr <- connectionString.local[AppConfig](c =>
         DbConfig(c.dbHost, c.dbPort, c.maxConnections)
       )
       maxConn <- Reader.asks[AppConfig, Int](_.maxConnections)
-    yield
-      s"""$header
-         |  db  : $connStr
-         |  pool: $maxConn connections""".stripMargin
+    } yield s"""$header
+               |  db  : $connStr
+               |  pool: $maxConn connections""".stripMargin
 
-  def run(): Unit =
+  def run(): Unit = {
     println("\n=== Reader Monad ===")
 
     val config = AppConfig(
@@ -83,3 +84,5 @@ object ReaderDemo:
 
     val report = fullReport.provide(config)
     println(report.linesIterator.map(l => s"  [Reader] $l").mkString("\n"))
+  }
+}
