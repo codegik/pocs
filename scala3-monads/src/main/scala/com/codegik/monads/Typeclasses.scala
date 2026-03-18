@@ -1,8 +1,6 @@
 package com.codegik.monads
 
-// ---------------------------------------------------------------------------
 // Core typeclasses
-// ---------------------------------------------------------------------------
 
 /** Functor: any type F[_] that supports mapping over its value. */
 trait Functor[F[_]]:
