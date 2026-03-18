@@ -1,0 +1,1 @@
+{"name":"sbt","version":"1.10.10","bspVersion":"2.1.0-M1","languages":["scala"],"argv":["/home/codegik/.sdkman/candidates/java/25.0.1-amzn/bin/java","-Xms100m","-Xmx100m","-classpath","/home/codegik/.local/share/JetBrains/IntelliJIdea2025.3/Scala/launcher/sbt-launch.jar","-Dsbt.script=/home/codegik/.sdkman/candidates/sbt/current/bin/sbt","xsbt.boot.Boot","-bsp"]}
