@@ -3,18 +3,6 @@ package com.codegik.monads
 // ---------------------------------------------------------------------------
 // IO Monad
 // ---------------------------------------------------------------------------
-// IO[A] represents a description of a side-effecting computation that, when
-// executed, produces a value of type A.
-//
-// Key insight: an IO value is *just data* — a thunk wrapped in a case class.
-// Side effects are deferred until .unsafeRun() is explicitly called, making
-// the code referentially transparent up to that boundary.
-//
-//   val x = IO.println("hi")   // nothing printed yet
-//   x.unsafeRun()              // prints "hi"
-//   x.unsafeRun()              // prints "hi" again
-// ---------------------------------------------------------------------------
-
 final class IO[A](val unsafeRun: () => A):
 
   /** Transform the result without running any new effects. */
@@ -58,9 +46,7 @@ object IO:
     def pure[A](a: A): IO[A]                          = IO.pure(a)
     def flatMap[A, B](fa: IO[A])(f: A => IO[B]): IO[B] = fa.flatMap(f)
 
-// ---------------------------------------------------------------------------
 // Demo
-// ---------------------------------------------------------------------------
 object IODemo:
   def run(): Unit =
     println("\n=== IO Monad ===")
