@@ -46,7 +46,7 @@ object JsonParser {
   val stringLiteral: Parser[String] = {
     val escapedChar = char('\\') ~> anyChar
     val normalChar  = satisfy(c => c != '"' && c != '\\', "string char")
-    token(char('"') ~> (escapedChar or normalChar).many <~ char('"')).map(_.mkString)
+    token(char('"') ~> escapedChar.or(normalChar).many <~ char('"')).map(_.mkString)
   }
 
   val jString: Parser[Json] =

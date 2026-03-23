@@ -141,5 +141,5 @@ object Parser {
 
   // Try parsers in order, return first success
   def choice[A](parsers: Parser[A]*): Parser[A] =
-    parsers.reduceLeft(_ or _)
+    parsers.reduceLeft(_.or(_))
 }

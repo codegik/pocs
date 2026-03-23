@@ -41,7 +41,7 @@ object ExprParser {
   lazy val expr: Parser[Expr] = addSub
 
   lazy val factor: Parser[Expr] =
-    number or expr.between(token(char('(')), token(char(')')))
+    number.or(expr.between(token(char('(')), token(char(')'))))
 
   lazy val term: Parser[Expr] =
     (factor ~ (token(choice(char('*'), char('/'))) ~ factor).many).map {
