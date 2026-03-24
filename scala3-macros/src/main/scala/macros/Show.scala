@@ -52,8 +52,10 @@ object Show:
   def derivedImpl[T: Type](using Quotes): Expr[Show[T]] =
     import quotes.reflect.*
 
-    val sym      = TypeRepr.of[T].typeSymbol
-    val typeName = Expr(sym.name)
+    val sym     = TypeRepr.of[T].typeSymbol
+    // Module symbols (case objects) have a trailing '$' in their name
+    val rawName = sym.name
+    val typeName = Expr(if rawName.endsWith("$") then rawName.dropRight(1) else rawName)
 
     if !sym.flags.is(Flags.Case) then
       report.errorAndAbort(

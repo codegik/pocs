@@ -5,15 +5,14 @@ import java.io.{ByteArrayOutputStream, PrintStream}
 
 class LoggingTest extends FunSuite:
 
-  /** Captures stdout produced by `f`, returning the printed string. */
+  /** Captures stdout produced by `f`, returning the printed string.
+   *  Uses Console.withOut because Scala's println writes to Console.out, not System.out.
+   */
   private def capture(f: => Unit): String =
     val baos = new ByteArrayOutputStream()
     val ps   = new PrintStream(baos)
-    val old  = System.out
-    System.setOut(ps)
-    try f finally
-      ps.flush()
-      System.setOut(old)
+    scala.Console.withOut(ps)(f)
+    ps.flush()
     baos.toString("UTF-8").trim
 
   // ── log ───────────────────────────────────────────────────────────────────
