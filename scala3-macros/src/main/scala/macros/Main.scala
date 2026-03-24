@@ -31,13 +31,14 @@ given Show[Item]    = Show.derived[Item]
   println(item.show)
   println(rare.show)
 
+
   // ── 2. Structural inspection ─────────────────────────────────────────────
   section("2 · Inspect — compile-time structural extraction")
 
   println(s"Person field names : ${Inspect.fieldNames[Person]}")
   println(s"Person field count : ${Inspect.fieldCount[Person]}")
   println(s"Person field types : ${Inspect.fieldTypes[Person]}")
-  println(s"Product field names: ${Inspect.fieldNames[Product]}")
+  println(s"Item field names   : ${Inspect.fieldNames[Item]}")
 
   println(s"isCaseClass[Person] : ${Inspect.isCaseClass[Person]}")
   println(s"isCaseClass[String] : ${Inspect.isCaseClass[String]}")
@@ -93,7 +94,7 @@ given Show[Item]    = Show.derived[Item]
   println(s"trace result = $result")
 
   // logIf — when false, generates NO code (verified by inspecting bytecode)
-  val debugEnabled = true
+  inline val debugEnabled = true
   Logging.logIf(debugEnabled)(alice.name.toUpperCase)
   Logging.logIf(false)(bob.name.toUpperCase)  // this line compiles to nothing
 
