@@ -6,12 +6,12 @@ package macros
 
 case class Address(street: String, city: String, zip: String)
 case class Person(name: String, age: Int, active: Boolean, address: Address)
-case class Product(id: Int, label: String, price: Double, stock: Option[Int])
+case class Item(id: Int, label: String, price: Double, stock: Option[Int])
 
 // Show instances derived via macro (zero reflection at runtime)
 given Show[Address] = Show.derived[Address]
 given Show[Person]  = Show.derived[Person]
-given Show[Product] = Show.derived[Product]
+given Show[Item]    = Show.derived[Item]
 
 // ---------------------------------------------------------------------------
 // Demo runner
@@ -20,8 +20,8 @@ given Show[Product] = Show.derived[Product]
 
   val alice = Person("Alice", 30, true, Address("123 Main St", "Springfield", "12345"))
   val bob   = Person("Bob",   25, false, Address("7 Elm Ave",  "Shelbyville", "99999"))
-  val item  = Product(42, "Gadget", 9.99, Some(100))
-  val rare  = Product(7,  "Rare",   999.0, None)
+  val item  = Item(42, "Gadget", 9.99, Some(100))
+  val rare  = Item(7,  "Rare",   999.0, None)
 
   // ── 1. Show typeclass via macro derivation ───────────────────────────────
   section("1 · Show — macro-derived typeclass instances")

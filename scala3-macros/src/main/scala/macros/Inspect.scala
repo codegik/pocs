@@ -63,7 +63,7 @@ object Inspect:
       '{ ($nameExpr, $valueExpr) }
     }
 
-    '{ Map(${ Varargs(entries) }: _*) }
+    '{ Map(${ Varargs(entries) }*) }
 
   // ── toJson ───────────────────────────────────────────────────────────────
 

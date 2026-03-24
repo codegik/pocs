@@ -14,13 +14,20 @@ extension [A](a: A)(using s: Show[A])
 object Show:
 
   // ── primitive instances ──────────────────────────────────────────────────
-  given Show[Int]     with def show(a: Int): String     = a.toString
-  given Show[Long]    with def show(a: Long): String    = a.toString
-  given Show[Double]  with def show(a: Double): String  = a.toString
-  given Show[Float]   with def show(a: Float): String   = a.toString
-  given Show[Boolean] with def show(a: Boolean): String = a.toString
-  given Show[String]  with def show(a: String): String  = s""""$a""""
-  given Show[Char]    with def show(a: Char): String    = s"'$a'"
+  given Show[Int] with
+    def show(a: Int): String = a.toString
+  given Show[Long] with
+    def show(a: Long): String = a.toString
+  given Show[Double] with
+    def show(a: Double): String = a.toString
+  given Show[Float] with
+    def show(a: Float): String = a.toString
+  given Show[Boolean] with
+    def show(a: Boolean): String = a.toString
+  given Show[String] with
+    def show(a: String): String = s""""$a""""
+  given Show[Char] with
+    def show(a: Char): String = s"'$a'"
 
   given [A](using sa: Show[A]): Show[Option[A]] with
     def show(a: Option[A]): String = a.fold("None")(v => s"Some(${sa.show(v)})")
