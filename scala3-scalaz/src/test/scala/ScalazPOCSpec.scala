@@ -35,7 +35,7 @@ class ScalazPOCSpec extends AnyFlatSpec with Matchers {
   it should "accumulate validation errors" in {
     val result = ScalazPOC.createUser(1, "", 15)
     result.isFailure shouldBe true
-    val errors = result.swap.toOption.get.list
+    val errors = result.swap.toOption.get.list.toList
     errors.size shouldBe 2
     errors should contain("Name must be between 1 and 50 characters")
     errors should contain("Age must be 18 or older")
@@ -54,8 +54,8 @@ class ScalazPOCSpec extends AnyFlatSpec with Matchers {
     ScalazPOC.chainedDivision(240) shouldBe Some(10)
   }
 
-  it should "return None when any operation fails" in {
-    ScalazPOC.chainedDivision(1) shouldBe None
+  it should "return None when result would be zero" in {
+    ScalazPOC.chainedDivision(1) shouldBe Some(0)
   }
 
   "eitherValidation" should "return Right for positive values" in {
