@@ -5,6 +5,7 @@
 .project
 git.properties
 target/
+.bsp
 logs/
 bin/
 _build/
