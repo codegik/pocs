@@ -25,24 +25,28 @@ object UserRoutes:
           case None       => NotFound(ApiError(s"user $id not found"))
         }
 
-      // POST /users -> create, with body validation
+      // POST /users -> create, with body decoding + validation
       case req @ POST -> Root / "users" =>
-        req.as[UserInput].flatMap { input =>
-          input.validate match
-            case Nil    => repo.create(input).flatMap(Created(_))
-            case errors => BadRequest(ApiError(errors))
+        req.attemptAs[UserInput].value.flatMap {
+          case Left(failure) => BadRequest(ApiError(failure.message))
+          case Right(input) =>
+            input.validate match
+              case Nil    => repo.create(input).flatMap(Created(_))
+              case errors => BadRequest(ApiError(errors))
         }
 
       // PUT /users/:id -> replace an existing user
       case req @ PUT -> Root / "users" / LongVar(id) =>
-        req.as[UserInput].flatMap { input =>
-          input.validate match
-            case errors @ (_ :: _) => BadRequest(ApiError(errors))
-            case Nil =>
-              repo.update(id, input).flatMap {
-                case Some(user) => Ok(user)
-                case None       => NotFound(ApiError(s"user $id not found"))
-              }
+        req.attemptAs[UserInput].value.flatMap {
+          case Left(failure) => BadRequest(ApiError(failure.message))
+          case Right(input) =>
+            input.validate match
+              case errors @ (_ :: _) => BadRequest(ApiError(errors))
+              case Nil =>
+                repo.update(id, input).flatMap {
+                  case Some(user) => Ok(user)
+                  case None       => NotFound(ApiError(s"user $id not found"))
+                }
         }
 
       // DELETE /users/:id -> remove, 204 on success
