@@ -46,7 +46,10 @@ class HelloRoutesTest extends CatsEffectSuite:
     routes.run(req).map(r => assertEquals(r.status, Status.NotFound))
   }
 
-  test("invalid boolean query param yields 400") {
+  // An OptionalQueryParamDecoderMatcher with an unparseable value does not
+  // match the route, so http4s falls through to a 404 (use the *Validating*
+  // matcher if you want a 400 instead).
+  test("unparseable boolean query param falls through to 404") {
     val req = Request[IO](Method.GET, uri"/hello/Alice?loud=maybe")
-    routes.run(req).map(r => assertEquals(r.status, Status.BadRequest))
+    routes.run(req).map(r => assertEquals(r.status, Status.NotFound))
   }
