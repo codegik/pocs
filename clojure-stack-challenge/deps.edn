@@ -1,0 +1,10 @@
+{:paths ["src" "test"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}}
+ :aliases {:test {:extra-paths ["test"]
+                  :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}}
+                  :main-opts ["-m" "com.codegik.stack.solution-test"]}
+           :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+                     :exec-fn hf.depstar/uberjar
+                     :exec-args {:aot true
+                                 :jar "target/solution.jar"
+                                 :main-class com.codegik.stack.solution}}}}

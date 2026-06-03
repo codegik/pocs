@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+aws:
+  region: us-east-1
+  endpoint: ${AWS_ENDPOINT:}
+  access-key: ${AWS_ACCESS_KEY:test}
+  secret-key: ${AWS_SECRET_KEY:test}
+  topic-name: ${AWS_TOPIC_NAME:ondemand-topic}
+
+logging:
+  level:
+    com.poc.sqs: INFO
+    software.amazon.awssdk: WARN
