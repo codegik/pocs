@@ -1,6 +1,6 @@
 # scala3-http4s-streaming
 
-A second http4s + Scala 3 POC, focused on **streaming** rather than buffered
+http4s + Scala 3 POC, focused on **streaming** rather than buffered
 JSON. It serves a job-lifecycle feed as **Server-Sent Events** and a lazily
 produced NDJSON byte stream, all built on `fs2.Stream`. The domain is modeled
 with a Scala 3 `enum` ADT. Sibling to `scala3-http4s` (which covers REST CRUD) —
@@ -41,10 +41,10 @@ src/main/scala/com/codegik/streaming/
 ## Endpoints
 
 | Method | Path                      | Description                                         |
-|--------|---------------------------|-----------------------------------------------------|
+| ------ | ------------------------- | --------------------------------------------------- |
 | GET    | `/events/clock`           | Infinite SSE heartbeat (1/sec); `?limit=N` to bound |
 | GET    | `/events/jobs/:id`        | Finite SSE job lifecycle; ends on terminal event    |
-| GET    | `/stream/numbers?count=N` | Lazy NDJSON stream; `?delayMs=` to space chunks      |
+| GET    | `/stream/numbers?count=N` | Lazy NDJSON stream; `?delayMs=` to space chunks     |
 
 The job lifecycle is `Queued -> Started -> Progress(25/50/75) -> Completed`
 (even ids) or `... -> Failed` (odd ids). The SSE `event:` field is the enum case
