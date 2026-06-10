@@ -53,9 +53,11 @@ name; the `data:` field is the event JSON.
 ## Run
 
 ```bash
-sbt run        # serves http://localhost:8080
-sbt test       # 16 tests
+sbt run
+sbt test
 ```
+
+Serves <http://localhost:8080>
 
 ```bash
 curl -N localhost:8080/events/jobs/2          # watch the SSE frames stream in, then close
