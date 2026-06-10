@@ -1,4 +1,4 @@
-package http4s_poc
+package com.codegik.http4s
 
 import cats.effect.IO
 import io.circe.syntax.*
