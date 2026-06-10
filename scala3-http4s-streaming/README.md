@@ -64,17 +64,3 @@ curl localhost:8080/stream/numbers?count=10
 ```
 
 `-N` disables curl's buffering so SSE/streamed frames appear as they arrive.
-
-## Tests (16 total)
-
-- **ModelsTest** — `JobEvent` circe round-trips; `asServerSentEvent` event type
-  and data mapping; `isTerminal` over the ADT.
-- **JobSimulatorTest** — runs the metered stream under `TestControl` (instant
-  virtual time), asserting the exact event sequence and terminal behavior.
-- **EventRoutesTest** — drives `HttpRoutes` in-memory, asserts the
-  `text/event-stream` content type, decodes the SSE body via
-  `ServerSentEvent.decoder`, checks `?limit` and the job lifecycle.
-- **NumberRoutesTest** — NDJSON line count, empty on `count<=0`, cap enforcement,
-  404 on a missing required param.
-- **ServerIntegrationTest** — boots a real Ember server on an ephemeral port and
-  consumes the SSE feed end-to-end with a real Ember client.
