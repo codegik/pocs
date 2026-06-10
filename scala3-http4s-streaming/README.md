@@ -58,9 +58,9 @@ sbt test       # 16 tests
 ```
 
 ```bash
-curl -N localhost:8080/events/jobs/2       # watch the SSE frames stream in, then close
-curl -N localhost:8080/events/clock?limit=5
-curl localhost:8080/stream/numbers?count=10
+curl -N localhost:8080/events/jobs/2          # watch the SSE frames stream in, then close
+curl -N "localhost:8080/events/clock?limit=5"
+curl "localhost:8080/stream/numbers?count=10"
 ```
 
 `-N` disables curl's buffering so SSE/streamed frames appear as they arrive.
